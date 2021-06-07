@@ -1,10 +1,13 @@
 import React from 'react';
 import s from './Friends.module.css'
 import FriendsItem from "./FriendsItem/FriendsItem";
+import StoreContext from "../../redux/StoreContext";
 
-const Friends = (props) => {
-
-    let friendsItems = props.friends.map(d => <FriendsItem name={d.name} id={d.id} src={d.src} />)
+const Friends = () => {
+    return <StoreContext.Consumer>
+        { (store) => {
+            let state = store.getState();
+    let friendsItems = state.sidebar.friends.map(d => <FriendsItem name={d.name} id={d.id} src={d.src} />)
 
     return (
         <div className={s.dialogs}>
@@ -19,7 +22,9 @@ const Friends = (props) => {
 
     </div>
     )
-
+        }
+        }
+    </StoreContext.Consumer>
 }
 
 export default Friends;

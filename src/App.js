@@ -12,24 +12,22 @@ import Settings from './components/Settings/Settings';
 import Friends from "./components/Friends/Friends";
 
 
-const App = (props) => {
+const App = () => {
 
     return (
       <div className='app-wrapper'>
         <Header />
-        <Navbar dialogs={props.state.dialogPage.dialogs} />
+        <Navbar />
         <div className='app-wrapper-content'>
           {/* <Route path='/Profile' component={Profile} /> */}
-          <Route path='/Profile' render={() => <Profile store={props.store}
-              />}
+          <Route path='/Profile' render={() => <Profile />}
             />
-          <Route path='/Dialogs' render={() => <Dialogs store={props.store}
-                                                           />}
+          <Route path='/Dialogs' render={() => <Dialogs />}
           />
           <Route path='/News' render={() => <News />} />
           <Route path='/Music' render={() => <Music />} />
           <Route path='/Settings' render={ () => <Settings />} />
-          <Route path='/Friends' render={ () => <Friends friends={props.state.sidebar.friends}/>} />
+          <Route path='/Friends' render={ () => <Friends />} />
         </div>
       </div>
 
