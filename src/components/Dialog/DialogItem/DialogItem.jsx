@@ -1,20 +1,19 @@
 import React from 'react';
-import s from '../Dialogs.module.css';
-import {NavLink} from 'react-router-dom';
-
+import DialogItemInside from "./DialogItemInside";
+import DialogState from "./DialogState";
 
 const DialogItem = (props) => {
 
-    let path = '/Dialogs/' + props.id;
-    name = props.name;
+    let dialogItems = props.dialogs.map(d => <DialogItemInside
+        name={d.name}
+        id={d.id}
+        src={d.src}
+    />)
 
-
-    return <div className={s.item + ' ' + s.active}>
-        <NavLink to={path}><img src={props.src}/><br/>
-            {props.name}</NavLink>
-        <br/>
-
+    return <div >
+        {dialogItems}
+        <DialogState onPostChange={props.onPostChange} addDialog={props.addDialog}/>
     </div>;
 }
-export let name;
+
 export default DialogItem;

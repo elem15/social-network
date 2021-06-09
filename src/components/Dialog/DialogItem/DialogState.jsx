@@ -3,8 +3,8 @@ import s from '../Dialogs.module.css';
 
 const DialogState = (props) => {
 
-    let addPost = () => {
-        props.addPost();
+    let addDialog = () => {
+        props.addDialog();
     };
 
     let onPostChange = (e) => {
@@ -12,12 +12,12 @@ const DialogState = (props) => {
         props.onPostChange(text);
     }
 
-    return <div>
+    return <div className={s.item + ' ' + s.active} >
         <div>
             <textarea name="input" onChange={onPostChange} value={props.newDialogState}/>
         </div>
         <div>
-            <button onClick={addPost}>Add post</button>
+            <button onClick={addDialog}>Add post</button>
         </div>
     </div>
 }

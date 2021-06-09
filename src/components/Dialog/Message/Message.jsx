@@ -1,10 +1,16 @@
 import React from 'react';
 import s from '../Dialogs.module.css';
+import MessageInside from "./MessageInside";
 
 const Message = (props) => {
+  let messageItems = props.messages.map(m => <MessageInside message={m.message}
+                                                                 name={m.name}
+                                                                 st={m.st}
+  />)
   return (
-      <div className={s.messages + ' ' + s[props.st]}><div className={s.name}>{props.name}:</div>{props.message}
-  </div>
+      <div className={s.messages}>
+        <div>{messageItems}</div>
+      </div>
   )
 }
 

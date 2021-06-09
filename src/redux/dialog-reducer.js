@@ -35,7 +35,7 @@ const dialogReducer = (state = initialState, action) => {
             let post = {
                 id: countId,
                 message: state.newDialogState,
-                name: action.currentName,
+                name: 'action.currentName',
                 st: positon
             };
             state.messages.push(post);
