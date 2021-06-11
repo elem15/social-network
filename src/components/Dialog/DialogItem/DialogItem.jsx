@@ -7,12 +7,13 @@ const DialogItem = (props) => {
     let dialogItems = props.dialogs.map(d => <DialogItemInside
         name={d.name}
         id={d.id}
+        key={d.id}
         src={d.src}
     />)
 
     return <div >
         {dialogItems}
-        <DialogState onPostChange={props.onPostChange} addDialog={props.addDialog}/>
+        <DialogState newDialogState={props.newDialogState} onPostChange={props.onPostChange} addDialog={props.addDialog}/>
     </div>;
 }
 

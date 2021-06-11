@@ -6,6 +6,7 @@ const Message = (props) => {
   let messageItems = props.messages.map(m => <MessageInside message={m.message}
                                                                  name={m.name}
                                                                  st={m.st}
+                                                                 key={m.id}
   />)
   return (
       <div className={s.messages}>
