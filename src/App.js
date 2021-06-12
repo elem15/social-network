@@ -8,8 +8,10 @@ import Dialogs from './components/Dialog/Dialogs';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import Users from "./components/Users/Users";
 import FriendsContainer from "./components/Friends/FriendsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 
 const App = () => {
@@ -28,6 +30,8 @@ const App = () => {
           <Route path='/Music' render={() => <Music />} />
           <Route path='/Settings' render={() => <Settings />} />
           <Route path='/Friends' render={() => <FriendsContainer />} />
+          <Route path='/Users' render={() => <UsersContainer />} />
+
         </div>
       </div>
 
