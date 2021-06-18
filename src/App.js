@@ -8,7 +8,6 @@ import Dialogs from './components/Dialog/Dialogs';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import Users from "./components/Users/Users";
 import FriendsContainer from "./components/Friends/FriendsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";

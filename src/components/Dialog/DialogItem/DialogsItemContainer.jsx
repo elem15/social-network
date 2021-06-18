@@ -1,7 +1,6 @@
 import React from 'react';
 import {addMessageActionCreator, onMessageChangeActionCreator} from "../../../redux/dialog-reducer";
 import DialogsItem from "./DialogItem";
-import {name} from './DialogItemInside'
 import {connect} from "react-redux";
 
 let mapStateToProps = (state) => {
@@ -12,7 +11,7 @@ let mapStateToProps = (state) => {
 }
 let mapDispatchToProps = (dispatch) => {
     return {
-        addDialog: () => {dispatch(addMessageActionCreator(name))},
+        addDialog: (name) => {dispatch(addMessageActionCreator(name))},
         onPostChange: (text) => {dispatch(onMessageChangeActionCreator(text))}
     }
 }
