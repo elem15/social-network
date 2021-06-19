@@ -52,7 +52,7 @@ li {
   'h h'
   'n c';
 
-  grid-template-rows: 3fr 30fr;
+  grid-template-rows: 1fr 30fr;
   grid-template-columns: 3fr 20fr;
   grid-gap: 10px;
 }
