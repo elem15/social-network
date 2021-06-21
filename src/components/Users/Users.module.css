@@ -8,3 +8,9 @@
 .pointer {
     cursor: pointer;
 }
+
+.preload {
+    position: absolute;
+    top: 30%;
+    left: 400px ;
+}

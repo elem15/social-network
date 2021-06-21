@@ -30,7 +30,6 @@ const App = () => {
           <Route path='/Settings' render={() => <Settings />} />
           <Route path='/Friends' render={() => <FriendsContainer />} />
           <Route path='/Users' render={() => <UsersContainer />} />
-
         </div>
       </div>
 
