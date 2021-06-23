@@ -3,6 +3,8 @@ import styles from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import Preloader from "../Common/Preloader/Preloader";
 import {NavLink} from 'react-router-dom';
+import * as axios from "axios";
+
 const Users = (props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -12,19 +14,20 @@ const Users = (props) => {
     }
 
     return (
-        <div >
-            <div className={styles.preload} > { props.isFetching ? <Preloader /> : null }</div>
-            <div >
+        <div>
+            <div className={styles.preload}> {props.isFetching ? <Preloader/> : null}</div>
             <div>
-                {pages.map(p => {
-                    return <span className={styles.pointer}><span className={props.currentPage === p && styles.selectedPage} onClick={() =>
-                        props.onPageChanged(p)
-                    }>{p}</span></span>
-                })}
-            </div>
-            <div>
-                {
-                    props.users.map(u => <div key={u.id}>
+                <div>
+                    {pages.map(p => {
+                        return <span className={styles.pointer}><span
+                            className={props.currentPage === p && styles.selectedPage} onClick={() =>
+                            props.onPageChanged(p)
+                        }>{p}</span></span>
+                    })}
+                </div>
+                <div>
+                    {
+                        props.users.map(u => <div key={u.id}>
             <span>
                 <div>
                     <NavLink to={'/Profile/' + u.id}>
@@ -34,22 +37,42 @@ const Users = (props) => {
                 <div>
                     {u.followed
                         ? <button onClick={() => {
-                            props.unfollow(u.id)
-                        }}>Follow</button>
+                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                withCredentials: true,
+                                headers: {
+                                    'API-KEY': 'fc80d18e-ccad-4cf3-bd62-026f50314b83'
+                                }
+                            })
+                                .then(response => {
+                                    if (response.data.resultCode === 0) {
+                                        props.unFollow(u.id)
+                                    }
+                                })
+                        }}>Unfollow</button>
                         : <button onClick={() => {
-                            props.follow(u.id)
-                        }}>Unfollowed</button>
+                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                withCredentials: true,
+                                headers: {
+                                    'API-KEY': 'fc80d18e-ccad-4cf3-bd62-026f50314b83'
+                                }
+                            })
+                                .then(response => {
+                                    if (response.data.resultCode === 0) {
+                                        props.follow(u.id)
+                                    }
+                                })
+                        }}>Follow</button>
                     }
                      </div>
             </span>
-                        <span>
+                            <span>
                  <span><div>{'u.location.city'}</div><div>{'u.location.country'}</div></span>
                 <span><div>{u.name}</div><div>{u.status}</div></span>
             </span>
-                    </div>)
-                }
+                        </div>)
+                    }
+                </div>
             </div>
-           </div>
         </div>
     );
 }
