@@ -1,8 +1,16 @@
 .header {
     grid-area: h;
     background-color: green;
+    display: flex;
   }
   .image.active {
     height: 50px; 
     width: 50px
+  }
+  .loginBlock {
+      margin-left: 500px;
+      margin-bottom: 30px;
+  }
+  .loginBlock a {
+      color: white;
   }

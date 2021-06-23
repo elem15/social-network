@@ -7,7 +7,7 @@ const Navbar = (props) => {
 
                 return <nav className={s.nav}>
                     <div>
-                        <NavLink to='/Profile/Profile.jsx' activeClassName={s.activeLink}>Profile</NavLink>
+                        <NavLink to='/Profile' activeClassName={s.activeLink}>Profile</NavLink>
                     </div>
                     <div>
                         <NavLink exact to='/Dialogs' activeClassName={s.activeLink}>Message</NavLink>
