@@ -13,13 +13,13 @@ export const usersAPI = {
                 return response.data
             })
     },
-    postUsers (id) {
+    follow (id) {
         return instance.post(`follow/${id}`)
             .then(response => {
                 return response.data
             })
     },
-    deleteUsers (id) {
+    unFollow (id) {
         return instance.delete(`follow/${id}`, {})
             .then(response => {
                 return response.data

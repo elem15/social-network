@@ -3,7 +3,6 @@ import styles from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import Preloader from "../Common/Preloader/Preloader";
 import {NavLink} from 'react-router-dom';
-import {usersAPI} from "../../api/api";
 
 const Users = (props) => {
 
@@ -15,7 +14,7 @@ const Users = (props) => {
 
     return (
         <div>
-            <div className={styles.preload}> {props.isFetching ? <Preloader/> : null}</div>
+            <div> {props.isFetching ? <Preloader/> : null}</div>
             <div>
                 <div>
                     {pages.map(p => {
@@ -37,24 +36,10 @@ const Users = (props) => {
                 <div>
                     {u.followed
                         ? <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
-                            props.toggleIsFollowingProgress(true, u.id);
-                            usersAPI.deleteUsers(u.id)
-                                .then(data => {
-                                    if (data.resultCode === 0) {
-                                        props.unFollow(u.id)
-                                    }
-                                    props.toggleIsFollowingProgress(false, u.id);
-                                })
+                            props.unFollow(u.id);
                         }}>Unfollow</button>
                         : <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
-                            props.toggleIsFollowingProgress(true, u.id);
-                            usersAPI.postUsers(u.id)
-                                .then(data => {
-                                    if (data.resultCode === 0) {
-                                        props.follow(u.id)
-                                    }
-                                    props.toggleIsFollowingProgress(false, u.id);
-                                })
+                            props.follow(u.id);
                         }}>Follow</button>
                     }
                      </div>
