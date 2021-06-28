@@ -47,8 +47,11 @@ const Users = (props) => {
                             <span>
                  <span><div>{'u.location.city'}</div><div>{'u.location.country'}</div></span>
                 <span><div>{u.name}</div><div>{u.status}</div></span>
+                <span><div>Мой ID: {u.id}</div></span>
             </span>
-                        </div>)
+                                <div>  <hr/></div>
+                        </div>
+                        )
                     }
                 </div>
             </div>

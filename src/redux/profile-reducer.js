@@ -3,6 +3,7 @@ import {usersAPI} from "../api/api";
 const ADD_POST = 'ADD_POST';
 const ON_POST_CHANGE = 'ON_POST_CHANGE';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const SET_USER_FOLLOW = 'SET_USER_FOLLOW'
 
 let initialState = {
     posts: [
@@ -11,7 +12,8 @@ let initialState = {
         {id: 3, message: 'Right', likeCount: 15}
     ],
     newPostState: 'YOY',
-    profile: null
+    profile: null,
+    follow: true
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -36,6 +38,9 @@ const profileReducer = (state = initialState, action) => {
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
 
+        case SET_USER_FOLLOW:
+            return {...state, follow: action.follow}
+
         default:
             return state;
     }
@@ -43,7 +48,8 @@ const profileReducer = (state = initialState, action) => {
 
 export const addPostActionCreator = () => ({type: ADD_POST});
 export const onPostChangeActionCreator = (text) => ({type: ON_POST_CHANGE, newText: text});
-export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
 
 export const getUserProfile = (userId) =>
     (dispatch) => {
@@ -52,4 +58,19 @@ export const getUserProfile = (userId) =>
     })
 }
 
+export const getId = (userId=2) =>
+    (dispatch) => {
+        return usersAPI.getId().then(response => {
+            let follow;
+            let items =  response.data.items;
+            for (let i=0; i < items.length; i++) {
+                if (items[i].id == userId) {
+                    follow = items[i].followed;
+                }
+            }
+        dispatch(setUserFollow(follow));
+        })
+    }
+
 export default profileReducer;
+
