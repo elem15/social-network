@@ -54,23 +54,15 @@ const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
 export const getUserProfile = (userId) =>
     (dispatch) => {
     return usersAPI.getProfile(userId, setUserProfile).then(response => {
+        console.log(response.data);
         dispatch(setUserProfile(response.data));
     })
 }
 
-export const getId = (userId=2) =>
+export const getUserFollow = (userId=2) =>
     (dispatch) => {
-
-        return usersAPI.getCurrentPage().then(response => {
-            let follow;
-            let items = response.data.items;
-
-            for (let i=0; i < items.length; i++) {
-                if (items[i].id == userId) {
-                    follow = items[i].followed;
-                }
-            }
-        dispatch(setUserFollow(follow));
+        return usersAPI.getFollow(userId).then(response => {
+        dispatch(setUserFollow(response.data));
         })
     }
 
