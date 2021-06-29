@@ -16,7 +16,7 @@ const Users = (props) => {
         <div>
             <div> {props.isFetching ? <Preloader/> : null}</div>
             <div>
-                <div>
+                <div className={styles.listContainer}>
                     {pages.map(p => {
                         return <span className={styles.pointer}><span
                             className={props.currentPage === p && styles.selectedPage} onClick={() =>
@@ -24,7 +24,7 @@ const Users = (props) => {
                         }>{p}</span></span>
                     })}
                 </div>
-                <div>
+                <div className={styles.users}>
                     {
                         props.users.map(u => <div key={u.id}>
             <span>
@@ -44,13 +44,15 @@ const Users = (props) => {
                     }
                      </div>
             </span>
-                            <span>
+                                <span>
                  <span><div>{'u.location.city'}</div><div>{'u.location.country'}</div></span>
                 <span><div>{u.name}</div><div>{u.status}</div></span>
                 <span><div>Мой ID: {u.id}</div></span>
             </span>
-                                <div>  <hr/></div>
-                        </div>
+                                <div>
+                                    <hr/>
+                                </div>
+                            </div>
                         )
                     }
                 </div>

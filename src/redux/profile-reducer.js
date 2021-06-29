@@ -60,9 +60,11 @@ export const getUserProfile = (userId) =>
 
 export const getId = (userId=2) =>
     (dispatch) => {
-        return usersAPI.getId().then(response => {
+
+        return usersAPI.getCurrentPage().then(response => {
             let follow;
-            let items =  response.data.items;
+            let items = response.data.items;
+
             for (let i=0; i < items.length; i++) {
                 if (items[i].id == userId) {
                     follow = items[i].followed;

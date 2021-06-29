@@ -1,3 +1,17 @@
+.pointer {
+
+    cursor: pointer;
+}
+.listContainer {
+    max-width: 350px;
+    max-height: 50px;
+    margin: 10px;
+    border: 2px;
+    overflow: auto;
+}
+.users {
+    margin-left: 15px;
+}
 .userPhoto {
     height: 50px;
     width: 50px;
@@ -5,8 +19,4 @@
 .selectedPage {
     font-weight: bold;
 }
-.pointer {
-    cursor: pointer;
-}
-
 

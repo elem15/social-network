@@ -5,7 +5,7 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {'API-KEY': 'fc80d18e-ccad-4cf3-bd62-026f50314b83'},
 })
-let localCurrentPage = 1;
+let localCurrentPage = 0;
 let localPageSize = 5;
 function totalCount() {
     return instance.get(`users?page=1&count=1`).then(response => {
@@ -30,10 +30,9 @@ export const usersAPI = {
     getProfile(userId = 2) {
         return instance.get(`profile/${userId}`)
     },
-    getId() {
-        if (localCurrentPage === 1) {
+    getCurrentPage() {
+        if (localCurrentPage === 0) {
             return totalCount().then((localCurrentPage) => {
-                debugger
                 return instance.get(`users?page=${localCurrentPage}&count=${localPageSize}`)
             })
         } else {
