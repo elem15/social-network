@@ -2,6 +2,7 @@ import React from 'react';
 import DialogState from "./DialogState";
 import s from "../Dialogs.module.css";
 import {NavLink, Route} from "react-router-dom";
+import Login from "../../Login/Login";
 
 
 const DialogItem = (props) => {

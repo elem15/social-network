@@ -48,6 +48,9 @@ const Navbar = (props) => {
                             </li>
                         </ul>
                     </div>
+                    <div>
+                        <NavLink to='/Login' activeClassName={s.activeLink}>Login</NavLink>
+                    </div>
                 </nav>
 }
 

@@ -3,10 +3,11 @@ import React from 'react';
 import Message from "../Message/Message";
 
 import {connect} from "react-redux";
+import {withAuthRedirect} from "../../../HOC/withAuthRedirect";
 
 let mapStateToProps = (state) => {
     return {
-        messages: state.dialogPage.messages,
+        messages: state.dialogPage.messages
     }
 }
 let mapDispatchToProps = () => {
@@ -14,6 +15,7 @@ let mapDispatchToProps = () => {
     }
 }
 
-const MessageContainer = connect(mapStateToProps, mapDispatchToProps)(Message);
+let AuthRedirectComponent = withAuthRedirect(Message);
+const MessageContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
 
 export default MessageContainer;
