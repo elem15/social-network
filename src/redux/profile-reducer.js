@@ -54,7 +54,6 @@ const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
 export const getUserProfile = (userId) =>
     (dispatch) => {
     return usersAPI.getProfile(userId, setUserProfile).then(response => {
-        console.log(response.data);
         dispatch(setUserProfile(response.data));
     })
 }

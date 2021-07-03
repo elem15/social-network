@@ -9,6 +9,7 @@ import {
 import Users from "./Users";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import Message from "../Dialog/Message/Message";
+import {compose} from "redux";
 
 class UsersContainer extends React.Component {
 
@@ -46,11 +47,14 @@ const mapStateToProps = (state) => {
         isFetching: state.usersPage.isFetching,
         isFollowingProgress: state.usersPage.isFollowingProgress
     }
-}
+};
 
-export default withAuthRedirect(connect (mapStateToProps, {
+export default compose (
+    connect(mapStateToProps, {
         follow,
         unFollow,
         setCurrentPage,
         getUsers,
-    })(UsersContainer));
+    }),
+    withAuthRedirect
+)(UsersContainer);
