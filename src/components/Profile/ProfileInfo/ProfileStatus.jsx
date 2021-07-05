@@ -1,51 +1,62 @@
 import React from 'react';
 
-
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,
-        title: null
+        status: this.props.status,
+        queryStatus: 'Узнать статус'
     }
 
-    activateMode() {
+    activateMode = () => {
+        if (this.props.userId === 17889) {
         this.setState({
             editMode: true
-        })
+        })}
     }
 
-    inActivateMode() {
+    setNewStatus = () => {
+        return this.props.updateStatus(this.state.status)
+    }
+
+    inActivateMode = () => {
+        this.setState({
+            status: this.state.status
+        });
         this.setState({
             editMode: false
-        })
+        });
+        if (this.props.userId === 17889) {
+            this.setNewStatus();
+        }
     }
 
     onStatusChange = (e) => {
-        let text = e.target.value;
-        this.setState({
-            title: text
-        })
-    }
-
+        let text = e.currentTarget.value;
+            this.setState({
+                status: text
+            })
+        }
 
     render() {
         return (
             <div>
-                <div>Новый статус</div>
                 {!this.state.editMode &&
                 <div>
-                    <button onClick={this.activateMode.bind(this)}>{this.state.title}</button>
+                    {!this.state.status &&
+                    <button onClick={this.activateMode}>{this.state.queryStatus}</button>}
+                    {this.state.status &&
+                    <button onClick={this.activateMode}>{this.state.status}</button>}
                 </div>}
                 {this.state.editMode &&
                 <div>
                     <input autoFocus={true}
-                           onBlur={this.inActivateMode.bind(this)}
-                           defaultValue={this.props.status}
-                           onChange={this.onStatusChange.bind(this)}
-                           value={this.state.title}
+                           onBlur={this.inActivateMode}
+                           onChange={this.onStatusChange}
+                           value={this.state.status}
                     />
                 </div>}
             </div>
-        );
+        )
     }
 }
 

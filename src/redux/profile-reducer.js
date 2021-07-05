@@ -1,9 +1,10 @@
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD_POST';
 const ON_POST_CHANGE = 'ON_POST_CHANGE';
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
-const SET_USER_FOLLOW = 'SET_USER_FOLLOW'
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_FOLLOW = 'SET_USER_FOLLOW';
+const SET_USER_STATUS = 'SET_USER_STATUS';
 
 let initialState = {
     posts: [
@@ -13,7 +14,8 @@ let initialState = {
     ],
     newPostState: 'YOY',
     profile: null,
-    follow: true
+    follow: true,
+    status: ''
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -31,7 +33,7 @@ const profileReducer = (state = initialState, action) => {
                         likeCount: 17
                     }]
             };
- 
+
         case ON_POST_CHANGE:
             return {...state, newPostState: action.newText};
 
@@ -40,6 +42,9 @@ const profileReducer = (state = initialState, action) => {
 
         case SET_USER_FOLLOW:
             return {...state, follow: action.follow}
+
+        case SET_USER_STATUS:
+            return {...state, status: action.status}
 
         default:
             return state;
@@ -50,19 +55,34 @@ export const addPostActionCreator = () => ({type: ADD_POST});
 export const onPostChangeActionCreator = (text) => ({type: ON_POST_CHANGE, newText: text});
 const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
+const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
 
 export const getUserProfile = (userId) =>
     (dispatch) => {
-    return usersAPI.getProfile(userId, setUserProfile).then(response => {
-        dispatch(setUserProfile(response.data));
-    })
-}
+        return usersAPI.getProfile(userId).then(response => {
+            dispatch(setUserProfile(response.data));
+        })
+    }
 
-export const getUserFollow = (userId=2) =>
+export const getUserFollow = (userId = 2) =>
     (dispatch) => {
         return usersAPI.getFollow(userId).then(response => {
-        dispatch(setUserFollow(response.data));
+            dispatch(setUserFollow(response.data));
         })
+    }
+
+export const getStatus = (userId = 2) =>
+    (dispatch) => {
+        return profileAPI.getStatus(userId).then(response => {
+            dispatch(setUserStatus(response.data))
+        })
+    }
+
+export const updateStatus = (status) =>
+    (dispatch) => {
+        return profileAPI.updateStatus(status).then(() => {
+            dispatch(setUserStatus(status))
+            })
     }
 
 export default profileReducer;

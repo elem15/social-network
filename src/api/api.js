@@ -16,11 +16,24 @@ export const usersAPI = {
     unFollow(id) {
         return instance.delete(`follow/${id}`, {})
     },
+    getFollow(userId) {
+        return instance.get(`follow/${userId}`)
+    },
+    getProfile(userId) {
+        console.warn('Obsolete method. Use "profileAPI.getProfile"')
+        return profileAPI.getProfile(userId)
+    },
+}
+
+export const profileAPI = {
     getProfile(userId = 2) {
         return instance.get(`profile/${userId}`)
     },
-    getFollow(userId) {
-            return instance.get(`follow/${userId}`)
+    getStatus(userId) {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus(status) {
+        return instance.put(`profile/status`, {status: status})
     }
 }
 
