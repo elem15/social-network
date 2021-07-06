@@ -8,7 +8,6 @@ import {
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
-import Message from "../Dialog/Message/Message";
 import {compose} from "redux";
 
 class UsersContainer extends React.Component {

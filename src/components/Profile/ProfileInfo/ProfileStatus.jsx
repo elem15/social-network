@@ -19,14 +19,14 @@ class ProfileStatus extends React.Component {
     }
 
     inActivateMode = () => {
+        if (this.props.userId === 17889) {
         this.setState({
             status: this.state.status
         });
         this.setState({
             editMode: false
         });
-        if (this.props.userId === 17889) {
-            this.setNewStatus();
+        this.setNewStatus();
         }
     }
 
@@ -37,15 +37,22 @@ class ProfileStatus extends React.Component {
             })
         }
 
+    componentDidUpdate(prevProps, prevState, snapshot)  {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            });
+        }
+        console.log('componentDidUpdate')
+    }
+
     render() {
+        console.log('render');
         return (
             <div>
                 {!this.state.editMode &&
                 <div>
-                    {!this.state.status &&
-                    <button onClick={this.activateMode}>{this.state.queryStatus}</button>}
-                    {this.state.status &&
-                    <button onClick={this.activateMode}>{this.state.status}</button>}
+                    <button disabled={this.props.userId !== 17889} onClick={this.activateMode}>{this.state.status}</button>
                 </div>}
                 {this.state.editMode &&
                 <div>
