@@ -2,7 +2,7 @@ import {authAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_USER_LOGIN = 'SET_USER_LOGIN';
-const DELETE_USER_LOGIN = 'DELETE_USER_LOGIN';
+// const DELETE_USER_LOGIN = 'DELETE_USER_LOGIN';
 
 let initialState = {
     id: null,
@@ -28,11 +28,11 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isAuth: true
             }
-        case DELETE_USER_LOGIN:
-            return {
-                ...state,
-                isAuth: false
-            }
+        // case DELETE_USER_LOGIN:
+        //     return {
+        //         ...state,
+        //         isAuth: false
+        //     }
 
         default:
             return state;
@@ -52,7 +52,7 @@ export const ownUserName = () =>
     }
 
 const setUserLogin = () => ({type: SET_USER_LOGIN, data: {}});
-const deleteUserLogin = () => ({type: DELETE_USER_LOGIN, data: {}});
+// const deleteUserLogin = () => ({type: DELETE_USER_LOGIN, data: {}});
 
 export const userSignIn = (login, password, rememberMe) =>
     (dispatch) => {
