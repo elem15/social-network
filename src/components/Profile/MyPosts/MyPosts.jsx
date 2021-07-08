@@ -8,7 +8,7 @@ let PostForm = (props) => {
     return (
         <form onSubmit={ handleSubmit }>
             <div>
-                <Field name="post" component="input" type="text" placeholder='post'/>
+                <Field name="post" component="textarea" type="text" placeholder='Enter your message'/>
             </div>
             <div>
                 <button>Add post</button>
@@ -17,30 +17,25 @@ let PostForm = (props) => {
     )
 }
 
-PostForm = reduxForm({form: 'post'})(PostForm)
+PostForm  = reduxForm({form: 'post'})(PostForm)
 
-class MyPosts extends React.Component {
-    state = {
-        posts: this.props.posts
-    }
-    submit = values => {
-        this.props.addPost(values.post);
-        this.setState({
-            posts: this.props.posts
-        })
-    }
+const MyPosts = (props) => {
 
-        render()
-        {
+    const addPost = (post) => {
+        return props.addPost(post)
+    }
+    const submit = (values) => {
+        addPost(values.post);
+    }
             return (
                 <div className={s.items}>
                     My posts
-                    <PostForm onSubmit={this.submit}/>
+                    <PostForm onSubmit={submit}/>
                     <h3>NEW POST</h3>
-                    {this.state.posts.map(m => <Post message={m.message} likeCount={m.likeCount} />)}
+                    {props.posts.map(m => <Post message={m.message} likeCount={m.likeCount} />)}
                 </div>
             )
-        }
+
     }
 
 export default MyPosts;

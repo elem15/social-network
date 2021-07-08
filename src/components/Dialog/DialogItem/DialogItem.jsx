@@ -1,8 +1,8 @@
 import React from 'react';
-import DialogState from "./DialogState";
 import s from "../Dialogs.module.css";
 import {NavLink, Route} from "react-router-dom";
 import Login from "../../Login/Login";
+import DialogStateForm from "./DialogStateForm";
 
 
 const DialogItem = (props) => {
@@ -18,7 +18,7 @@ const DialogItem = (props) => {
          </div>
         )
     }
-        <DialogState newDialogState={props.newDialogState} name={props.dialogs[2].name} onPostChange={props.onPostChange} addDialog={props.addDialog}/>
+        <DialogStateForm newDialogState={props.newDialogState} name={props.dialogs[2].name} onPostChange={props.onPostChange} addDialog={props.addDialog}/>
     </div>
 
 }

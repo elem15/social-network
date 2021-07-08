@@ -1,7 +1,6 @@
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD_POST';
-const ON_POST_CHANGE = 'ON_POST_CHANGE';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_FOLLOW = 'SET_USER_FOLLOW';
 const SET_USER_STATUS = 'SET_USER_STATUS';
@@ -25,7 +24,7 @@ const profileReducer = (state = initialState, action) => {
             let countId = state.posts.length + 1;
 
             return {
-                ...state, newPostState: '',
+                ...state,
                 posts: [...state.posts,
                     {
                         id: countId,
@@ -33,9 +32,6 @@ const profileReducer = (state = initialState, action) => {
                         likeCount: 17
                     }]
             };
-
-        case ON_POST_CHANGE:
-            return {...state, newPostState: action.newText};
 
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
@@ -52,7 +48,6 @@ const profileReducer = (state = initialState, action) => {
 }
 
 export const addPostActionCreator = (text) => ({type: ADD_POST, text});
-export const onPostChangeActionCreator = (text) => ({type: ON_POST_CHANGE, newText: text});
 const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
 const setUserStatus = (status) => ({type: SET_USER_STATUS, status})

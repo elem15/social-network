@@ -24,8 +24,6 @@ class ProfileContainer extends React.Component {
     }
 }
 
-
-
 let mapStateToProps = (state) => ({
     profile: state.postPage.profile,
     follow: state.postPage.follow,
