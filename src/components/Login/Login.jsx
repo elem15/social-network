@@ -5,23 +5,25 @@ import {userSignIn, userSignOut} from "../../redux/auth-reducer";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
+import {renderInput} from "../Common/InputField/FormsControls";
+import {maxLength33, required} from "../../utils/validators";
 
 let LoginForm = (props) => {
-    const { handleSubmit } = props
+    const { handleSubmit, submitting } = props
     return (
         <div>
             <form onSubmit={ handleSubmit }>
                 <div>
-                    <Field name="login" component="input" type="text" placeholder='login'/>
+                    <Field name="email" type="email" label="Email" component={renderInput} validate={[required, maxLength33]}/>
                 </div>
                 <div>
-                    <Field name="password" component="input" type="text" placeholder='password'/>
+                    <Field name="password" type="text" label="password" component={renderInput} validate={[required, maxLength33]}/>
                 </div>
                 <div>
-                    <Field name="rememberMe" component="input" type="checkbox"/> Remember Me
+                    <Field name="rememberMe" component='input' type="checkbox"/> Remember Me
                 </div>
                 <div>
-                    <button>Sign in</button>
+                    <button type="submit" disabled={submitting}>Sign in</button>
                 </div>
             </form>
         </div>
@@ -45,10 +47,10 @@ ExitForm = reduxForm({form: 'exit'})(ExitForm)
 
 class Login extends React.Component {
     submit = values => {
-        this.props.userSignIn(values.login, values.password, values.rememberMe)
+        this.props.userSignIn(values.email, values.password, values.rememberMe)
     }
     unSubmit = () => {
-       userSignOut()
+        this.props.userSignOut()
     }
 
     render() {
