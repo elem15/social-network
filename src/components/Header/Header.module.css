@@ -10,6 +10,8 @@
   .loginBlock {
       margin-left: 500px;
       margin-bottom: 30px;
+      text-align: right;
+
   }
   .loginBlock a {
       color: white;

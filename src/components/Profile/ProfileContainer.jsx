@@ -10,9 +10,11 @@ import {compose} from "redux";
 class ProfileContainer extends React.Component {
 
     componentDidMount() {
-        this.props.getUserProfile(this.props.match.params.userId);
-        this.props.getUserFollow(this.props.match.params.userId)
-        this.props.getStatus(this.props.match.params.userId)
+        let userId = this.props.match.params.userId;
+
+        this.props.getUserProfile(userId);
+        this.props.getUserFollow(userId);
+        this.props.getStatus(userId);
     }
 
     render() {
@@ -33,6 +35,6 @@ let mapStateToProps = (state) => ({
 export default compose (
     connect(mapStateToProps, {getUserProfile, getUserFollow, getStatus, updateStatus}),
     withRouter,
-    withAuthRedirect
+    // withAuthRedirect
 )
 (ProfileContainer)

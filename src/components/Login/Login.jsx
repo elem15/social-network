@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {renderInput} from "../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../utils/validators";
+import {Redirect} from "react-router-dom";
 
 let LoginForm = (props) => {
     const { handleSubmit, submitting } = props
@@ -17,7 +18,10 @@ let LoginForm = (props) => {
                     <Field name="email" type="email" label="Email" component={renderInput} validate={[required, maxLength33]}/>
                 </div>
                 <div>
-                    <Field name="password" type="text" label="password" component={renderInput} validate={[required, maxLength33]}/>
+                    <Field name="password" type="password" label="password" component={renderInput} validate={[required, maxLength33]}/>
+                </div>
+                <div>
+                    <Field name="captcha" type="text" label="AntiBot" component={renderInput}/>
                 </div>
                 <div>
                     <Field name="rememberMe" component='input' type="checkbox"/> Remember Me
@@ -47,25 +51,34 @@ ExitForm = reduxForm({form: 'exit'})(ExitForm)
 
 class Login extends React.Component {
     submit = values => {
-        this.props.userSignIn(values.email, values.password, values.rememberMe)
+        this.props.userSignIn(values.email, values.password, values.rememberMe, values.captcha)
+
     }
     unSubmit = () => {
         this.props.userSignOut()
     }
 
+
     render() {
+        if (this.props.isAuth) {
+            return <Redirect to={'/Profile'}/>
+        }
         return (
             <div>
                 <h1>Login</h1>
                 <LoginForm onSubmit={this.submit}/>
                 <ExitForm onSubmit={this.unSubmit}/>
+                <div>{this.props.serverMessage}</div>
+                <div><img src={this.props.captchaURL} alt=""/></div>
             </div>)
     }
 }
 
 const mapStateToProps = (state) =>{
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaURL: state.auth.captchaURL,
+        serverMessage: state.auth.serverMessage
     }
 }
 

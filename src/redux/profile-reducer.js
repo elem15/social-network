@@ -66,7 +66,7 @@ export const getUserFollow = (userId = 2) =>
         })
     }
 
-export const getStatus = (userId = 2) =>
+export const getStatus = (userId = 17889) =>
     (dispatch) => {
         return profileAPI.getStatus(userId).then(response => {
             dispatch(setUserStatus(response.data))

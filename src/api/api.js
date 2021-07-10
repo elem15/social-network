@@ -22,7 +22,7 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userId = 2) {
+    getProfile(userId = 17889) {
         return instance.get(`profile/${userId}`)
     },
     getStatus(userId) {
@@ -37,10 +37,13 @@ export const authAPI = {
     me() {
         return instance.get(`auth/me`)
     },
-    login(email, password, rememberMe) {
-        return instance.post(`auth/login`, {email, password, rememberMe})
+    login(email, password, rememberMe=false, captcha) {
+        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
     },
     exit() {
-        return instance.delete(`auth/login`, {})
+        return instance.delete(`auth/login`)
+    },
+    captcha() {
+        return instance.get(`security/get-captcha-url`)
     }
 }
