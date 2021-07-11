@@ -1,11 +1,8 @@
 import React from "react";
-import styles from './Login.module.css';
 import s from '../../components/Common/InputField/FormsContorls.module.css'
 import {Field, reduxForm} from 'redux-form'
 import {userSignIn, userSignOut} from "../../redux/auth-reducer";
-import {compose} from "redux";
 import {connect} from "react-redux";
-import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {renderInput} from "../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../utils/validators";
 import {Redirect} from "react-router-dom";
@@ -70,7 +67,6 @@ class Login extends React.Component {
                 <h1>Login</h1>
                 <LoginForm onSubmit={this.submit}/>
                 <ExitForm onSubmit={this.unSubmit}/>
-                {/*<div>{this.props.serverMessage}</div>*/}
                 <div><img src={this.props.captchaURL} alt=""/></div>
             </div>)
     }

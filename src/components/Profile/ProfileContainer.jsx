@@ -11,18 +11,19 @@ import {ownUserName} from "../../redux/auth-reducer";
 class ProfileContainer extends React.Component {
 
     componentDidMount() {
-        this.props.ownUserName().then(()=> {
-
         let userId = this.props.match.params.userId;
         if (!userId && this.props.isAuth) {
-            userId = this.props.id
+            userId = this.props.id;
+            if (!userId) {
+                this.props.history.push('/Login')
+            }
         }
         this.props.getUserProfile(userId);
         this.props.getUserFollow(userId);
-        this.props.getStatus(userId);})
+        this.props.getStatus(userId);
     }
 
-    render() {
+        render() {
 
         return (
             <Profile {...this.props} profile={this.props.profile}
@@ -43,6 +44,6 @@ export default compose (
     connect(mapStateToProps, {ownUserName, getUserProfile,
         getUserFollow, getStatus, updateStatus}),
     withRouter,
-    withAuthRedirect
+    // withAuthRedirect
 )
 (ProfileContainer)
