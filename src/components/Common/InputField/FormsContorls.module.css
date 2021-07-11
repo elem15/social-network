@@ -6,3 +6,8 @@
     font-size: 12px;
     line-height: 10px;
 }
+.formSummaryError {
+    color: red;
+    border: red 3px solid;
+    padding: 1px;
+}

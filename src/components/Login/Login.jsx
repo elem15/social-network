@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './Login.module.css';
+import s from '../../components/Common/InputField/FormsContorls.module.css'
 import {Field, reduxForm} from 'redux-form'
 import {userSignIn, userSignOut} from "../../redux/auth-reducer";
 import {compose} from "redux";
@@ -10,7 +11,7 @@ import {maxLength33, required} from "../../utils/validators";
 import {Redirect} from "react-router-dom";
 
 let LoginForm = (props) => {
-    const { handleSubmit, submitting } = props
+    const { handleSubmit, submitting, error } = props
     return (
         <div>
             <form onSubmit={ handleSubmit }>
@@ -26,6 +27,7 @@ let LoginForm = (props) => {
                 <div>
                     <Field name="rememberMe" component='input' type="checkbox"/> Remember Me
                 </div>
+                {error && <span className={s.formSummaryError}>{error}</span>}
                 <div>
                     <button type="submit" disabled={submitting}>Sign in</button>
                 </div>
@@ -68,7 +70,7 @@ class Login extends React.Component {
                 <h1>Login</h1>
                 <LoginForm onSubmit={this.submit}/>
                 <ExitForm onSubmit={this.unSubmit}/>
-                <div>{this.props.serverMessage}</div>
+                {/*<div>{this.props.serverMessage}</div>*/}
                 <div><img src={this.props.captchaURL} alt=""/></div>
             </div>)
     }

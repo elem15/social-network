@@ -59,14 +59,14 @@ export const getUserProfile = (userId) =>
         })
     }
 
-export const getUserFollow = (userId = 2) =>
+export const getUserFollow = (userId) =>
     (dispatch) => {
         return usersAPI.getFollow(userId).then(response => {
             dispatch(setUserFollow(response.data));
         })
     }
 
-export const getStatus = (userId = 17889) =>
+export const getStatus = (userId) =>
     (dispatch) => {
         return profileAPI.getStatus(userId).then(response => {
             dispatch(setUserStatus(response.data))
