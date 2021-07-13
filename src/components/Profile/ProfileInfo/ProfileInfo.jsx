@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png";
 import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -18,7 +19,7 @@ const ProfileInfo = (props) => {
                             ? props.profile.photos.small
                             : userPhoto}/>
                     </div>
-                    <ProfileStatus userId={props.profile.userId} id={props.id}
+                    <ProfileStatusWithHooks userId={props.profile.userId} id={props.id}
                                    status={props.status} updateStatus={props.updateStatus}/>
                     <div>{props.profile.fullName}</div>
                     <div>Обо мне: {props.profile.aboutMe}</div>
