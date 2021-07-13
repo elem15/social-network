@@ -8,7 +8,7 @@ class ProfileStatus extends React.Component {
     }
 
     activateMode = () => {
-        if (this.props.userId === 17889) {
+        if (this.props.userId === this.props.id) {
         this.setState({
             editMode: true
         })}
@@ -19,7 +19,7 @@ class ProfileStatus extends React.Component {
     }
 
     inActivateMode = () => {
-        if (this.props.userId === 17889) {
+        if (this.props.userId === this.props.id) {
         this.setState({
             status: this.state.status
         });
@@ -46,11 +46,13 @@ class ProfileStatus extends React.Component {
     }
 
     render() {
+       
         return (
             <div>
+                <div>status:</div>
                 {!this.state.editMode &&
                 <div>
-                    <button disabled={this.props.userId !== 17889} onClick={this.activateMode}>{this.state.status}</button>
+                    <button disabled={this.props.userId !== this.props.id} onClick={this.activateMode}>{this.state.status}</button>
                 </div>}
                 {this.state.editMode &&
                 <div>

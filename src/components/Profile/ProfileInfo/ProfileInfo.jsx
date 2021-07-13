@@ -9,6 +9,7 @@ const ProfileInfo = (props) => {
         return <Preloader/>
     }
     else {
+
         return (
             <div>
                 <div className={s.descriptionBlock}>
@@ -17,7 +18,7 @@ const ProfileInfo = (props) => {
                             ? props.profile.photos.small
                             : userPhoto}/>
                     </div>
-                    <ProfileStatus userId={props.profile.userId}
+                    <ProfileStatus userId={props.profile.userId} id={props.id}
                                    status={props.status} updateStatus={props.updateStatus}/>
                     <div>{props.profile.fullName}</div>
                     <div>Обо мне: {props.profile.aboutMe}</div>
