@@ -81,4 +81,3 @@ export const updateStatus = (status) =>
     }
 
 export default profileReducer;
-

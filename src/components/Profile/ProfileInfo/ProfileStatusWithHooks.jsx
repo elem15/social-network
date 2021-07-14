@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const ProfileStatusWithHooks = (props) => {
 
@@ -7,6 +7,10 @@ const ProfileStatusWithHooks = (props) => {
 
     let [status, setStatus] = useState(props.status);
     let onStatusChange = e => setStatus(e.currentTarget.value);
+
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
 
     let inActivateMode = () => {
         if (props.userId === props.id) {
