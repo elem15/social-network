@@ -18,8 +18,9 @@ const Users = (props) => {
             <div>
                 <div className={styles.listContainer}>
                     {pages.map(p => {
-                        return <span className={styles.pointer}><span
-                            className={props.currentPage === p && styles.selectedPage} onClick={() =>
+                        let selectedPage = props.currentPage === p ? styles.selectedPage : styles.unSelectedPage;
+                        return <span className={styles.pointer} key={p}><span
+                            className={selectedPage} onClick={() =>
                             props.onPageChanged(p)
                         }>{p}</span></span>
                     })}

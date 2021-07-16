@@ -5,7 +5,8 @@ import {Field, reduxForm} from "redux-form";
 import {renderField} from "../../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../../utils/validators";
 
-let PostForm = (props) => {
+let PostForm = props => {
+
     const { handleSubmit } = props;
     return (
         <form onSubmit={ handleSubmit }>
@@ -25,7 +26,7 @@ let PostForm = (props) => {
 
 PostForm  = reduxForm({form: 'post'})(PostForm)
 
-const MyPosts = (props) => {
+const MyPosts = props => {
 
     const addPost = (post) => {
         return props.addPost(post)
@@ -38,7 +39,7 @@ const MyPosts = (props) => {
                     My posts
                     <PostForm onSubmit={submit}/>
                     <h3>NEW POST</h3>
-                    {props.posts.map(m => <Post message={m.message} likeCount={m.likeCount} />)}
+                    {[...props.posts].reverse().map(m => <Post message={m.message} likeCount={m.likeCount} key={m.id}/>)}
                 </div>
             )
 
