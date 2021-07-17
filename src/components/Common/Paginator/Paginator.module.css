@@ -1,0 +1,11 @@
+.pointer {
+    padding-right: 3px;
+    cursor: pointer;
+}
+.selectedPage {
+    font-weight: bold;
+}
+.unSelectedPage {
+    font-weight: normal;
+}
+

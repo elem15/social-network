@@ -7,8 +7,7 @@ import {renderInput} from "../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../utils/validators";
 import {Redirect} from "react-router-dom";
 
-let LoginForm = (props) => {
-    const { handleSubmit, submitting, error } = props
+let LoginForm = ({ handleSubmit, submitting, error }) => {
     return (
         <div>
             <form onSubmit={ handleSubmit }>
@@ -32,8 +31,7 @@ let LoginForm = (props) => {
         </div>
     )
 }
-let ExitForm = (props) => {
-    const { handleSubmit } = props
+let ExitForm = ({ handleSubmit }) => {
     return (
         <div>
             <form onSubmit={ handleSubmit }>

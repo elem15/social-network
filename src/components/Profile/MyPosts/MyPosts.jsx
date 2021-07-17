@@ -42,7 +42,6 @@ const MyPosts = props => {
                     {[...props.posts].reverse().map(m => <Post message={m.message} likeCount={m.likeCount} key={m.id}/>)}
                 </div>
             )
-
     }
 
 export default MyPosts;

@@ -7,7 +7,7 @@ import {
     requestUsers,
 } from "../../redux/users-reducer";
 import Users from "./Users";
-import {withAuthRedirect} from "../../HOC/withAuthRedirect";
+// import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import {
     getCurrentPage,
@@ -15,32 +15,34 @@ import {
     getIsFollowingProgress,
     getPageSize,
     getTotalUsersCount,
-    getUsers, selectUsers
+    selectUsers
 } from "../../redux/users-selectors";
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
+        const {requestUsers, currentPage, pageSize} = this.props;
+        requestUsers(currentPage, pageSize);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.requestUsers(pageNumber, this.props.pageSize);
+        const {requestUsers, pageSize} = this.props;
+        requestUsers(pageNumber, pageSize);
     }
 
     render() {
         return <>
             <Users totalUsersCount={this.props.totalUsersCount}
-                      pageSize={this.props.pageSize}
-                      currentPage={this.props.currentPage}
-                      onPageChanged={this.onPageChanged}
-                      users={this.props.users}
-                      follow={this.props.follow}
-                      unFollow={this.props.unFollow}
-                      isFetching={this.props.isFetching}
-                      isFollowingProgress={this.props.isFollowingProgress}
-                      toggleIsFetching={this.props.toggleIsFetching}
-        />
+                   pageSize={this.props.pageSize}
+                   currentPage={this.props.currentPage}
+                   onPageChanged={this.onPageChanged}
+                   users={this.props.users}
+                   follow={this.props.follow}
+                   unFollow={this.props.unFollow}
+                   isFetching={this.props.isFetching}
+                   isFollowingProgress={this.props.isFollowingProgress}
+                   toggleIsFetching={this.props.toggleIsFetching}
+            />
         </>
     }
 }
@@ -66,7 +68,7 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default compose (
+export default compose(
     connect(mapStateToProps, {
         follow,
         unFollow,

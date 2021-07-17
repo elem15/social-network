@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import React from 'react';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './App.css';
@@ -16,7 +15,6 @@ import {connect, Provider} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {compose} from "redux";
 import {getInitialization} from "./redux/app-reducer";
-import store from "./redux/redux-store";
 
 class App extends React.Component {
 

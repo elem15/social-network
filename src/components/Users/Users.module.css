@@ -1,7 +1,3 @@
-.pointer {
-    padding-right: 3px;
-    cursor: pointer;
-}
 .listContainer {
     max-width: 350px;
     max-height: 50px;
@@ -16,10 +12,3 @@
     height: 50px;
     width: 50px;
 }
-.selectedPage {
-    font-weight: bold;
-}
-.unSelectedPage {
-    font-weight: normal;
-}
-
