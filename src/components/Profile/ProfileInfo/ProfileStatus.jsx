@@ -52,7 +52,8 @@ class ProfileStatus extends React.Component {
                 <div>status:</div>
                 {!this.state.editMode &&
                 <div>
-                    <button disabled={this.props.userId !== this.props.id} onClick={this.activateMode}>{this.state.status}</button>
+                    <button disabled={this.props.userId !== this.props.id} onClick={this.activateMode}>
+                        {this.state.status} || '-------' </button>
                 </div>}
                 {this.state.editMode &&
                 <div>
