@@ -13,7 +13,7 @@ const Users = ({
         <div>
             <div> {isFetching ? <Preloader/> : null}</div>
             <div>
-                <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize}
+                <Paginator totalItemCount={totalUsersCount} pageSize={pageSize}
                            currentPage={currentPage} onPageChanged={onPageChanged}/>
 
                 <div className={styles.users}>
