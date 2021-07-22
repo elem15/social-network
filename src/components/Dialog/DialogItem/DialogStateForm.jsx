@@ -1,8 +1,9 @@
 import React from 'react';
 import s from '../Dialogs.module.css';
-import {Field, reduxForm} from "redux-form";
+import {Field, reset, reduxForm} from "redux-form";
 import {required, maxLength15} from '../../../utils/validators'
 import {renderField} from "../../Common/InputField/FormsControls";
+
 const DialogState = (props) => {
 
     let addDialog = (newMessageBody) => {
@@ -30,8 +31,10 @@ let DialogStateForm = (props) => {
         </div>
     </form>
 }
+const afterSubmit = (result, dispatch) =>
+    dispatch(reset('dialogAddMessageForm'));
 
-
-DialogStateForm  = reduxForm({form: 'dialogAddMessageForm'})(DialogStateForm)
+DialogStateForm  = reduxForm({form: 'dialogAddMessageForm', onSubmitSuccess: afterSubmit
+})(DialogStateForm)
 
 export default DialogState;

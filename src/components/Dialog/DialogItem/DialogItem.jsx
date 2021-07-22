@@ -1,13 +1,12 @@
 import React from 'react';
 import s from "../Dialogs.module.css";
 import {NavLink, Route} from "react-router-dom";
-import Login from "../../Login/Login";
 import DialogStateForm from "./DialogStateForm";
 
 
 const DialogItem = (props) => {
 
-    return <div> {
+    return <div className={s.dialogContent}> {
      props.dialogs.map(d => <div  key={d.id}>
 
          <div className={s.item + ' ' + s.active}>
