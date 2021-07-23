@@ -17,7 +17,7 @@
     font-weight: normal;
     color: cornflowerblue;
     border: 1px solid gray;
-    border-radius: 20%;
+    border-radius: 5px;
     margin: 3px;
     padding: 0 3px;
     cursor: pointer;
@@ -26,11 +26,18 @@
 }
 .unSelectedPage:hover {
     color: darkslateblue;
-    box-shadow: darkslateblue;
+    background-color: green;
+    vertical-align: unset;
+    transition: .5s;
 }
-button {
+.unSelectedPage::selection {
+    background-color: green;
+    transition: .2s;
+
+}
+.listContainer button {
    margin: 0 3px 0px 3px;
-   border-radius: 20%;
+   border-radius: 15px;
    cursor: pointer;
 }
 
