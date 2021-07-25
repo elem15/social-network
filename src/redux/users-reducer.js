@@ -92,18 +92,17 @@ export const requestUsers = (currentPage, pageSize) =>
         dispatch(setCurrentPage(currentPage));
         dispatch(toggleIsFetching(true));
         const response = await usersAPI.requestUsers(currentPage, pageSize);
-        dispatch(toggleIsFetching(false));
-        dispatch(setUsers(response.data.items));
-        dispatch(setTotalUsersCount(response.data.totalCount));
-    };
-
+        if (response.data !== 0) {
+            dispatch(toggleIsFetching(false));
+            dispatch(setUsers(response.data.items));
+            dispatch(setTotalUsersCount(response.data.totalCount));
+        }
+    }
 const combineFollowUnfollow = async (dispatch, userId, following, followingSuccess) => {
     dispatch(toggleIsFollowingProgress(true, userId));
     let response = await following(userId);
-    if (response.data.resultCode === 0) {
         dispatch(followingSuccess(userId))
-    }
-    dispatch(toggleIsFollowingProgress(false, userId));
+        dispatch(toggleIsFollowingProgress(false, userId));
 }
 
 export const unFollow = (userId) => {

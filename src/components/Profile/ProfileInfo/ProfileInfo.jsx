@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import arrow from '../../../assets/images/add.svg'
 
 const ProfileInfo = (props) => {
     const onMainPhotoSelected = (e) => {
@@ -19,22 +20,33 @@ const ProfileInfo = (props) => {
         return (
             <div>
                 <div className={s.descriptionBlock}>
+                    <div className={s.fullName}>{props.profile.fullName}</div>
                     <div>
                         <img className={s.avatar} src={props.profile.photos.small || userPhoto}/>
                     </div>
-                    {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/> }
+                    {props.isOwner &&
+                    <div class={s.inputWrapper}>
+                    <input type={'file'} id={'input__file'} className={s.inputFile} onChange={onMainPhotoSelected}/>
+                        <label htmlFor={"input__file"} className={s.inputFileButton}>
+                        <span className={s.inputFileIconWrapper}>
+                            <img className={s.inputFileIcon} src={arrow} width="25" />
+                            </span>
+                        <span className={s.inputFileButtonText}>Download your photo</span>
+                        </label>
+                    </div>}
+                    <br/>
                     <ProfileStatusWithHooks userId={props.profile.userId} id={props.id}
                                    status={props.status} updateStatus={props.updateStatus}/>
-                    <div>{props.profile.fullName}</div>
-                    <div>Обо мне: {props.profile.aboutMe}</div>
+
+                    <div>About me: {props.profile.aboutMe}</div>
                     <div>Мой id: {props.profile.userId}</div>
-                    <div>{props.profile.lookingForAJob ? <span>У меня есть работа!</span> : <span>Я ищу работу!</span>}</div>
+                    <div>{props.profile.lookingForAJob ? <span>I have a job</span> : <span>I am looking for a job </span>}</div>
                     <div><a href="https://github.com">Мой GITHUB</a></div>
                     <div><br/> </div>
                     <div><br/>  </div>
                     <div>{ props.follow
-                    ? <span>Подписан на {props.profile.fullName}</span>
-                    : <span>Не подписан на {props.profile.fullName}</span> }
+                    ? <span>Subscribed {props.profile.fullName}</span>
+                    : <span>You can subscribe on Users Page to {props.profile.fullName}</span> }
                     </div>
                 </div>
             </div>

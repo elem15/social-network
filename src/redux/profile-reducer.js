@@ -83,19 +83,21 @@ export const savePhoto = (photoFile) =>
 export const getUserFollow = (userId) =>
     async (dispatch) => {
         let response = await usersAPI.getFollow(userId);
-        dispatch(setUserFollow(response.data));
+            dispatch(setUserFollow(response.data));
     }
 
 export const getStatus = (userId) =>
     async (dispatch) => {
         let response = await profileAPI.getStatus(userId);
-        dispatch(setUserStatus(response.data))
+        if (response.data !== null) {
+            dispatch(setUserStatus(response.data))
+        }
     }
-
 export const updateStatus = (status) =>
     async (dispatch) => {
-        await profileAPI.updateStatus(status);
-        dispatch(setUserStatus(status))
+        let response = await profileAPI.updateStatus(status);
+        if (response.data.resultCode === 0) {
+            dispatch(setUserStatus(status))
+        }
     }
-
 export default profileReducer;

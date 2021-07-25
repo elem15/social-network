@@ -1,7 +1,69 @@
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 160px;
+  height: 160px;
 }
 .descriptionBlock {
   padding: 10px;
+}
+
+.fullName {
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.inputWrapper {
+  width: 100%;
+  position: relative;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.inputFile {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.inputFileIconWrapper {
+  height: 40px;
+  width: 40px;
+  margin-right: 3px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-right: 1px solid #fff;
+}
+
+.inputFileButtonText {
+  line-height: 1;
+  margin-top: 1px;
+}
+
+.inputFileButton {
+  width: 100%;
+  max-width: 160px;
+  height: 40px;
+  background: #1bbc9b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0;
 }
