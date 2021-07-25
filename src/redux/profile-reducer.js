@@ -6,6 +6,7 @@ const SET_USER_FOLLOW = 'social_network/profile/SET_USER_FOLLOW';
 const SET_USER_STATUS = 'social_network/profile/SET_USER_STATUS';
 const DELETE_POST = 'social_network/profile/DELETE_POST';
 const SET_USER_PHOTO_SUCCESS = 'social_network/profile/SET_USER_PHOTO_SUCCESS';
+const UPDATE_USER_PROFILE = 'social_network/profile/UPDATE_USER_PROFILE';
 
 let initialState = {
     posts: [
@@ -31,7 +32,7 @@ const profileReducer = (state = initialState, action) => {
                     {
                         id: countId,
                         message: action.text,
-                        likeCount: 17
+                        likeCount: 17+countId
                     }]
             };
 
@@ -46,6 +47,10 @@ const profileReducer = (state = initialState, action) => {
 
         case SET_USER_PHOTO_SUCCESS:
             return {...state, profile: {...state.profile, photos: action.photos}}
+
+        case UPDATE_USER_PROFILE:
+            return {...state, profile: {...state.profile,
+                    lookingForAJobDescription: action.lookingForAJobDescription}}
 
         case SET_USER_FOLLOW:
             return {...state, follow: action.follow}
@@ -65,6 +70,7 @@ const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
 const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
 const setUserPhotoSuccess = (photos) => ({type: SET_USER_PHOTO_SUCCESS, photos})
+const updateUserProfile = (lookingForAJobDescription) => ({type: UPDATE_USER_PROFILE, lookingForAJobDescription})
 
 export const getUserProfile = (userId) =>
     async (dispatch) => {
@@ -89,15 +95,20 @@ export const getUserFollow = (userId) =>
 export const getStatus = (userId) =>
     async (dispatch) => {
         let response = await profileAPI.getStatus(userId);
-        if (response.data !== null) {
             dispatch(setUserStatus(response.data))
-        }
     }
 export const updateStatus = (status) =>
     async (dispatch) => {
         let response = await profileAPI.updateStatus(status);
         if (response.data.resultCode === 0) {
             dispatch(setUserStatus(status))
+        }
+    }
+export const updateProfile = (lookingForAJobDescription) =>
+    async (dispatch) => {
+        let response = await profileAPI.updateProfile(lookingForAJobDescription);
+        if (response.data.resultCode === 0) {
+            dispatch(updateUserProfile(lookingForAJobDescription))
         }
     }
 export default profileReducer;

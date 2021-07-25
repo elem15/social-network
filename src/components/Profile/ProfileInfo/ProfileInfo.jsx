@@ -4,6 +4,7 @@ import Preloader from "../../Common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import arrow from '../../../assets/images/add.svg'
+import ProfileUpdateWithHooks from "./ProfileUpdateWithHooks";
 
 const ProfileInfo = (props) => {
     const onMainPhotoSelected = (e) => {
@@ -22,7 +23,7 @@ const ProfileInfo = (props) => {
                 <div className={s.descriptionBlock}>
                     <div className={s.fullName}>{props.profile.fullName}</div>
                     <div>
-                        <img className={s.avatar} src={props.profile.photos.small || userPhoto}/>
+                        <img className={s.avatar} src={props.profile.photos.large || userPhoto}/>
                     </div>
                     {props.isOwner &&
                     <div class={s.inputWrapper}>
@@ -37,6 +38,10 @@ const ProfileInfo = (props) => {
                     <br/>
                     <ProfileStatusWithHooks userId={props.profile.userId} id={props.id}
                                    status={props.status} updateStatus={props.updateStatus}/>
+                    <ProfileUpdateWithHooks userId={props.profile.userId} id={props.id}
+                                            aboutMe={props.profile.aboutMe} updateProfile={props.updateProfile}
+                                            lookingForAJobDescription={props.profile.lookingForAJobDescription}
+                    />
 
                     <div>About me: {props.profile.aboutMe}</div>
                     <div>Мой id: {props.profile.userId}</div>

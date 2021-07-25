@@ -31,6 +31,9 @@ export const profileAPI = {
     updateStatus(status) {
         return instance.put(`profile/status`, {status: status})
     },
+    updateProfile(AboutMe = 'AboutMe', FullName = 'FullName',  lookingForAJobDescription = 'Js') {
+        return instance.put(`profile`, {AboutMe, FullName, lookingForAJobDescription})
+    },
     uploadPhoto(photo) {
         const formData = new FormData();
         formData.append("image", photo);
