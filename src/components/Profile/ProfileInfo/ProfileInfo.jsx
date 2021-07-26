@@ -38,9 +38,8 @@ const ProfileInfo = (props) => {
                     <br/>
                     <ProfileStatusWithHooks userId={props.profile.userId} id={props.id}
                                    status={props.status} updateStatus={props.updateStatus}/>
-                    <ProfileUpdateWithHooks userId={props.profile.userId} id={props.id}
-                                            aboutMe={props.profile.aboutMe} updateProfile={props.updateProfile}
-                                            lookingForAJobDescription={props.profile.lookingForAJobDescription}
+                    <ProfileUpdateWithHooks profile={props.profile} id={props.id}
+                                            updateProfile={props.updateProfile}
                     />
 
                     <div>About me: {props.profile.aboutMe}</div>

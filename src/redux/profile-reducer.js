@@ -49,8 +49,7 @@ const profileReducer = (state = initialState, action) => {
             return {...state, profile: {...state.profile, photos: action.photos}}
 
         case UPDATE_USER_PROFILE:
-            return {...state, profile: {...state.profile,
-                    lookingForAJobDescription: action.lookingForAJobDescription}}
+            return {...state, profile: action.profile}
 
         case SET_USER_FOLLOW:
             return {...state, follow: action.follow}
@@ -70,7 +69,7 @@ const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
 const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
 const setUserPhotoSuccess = (photos) => ({type: SET_USER_PHOTO_SUCCESS, photos})
-const updateUserProfile = (lookingForAJobDescription) => ({type: UPDATE_USER_PROFILE, lookingForAJobDescription})
+const updateUserProfile = (profile) => ({type: UPDATE_USER_PROFILE, profile})
 
 export const getUserProfile = (userId) =>
     async (dispatch) => {
@@ -104,11 +103,11 @@ export const updateStatus = (status) =>
             dispatch(setUserStatus(status))
         }
     }
-export const updateProfile = (lookingForAJobDescription) =>
+export const updateProfile = (profile) =>
     async (dispatch) => {
-        let response = await profileAPI.updateProfile(lookingForAJobDescription);
+        let response = await profileAPI.updateProfile(profile);
         if (response.data.resultCode === 0) {
-            dispatch(updateUserProfile(lookingForAJobDescription))
+            dispatch(updateUserProfile(profile))
         }
     }
 export default profileReducer;
