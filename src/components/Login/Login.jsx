@@ -7,7 +7,7 @@ import {renderInput} from "../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../utils/validators";
 import {Redirect} from "react-router-dom";
 
-let LoginForm = ({ handleSubmit, submitting, error }) => {
+let LoginForm = ({ handleSubmit, submitting, error, captchaURL }) => {
     return (
         <div>
             <form onSubmit={ handleSubmit }>
@@ -17,8 +17,8 @@ let LoginForm = ({ handleSubmit, submitting, error }) => {
                 <div>
                     <Field name="password" type="password" label="password" component={renderInput} validate={[required, maxLength33]}/>
                 </div>
-                <div>
-                    <Field name="captcha" type="text" label="AntiBot" component={renderInput}/>
+                <div>{captchaURL &&
+                    <Field name="captcha" type="text" label="AntiBot" component={renderInput}/>}
                 </div>
                 <div>
                     <Field name="rememberMe" component='input' type="checkbox"/> Remember Me
@@ -63,7 +63,7 @@ class Login extends React.Component {
         return (
             <div>
                 <h1>Login</h1>
-                <LoginForm onSubmit={this.submit}/>
+                <LoginForm onSubmit={this.submit} captchaURL={this.props.captchaURL}/>
                 <ExitForm onSubmit={this.unSubmit}/>
                 <div><img src={this.props.captchaURL} alt=""/></div>
             </div>)

@@ -103,11 +103,11 @@ export const updateStatus = (status) =>
             dispatch(setUserStatus(status))
         }
     }
-export const updateProfile = (profile) =>
+export const updateProfile = (profile, userId) =>
     async (dispatch) => {
         let response = await profileAPI.updateProfile(profile);
         if (response.data.resultCode === 0) {
-            dispatch(updateUserProfile(profile))
+            dispatch(getUserProfile(userId))
         }
     }
 export default profileReducer;

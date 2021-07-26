@@ -26,7 +26,7 @@ const ProfileUpdateWithHooks = (props) => {
 
     return (
         <div>
-            <div>Looking For A Job Description:</div>
+            <div><b>Looking for a job description:</b></div>
             {!editMode &&
             <div>
                 <button disabled={props.profile.userId !== props.id} onClick={activateEditMode}>
