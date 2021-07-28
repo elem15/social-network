@@ -6,6 +6,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import arrow from '../../../assets/images/add.svg'
 import ProfileDataForm from "./ProfileDataForm";
 import ProfileDataReduxForm from "./ProfileDataForm";
+import Follow from "../../Common/Follow/Follow";
 
 const ProfileInfo = (props) => {
     const onMainPhotoSelected = (e) => {
@@ -15,6 +16,22 @@ const ProfileInfo = (props) => {
     }
 
     const [editMode, setEditMode] = useState(false);
+
+    const [followed, setFollow] = useState(props.followed);
+
+    const follow = (userId) => {
+        props.follow(userId);
+        setFollow(true);
+    }
+
+    const unFollow = (userId) => {
+        props.unFollow(userId);
+        setFollow(false);
+    }
+
+    useEffect(() => {
+        setFollow(props.followed)
+    }, [props.followed])
 
     const submit = values => {
       props.updateProfile(values).then(
@@ -53,10 +70,13 @@ const ProfileInfo = (props) => {
                     <div><br/></div>
                     <div><br/></div>
                     {!props.isOwner &&
-                    <div>{props.follow
-                        ? <span>Subscribed {props.profile.fullName}</span>
-                        : <span>You can subscribe on Users Page to {props.profile.fullName}</span>}
-                    </div>}
+                    <div>{followed
+                        ? <span>Subscribed to {props.profile.fullName}</span>
+                        : <span>You can subscribe to {props.profile.fullName}</span>}
+
+                    <Follow followed={followed} userId={props.profile.userId}
+                            isFollowingProgress={props.isFollowingProgress}
+                            unFollow={unFollow} follow={follow}/></div>}
                 </div>
             </div>
         )
@@ -69,7 +89,7 @@ const ProfileData = (props) => {
             <div>Full name: <i>{props.profile.fullName}</i></div>
             <div>About me: <i>{props.profile.aboutMe}</i></div>
             <div>{props.profile.lookingForAJob ? <span><i>I am looking for a job </i></span> : <span><i>I have a job</i></span>}</div>
-            <div>Looking for a job description: <i>{props.profile.lookingForAJobDescription}</i></div>
+            <div>Looking for a job description: <br/> <i>{props.profile.lookingForAJobDescription}</i></div>
             <div>
                 Contacts: {Object.keys(props.profile.contacts).map(key => {
                     return <Contact key={key} contactTitle={key}

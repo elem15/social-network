@@ -16,7 +16,7 @@ let initialState = {
     ],
     newPostState: 'YOY',
     profile: null,
-    follow: true,
+    followed: true,
     status: ''
 };
 
@@ -57,7 +57,7 @@ const profileReducer = (state = initialState, action) => {
                 }}
 
         case SET_USER_FOLLOW:
-            return {...state, follow: action.follow}
+            return {...state, followed: action.followed}
 
         case SET_USER_STATUS:
             return {...state, status: action.status}
@@ -71,7 +71,7 @@ export const addPostActionCreator = (text) => ({type: ADD_POST, text});
 export const deletePostActionCreator = (postId) => ({type: DELETE_POST, postId});
 
 const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
-const setUserFollow = (follow) => ({type: SET_USER_FOLLOW, follow})
+const setUserFollow = (followed) => ({type: SET_USER_FOLLOW, followed})
 const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
 const setUserPhotoSuccess = (photos) => ({type: SET_USER_PHOTO_SUCCESS, photos})
 const updateUserProfile = (profile) => ({type: UPDATE_USER_PROFILE, profile})

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import {NavLink} from 'react-router-dom';
+import Follow from "../Common/Follow/Follow";
 
 const User = ({ user, isFollowingProgress, unFollow, follow }) => {
 
@@ -14,16 +15,9 @@ const User = ({ user, isFollowingProgress, unFollow, follow }) => {
                     <img src={user.photos.small != null ? user.photos.small : userPhoto} className={styles.userPhoto}/>
                     </NavLink>
                 </div>
-                <div>
-                    {user.followed
-                        ? <button disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
-                            unFollow(user.id);
-                        }}>Unfollow</button>
-                        : <button disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
-                            follow(user.id);
-                        }}>Follow</button>
-                    }
-                     </div>
+             <Follow followed={user.followed} userId={user.id}
+                     isFollowingProgress={isFollowingProgress}
+                     unFollow={unFollow} follow={follow}/>
             </span>
             <span>
                 <span><div>{'user.location.city'}</div><div>{'user.location.country'}</div></span>
@@ -36,5 +30,6 @@ const User = ({ user, isFollowingProgress, unFollow, follow }) => {
 
     )
 }
+
 
 export default User;
