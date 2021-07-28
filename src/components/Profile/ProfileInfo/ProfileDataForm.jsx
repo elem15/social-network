@@ -30,7 +30,7 @@ const ProfileDataForm = ({ handleSubmit, submitting, error, ...props }) => {
                 </div>
                 <div>
                     <Field name="AboutMe" type="text" label="About Me" component={renderInput}
-                           validate={[required, maxLength33]} value={props.profile.aboutMe}/>
+                           validate={[required, maxLength33]} defaultValue={props.profile.aboutMe}/>
                 </div>
                 <div>
                     <Field name="lookingForAJob" component='input' type="checkbox"/>Looking for a job

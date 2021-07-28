@@ -16,9 +16,9 @@ const ProfileInfo = (props) => {
 
     const [editMode, setEditMode] = useState(false);
 
-    const  submit = values => {
-      props.updateProfile(values, props.profile.userId);
-      setEditMode(false)
+    const submit = values => {
+      props.updateProfile(values).then(
+      setEditMode(false))
     }
 
     if (!props.profile) {

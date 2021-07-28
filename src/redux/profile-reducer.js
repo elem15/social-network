@@ -49,7 +49,12 @@ const profileReducer = (state = initialState, action) => {
             return {...state, profile: {...state.profile, photos: action.photos}}
 
         case UPDATE_USER_PROFILE:
-            return {...state, profile: action.profile}
+            return {...state, profile: {...state.profile,
+                    fullName: action.profile.FullName,
+                    aboutMe: action.profile.AboutMe,
+                    lookingForAJob: action.profile.lookingForAJob,
+                    lookingForAJobDescription: action.profile.lookingForAJobDescription
+                }}
 
         case SET_USER_FOLLOW:
             return {...state, follow: action.follow}
@@ -103,11 +108,11 @@ export const updateStatus = (status) =>
             dispatch(setUserStatus(status))
         }
     }
-export const updateProfile = (profile, userId) =>
+export const updateProfile = (profile) =>
     async (dispatch) => {
         let response = await profileAPI.updateProfile(profile);
         if (response.data.resultCode === 0) {
-            dispatch(getUserProfile(userId))
+            dispatch(updateUserProfile(profile))
         }
     }
 export default profileReducer;
