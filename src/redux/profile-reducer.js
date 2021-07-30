@@ -1,4 +1,6 @@
 import {profileAPI, usersAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
+
 
 const ADD_POST = 'social_network/profile/ADD_POST';
 const SET_USER_PROFILE = 'social_network/profile/SET_USER_PROFILE';
@@ -32,7 +34,7 @@ const profileReducer = (state = initialState, action) => {
                     {
                         id: countId,
                         message: action.text,
-                        likeCount: 17+countId
+                        likeCount: 17 + countId
                     }]
             };
 
@@ -49,12 +51,15 @@ const profileReducer = (state = initialState, action) => {
             return {...state, profile: {...state.profile, photos: action.photos}}
 
         case UPDATE_USER_PROFILE:
-            return {...state, profile: {...state.profile,
+            return {
+                ...state, profile: {
+                    ...state.profile,
                     fullName: action.profile.FullName,
                     aboutMe: action.profile.AboutMe,
                     lookingForAJob: action.profile.lookingForAJob,
                     lookingForAJobDescription: action.profile.lookingForAJobDescription
-                }}
+                }
+            }
 
         case SET_USER_FOLLOW:
             return {...state, followed: action.followed}
@@ -93,13 +98,13 @@ export const savePhoto = (photoFile) =>
 export const getUserFollow = (userId) =>
     async (dispatch) => {
         let response = await usersAPI.getFollow(userId);
-            dispatch(setUserFollow(response.data));
+        dispatch(setUserFollow(response.data));
     }
 
 export const getStatus = (userId) =>
     async (dispatch) => {
         let response = await profileAPI.getStatus(userId);
-            dispatch(setUserStatus(response.data))
+        dispatch(setUserStatus(response.data))
     }
 export const updateStatus = (status) =>
     async (dispatch) => {
@@ -108,11 +113,19 @@ export const updateStatus = (status) =>
             dispatch(setUserStatus(status))
         }
     }
-export const updateProfile = (profile) =>
+export const updateProfile = (profile, userId) =>
     async (dispatch) => {
-        let response = await profileAPI.updateProfile(profile);
+        // const userId = store.getState().auth.id;
+        const response = await profileAPI.updateProfile(profile);
         if (response.data.resultCode === 0) {
-            dispatch(updateUserProfile(profile))
+            dispatch(getUserProfile(userId))
+        } else if (response.data.resultCode === 1) {
+            const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Same error';
+            const getLastResponseWorld = (str) => {
+                return str.split('>').map((word) => word[0].toLowerCase() + word.slice(1,word.length - 1))[1];}
+            const action = stopSubmit('profile', {contacts: {[getLastResponseWorld(message)]: message}});
+            dispatch(action);
+            return Promise.reject(message)
         }
     }
 export default profileReducer;

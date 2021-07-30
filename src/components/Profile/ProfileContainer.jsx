@@ -15,8 +15,7 @@ import {compose} from "redux";
 import {ownUserName} from "../../redux/auth-reducer";
 import {getIsFollowingProgress} from "../../redux/users-selectors";
 import {follow, unFollow} from "../../redux/users-reducer";
-import Users from "../Users/Users";
-import Follow from "../Common/Follow/Follow";
+
 
 
 class ProfileContainer extends React.Component {

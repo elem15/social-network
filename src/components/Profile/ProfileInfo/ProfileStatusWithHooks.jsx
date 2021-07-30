@@ -13,7 +13,7 @@ const ProfileStatusWithHooks = (props) => {
     }, [props.status])
 
     let inActivateMode = () => {
-        if (props.userId === props.id) {
+        if (props.isOwner) {
             setEditMode(false)
             props.updateStatus(status);
         }
@@ -25,7 +25,7 @@ const ProfileStatusWithHooks = (props) => {
             <div>status:</div>
             {!editMode &&
             <div>
-                <button disabled={props.userId !== props.id} onClick={activateEditMode}>{props.status}</button>
+                <button disabled={!props.isOwner} onClick={activateEditMode}>{props.status}</button>
             </div>}
 
             {editMode &&

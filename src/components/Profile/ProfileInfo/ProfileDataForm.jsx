@@ -1,51 +1,45 @@
 import React, {useEffect, useState} from 'react';
 import s from '../../../components/Common/InputField/FormsContorls.module.css'
+import style from './ProfileInfo.module.css'
 import {Field, reduxForm} from 'redux-form'
 import {renderInput} from "../../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../../utils/validators";
+import createField from "redux-form/lib/createField";
 
 
 const ProfileDataForm = ({ handleSubmit, submitting, error, ...props }) => {
 
-    // let [profile, setProfile] = useState(props.profile);
-    //
-    // useEffect(() => {
-    //     setProfile(props.profile)
-    // }, [props.profile])
-    //
-    // // handleSubmit = (values) => {
-    //     if (props.profile.userId === props.id) {
-            // props.updateProfile(values);
-            // props.setEditMode(false);
-    //     }
-    // }
-
-
     return (
-        <div>
             <form onSubmit={ handleSubmit }>
+                    <button type="submit" disabled={submitting}>save</button>
                 <div>
-                    <Field name="FullName" type="text" label="Full Name" component={renderInput}
-                           validate={[required, maxLength33]} value={props.profile.fullName}/>
+                    {error && <span className={s.formSummaryError}>{error}</span>}
                 </div>
                 <div>
-                    <Field name="AboutMe" type="text" label="About Me" component={renderInput}
-                           validate={[required, maxLength33]} defaultValue={props.profile.aboutMe}/>
+                    <Field name="fullName" type="text" label="Full Name" component={renderInput}
+                           validate={[required, maxLength33]}/>
+                </div>
+                <div>
+                    <Field name="aboutMe" type="text" label="About Me" component={renderInput}
+                           validate={[required, maxLength33]}/>
                 </div>
                 <div>
                     <Field name="lookingForAJob" component='input' type="checkbox"/>Looking for a job
                 </div>
                 <div>
                 <Field name="lookingForAJobDescription" type="text"
-                       label="Looking for a job description" component={renderInput}
+                       label="My professional skills" component={renderInput}
                        validate={[required, maxLength33]}/>
                 </div>
-                {error && <span className={s.formSummaryError}>{error}</span>}
                 <div>
-                    <button type="submit" disabled={submitting}>Sign in</button>
+                    Contacts: {Object.keys(props.profile.contacts).map(key => {
+                    return (<div className={style.contact}>
+                    <Field name={'contacts.' + key} type="text" label={key} component={renderInput}
+                           validate={[]} />  </div>
+                    )
+                })}
                 </div>
             </form>
-        </div>
     )
 }
 

@@ -61,7 +61,6 @@ const deleteCaptchaURL = () => ({type: DELETE_CAPTCHA_URL});
 
 export const userSignIn = (login, password, rememberMe, captcha) =>
     async (dispatch) => {
-
         let response = await authAPI.login(login, password, rememberMe, captcha);
         dispatch(deleteCaptchaURL());
         if (response.data.resultCode === 0) {
