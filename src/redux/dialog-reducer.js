@@ -18,6 +18,11 @@ let initialState = {
 
 }
 
+const randomInteger = () => {
+    let rand = Math.floor(Math.random() * (4));
+    return rand;
+}
+
 const dialogReducer = (state = initialState, action) => {
 
     switch (action.type) {
@@ -34,8 +39,8 @@ const dialogReducer = (state = initialState, action) => {
                     messages: [...state.messages, {
                     id: countId,
                     message: action.newMessageBody,
-                    name: action.currentName,
-                    st: position,
+                    name: state.messages[randomInteger()].name,
+                    st: position
                 }]
             };
 
@@ -44,6 +49,6 @@ const dialogReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessageActionCreator = (name, newMessageBody) => ({type: ADD_MESSAGE, currentName: name, newMessageBody});
+export const addMessageActionCreator = (newMessageBody) => ({type: ADD_MESSAGE, newMessageBody});
 
 export default dialogReducer;

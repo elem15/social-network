@@ -48,12 +48,12 @@ const ProfileInfo = (props) => {
                     <div className={s.fullName}>{props.profile.fullName}</div>
                     <ProfileStatusWithHooks userId={props.profile.userId} id={props.id}
                                             status={props.status} updateStatus={props.updateStatus}
-                                            isOwner={props.isOwner} />
+                                            isOwner={props.isOwner} isAuth={props.isAuth}/>
                                             <br/>
                     <div>
                         <img className={s.avatar} src={props.profile.photos.large || userPhoto}/>
                     </div>
-                    {props.isOwner &&
+                    {props.isOwner && props.isAuth &&
                     <div class={s.inputWrapper}>
                         <input type={'file'} id={'input__file'} className={s.inputFile} onChange={onMainPhotoSelected}/>
                         <label htmlFor={"input__file"} className={s.inputFileButton}>
@@ -63,7 +63,7 @@ const ProfileInfo = (props) => {
                             <span className={s.inputFileButtonText}>Download your photo</span>
                         </label>
                     </div>}
-                    {props.isOwner && ! editMode &&
+                    {props.isOwner && !editMode && props.isAuth &&
                     <button onClick={() => setEditMode(true)}>edit profile</button>}
                     {editMode
                             ?<ProfileDataReduxForm initialValues={props.profile}
@@ -78,7 +78,8 @@ const ProfileInfo = (props) => {
 
                     <Follow followed={followed} userId={props.profile.userId}
                             isFollowingProgress={props.isFollowingProgress}
-                            unFollow={unFollow} follow={follow}/></div>}
+                            unFollow={unFollow} follow={follow} isAuth={props.isAuth} />
+                    </div>}
                 </div>
             </div>
         )
@@ -88,10 +89,10 @@ const ProfileInfo = (props) => {
 const ProfileData = (props) => {
     return (
         <div>
-            <div>Full name: <i>{props.profile.fullName}.</i></div>
-            <div>About me: <i>{props.profile.aboutMe}.</i></div>
-            <div>{props.profile.lookingForAJob ? <span><i>I am looking for a job.</i></span> : <span><i>I have a job.</i></span>}</div>
-            <div>My professional skills: <br/> <i>{props.profile.lookingForAJobDescription}.</i></div>
+            <div>Full name: <i>{props.profile.fullName}</i></div>
+            <div>About me: <i>{props.profile.aboutMe}</i></div>
+            <div>{props.profile.lookingForAJob ? <span><i>I am looking for a job</i></span> : <span><i>I have a job</i></span>}</div>
+            <div>My professional skills: <br/> <i>{props.profile.lookingForAJobDescription}</i></div>
             <div>
                 Contacts: {Object.keys(props.profile.contacts).map(key => {
                     return <Contact key={key} contactTitle={key}

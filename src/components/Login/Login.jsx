@@ -18,7 +18,7 @@ let LoginForm = ({ handleSubmit, submitting, error, captchaURL }) => {
                     <Field name="password" type="password" label="password" component={renderInput} validate={[required, maxLength33]}/>
                 </div>
                 <div>{captchaURL &&
-                    <Field name="captcha" type="text" label="AntiBot" component={renderInput}/>}
+                    <Field name="captcha" type="text" label="AntiBot" component={renderInput} validate={[required]}/>}
                 </div>
                 <div>
                     <Field name="rememberMe" component='input' type="checkbox"/> Remember Me

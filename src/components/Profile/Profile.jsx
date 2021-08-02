@@ -17,7 +17,7 @@ const Profile = (props) => {
                    isOwner={props.isOwner} savePhoto={props.savePhoto}
                    updateProfile={props.updateProfile} followed={props.followed} userId={props.id}
                    isFollowingProgress={props.isFollowingProgress}
-                   unFollow={props.unFollow} users={props.users}
+                   unFollow={props.unFollow} users={props.users} isAuth={props.isAuth}
       />
       <MyPostsContainer  />
       </div>

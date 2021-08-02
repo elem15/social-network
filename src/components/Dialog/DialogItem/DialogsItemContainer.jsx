@@ -12,7 +12,7 @@ let mapStateToProps = (state) => {
 }
 let mapDispatchToProps = (dispatch) => {
     return {
-        addDialog: (name, newMessageBody) => {dispatch(addMessageActionCreator(name, newMessageBody))},
+        addMessage: (name, newMessageBody) => {dispatch(addMessageActionCreator(name, newMessageBody))},
     }
 }
 

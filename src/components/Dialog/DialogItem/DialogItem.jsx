@@ -6,6 +6,7 @@ import DialogStateForm from "./DialogStateForm";
 
 const DialogItem = (props) => {
 
+
     return <div className={s.dialogContent}> {
      props.dialogs.map(d => <div  key={d.id}>
 
@@ -17,7 +18,9 @@ const DialogItem = (props) => {
          </div>
         )
     }
-        <DialogStateForm newDialogState={props.newDialogState} name={props.dialogs[2].name} onPostChange={props.onPostChange} addDialog={props.addDialog}/>
+        <DialogStateForm newDialogState={props.newDialogState} name={props.dialogs[3].name}
+                         onPostChange={props.onPostChange} addMessage={props.addMessage}
+                           />
     </div>
 
 }

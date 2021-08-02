@@ -1,10 +1,10 @@
-import {authAPI} from "../api/api";
+import {authAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import React from "react";
 
 const SET_USER_DATA = 'social_network/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL = 'social_network/auth/GET_CAPTCHA_URL';
-const DELETE_CAPTCHA_URL = 'social_network/auth/DELETE_CAPTCHA_URL';
+// const DELETE_CAPTCHA_URL = 'social_network/auth/DELETE_CAPTCHA_URL';
 
 let initialState = {
     id: '',
@@ -14,28 +14,24 @@ let initialState = {
     rememberMe: false,
     isAuth: false,
     serverMessage: '',
-    captchaURL: ''
+    captchaURL: null
 }
 
 const authReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case SET_USER_DATA:
-            return {
-                ...state,
-                ...action.payload,
-
-            }
         case GET_CAPTCHA_URL:
             return {
                 ...state,
-                captchaURL: action.url
+                ...action.payload
             }
-        case DELETE_CAPTCHA_URL:
-            return {
-                ...state,
-                captchaURL: ''
-            }
+
+        // case DELETE_CAPTCHA_URL:
+        //     return {
+        //         ...state,
+        //         captchaURL: null
+        //     }
         default:
             return state;
     }
@@ -55,14 +51,14 @@ export const ownUserName = () =>
         }
     }
 
-const getCaptchaURL = (url) => ({type: GET_CAPTCHA_URL, url});
-const deleteCaptchaURL = () => ({type: DELETE_CAPTCHA_URL});
+const getCaptchaURL = (captchaURL) => ({type: GET_CAPTCHA_URL, payload: {captchaURL}});
+// const deleteCaptchaURL = () => ({type: DELETE_CAPTCHA_URL});
 
 
-export const userSignIn = (login, password, rememberMe, captcha) =>
+export const userSignIn = (login, password, rememberMe=false, captcha=null) =>
     async (dispatch) => {
         let response = await authAPI.login(login, password, rememberMe, captcha);
-        dispatch(deleteCaptchaURL());
+        // dispatch(deleteCaptchaURL());
         if (response.data.resultCode === 0) {
             dispatch(ownUserName());
         } else if (response.data.resultCode === 10) {
@@ -85,7 +81,7 @@ export const userSignOut = () =>
     }
 const captchaURL = () =>
     async (dispatch) => {
-        let response = await authAPI.captcha()
+        let response = await securityAPI.captcha()
         if (response.data.url) {
             dispatch(getCaptchaURL(response.data.url));
         }

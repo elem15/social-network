@@ -53,7 +53,7 @@ class ProfileContainer extends React.Component {
                      users={this.props.users} follow={this.props.follow}
                      unFollow={this.props.unFollow}
                      isFollowingProgress={this.props.isFollowingProgress}
-                     followed={this.props.followed}
+                     followed={this.props.followed} isAuth={this.props.isAuth}
             />
         )
     }

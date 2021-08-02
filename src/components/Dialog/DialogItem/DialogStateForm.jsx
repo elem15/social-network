@@ -7,7 +7,7 @@ import {renderField} from "../../Common/InputField/FormsControls";
 const DialogState = (props) => {
 
     let addDialog = (newMessageBody) => {
-        props.addDialog(props.name, newMessageBody);
+        props.addMessage(newMessageBody);
     };
 
     let addNewMessage = (values) => {
