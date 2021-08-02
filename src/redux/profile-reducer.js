@@ -108,9 +108,13 @@ export const getStatus = (userId) =>
     }
 export const updateStatus = (status) =>
     async (dispatch) => {
-        let response = await profileAPI.updateStatus(status);
-        if (response.data.resultCode === 0) {
-            dispatch(setUserStatus(status))
+        try {
+            let response = await profileAPI.updateStatus(status);
+            if (response.data.resultCode === 0) {
+                dispatch(setUserStatus(status))
+            }
+        } catch (e) {
+            console.error("Error occurred: "   )
         }
     }
 export const updateProfile = (profile, userId) =>
@@ -122,7 +126,8 @@ export const updateProfile = (profile, userId) =>
         } else if (response.data.resultCode === 1) {
             const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Same error';
             const getLastResponseWorld = (str) => {
-                return str.split('>').map((word) => word[0].toLowerCase() + word.slice(1,word.length - 1))[1];}
+                return str.split('>').map((word) => word[0].toLowerCase() + word.slice(1, word.length - 1))[1];
+            }
             const action = stopSubmit('profile', {contacts: {[getLastResponseWorld(message)]: message}});
             dispatch(action);
             return Promise.reject(message)

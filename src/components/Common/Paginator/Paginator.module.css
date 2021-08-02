@@ -1,15 +1,18 @@
 .listContainer {
     margin: 10px;
-
+}
+.listContainerCn {
+    padding: 10px;
 }
 .selectedPage {
-    color: darkslateblue;
+    color: white;
     /*font-weight: 500;*/
     background-color: green;
     border: 1px solid green;
     border-radius: 20%;
     margin: 0 3px 6px 3px;
     padding: 0 3px;
+    vertical-align: unset;
     cursor: default;
     transition: .5s;
 }
