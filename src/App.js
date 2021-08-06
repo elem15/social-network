@@ -54,7 +54,7 @@ class App extends React.Component {
                             <Route path='/Users'
                                    render={() => <Suspense fallback={<Preloader/>}><UsersContainer/></Suspense>}/>
                             <Route path='/Login' render={() => <Suspense fallback={<Preloader/>}><Login/></Suspense>}/>
-                            {/*<Route exact path='/*' render={() => <div>404 PAGE NOT FOUND</div>}/>*/}
+                            <Route exact path='/*' render={() => <div>404 PAGE NOT FOUND</div>}/>
                         </Switch>
                     </div>
                 </div>
@@ -71,10 +71,10 @@ const AppContainer = compose(withRouter,
     connect(mapStateToProps, {getInitialization}))(App);
 /*basename={process.env.PUBLIC_URL}*/
 const SamuraiJSApp = () => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 export default SamuraiJSApp;
