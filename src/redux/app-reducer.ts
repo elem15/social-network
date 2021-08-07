@@ -2,11 +2,15 @@ import {ownUserName} from "./auth-reducer";
 
 const INITIALIZATION_SUCCESSFUL= 'social_network/app/INITIALIZATION_SUCCESSFUL';
 
-let initialState = {
-    initialization: false
+export type InitialStateType = {
+    initialization: boolean,
 }
 
-const appReducer = (state = initialState, action: any ) => {
+let initialState: InitialStateType = {
+    initialization: false,
+}
+
+const appReducer = (state = initialState, action: any ) : InitialStateType => {
 
     switch (action.type) {
         case INITIALIZATION_SUCCESSFUL:
@@ -19,7 +23,10 @@ const appReducer = (state = initialState, action: any ) => {
     }
 }
 
-const  initializationSuccessful = () => ({type: INITIALIZATION_SUCCESSFUL});
+type  InitializationSuccessfulActionType = {
+    type: typeof INITIALIZATION_SUCCESSFUL
+}
+const  initializationSuccessful = (): InitializationSuccessfulActionType => ({type: INITIALIZATION_SUCCESSFUL});
 
 export const getInitialization = () =>
    async (dispatch: any) => {

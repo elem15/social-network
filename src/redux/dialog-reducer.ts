@@ -1,5 +1,11 @@
 const ADD_MESSAGE = 'ADD_MESSAGE';
 
+type DialogsType = {
+    id: number, name: string, src: string
+}
+type MessagesType = {
+    id: number, message: string, name: string, st: string
+}
 let initialState = {
     dialogs: [
         {id: 1, name: 'Dima', src: 'https://avatarko.ru/img/avatar/9/serial_8759.jpg'},
@@ -7,23 +13,24 @@ let initialState = {
         {id: 3, name: 'Sveta', src: 'https://avatarko.ru/img/avatar/26/devushka_blondinka_kapyushon_25929.jpg'},
         {id: 4, name: 'Sasha', src: 'https://avatarko.ru/img/avatar/5/devushka_4066.jpg'},
         {id: 5, name: 'Victor', src: 'https://avatarko.ru/img/avatar/26/muzhchina_serfing_25374.jpg'},
-    ],
+    ] as Array<DialogsType>,
     messages: [
         {id: 1, message: 'Hi!', name: 'Dima', st: 'active'},
         {id: 2, message: 'How are you?', name: 'Andrey', st: "passive"},
         {id: 3, message: 'Wow!', name: 'Sveta', st: 'active'},
         {id: 4, message: 'Yo!', name: 'Sasha', st: 'passive'},
         {id: 5, message: 'Yah!', name: 'Victor', st: 'active'},
-    ],
-
+    ] as Array<MessagesType>,
 }
+
+export type initialStateActionType = typeof initialState;
 
 const randomInteger = () => {
     let rand = Math.floor(Math.random() * (4));
     return rand;
 }
 
-const dialogReducer = (state = initialState, action) => {
+const dialogReducer = (state:initialStateActionType = initialState, action: any) : initialStateActionType => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -48,7 +55,11 @@ const dialogReducer = (state = initialState, action) => {
             return state;
     }
 }
-
-export const addMessageActionCreator = (newMessageBody) => ({type: ADD_MESSAGE, newMessageBody});
+type AddMessageActionCreatorType = {
+    type: typeof ADD_MESSAGE,
+    newMessageBody: string | null
+}
+export const addMessageActionCreator = (newMessageBody: string): AddMessageActionCreatorType =>
+    ({type: ADD_MESSAGE, newMessageBody});
 
 export default dialogReducer;

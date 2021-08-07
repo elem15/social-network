@@ -1,7 +1,7 @@
 import {profileAPI, usersAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
-
-
+import exp from "constants";
+import {ContactsType, PhotosType, PostsType} from "../Types/Types";
 const ADD_POST = 'social_network/profile/ADD_POST';
 const SET_USER_PROFILE = 'social_network/profile/SET_USER_PROFILE';
 const SET_USER_FOLLOW = 'social_network/profile/SET_USER_FOLLOW';
@@ -10,19 +10,30 @@ const DELETE_POST = 'social_network/profile/DELETE_POST';
 const SET_USER_PHOTO_SUCCESS = 'social_network/profile/SET_USER_PHOTO_SUCCESS';
 const UPDATE_USER_PROFILE = 'social_network/profile/UPDATE_USER_PROFILE';
 
+
+type ProfileType = {
+    aboutMe: string,
+    contacts: ContactsType,
+    fullName: "Elem",
+    lookingForAJob: true,
+    lookingForAJobDescription: "REACK DEV",
+    photos: PhotosType,
+    userId: 17889
+}
 let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likeCount: 11},
         {id: 2, message: 'Okay', likeCount: 13},
         {id: 3, message: 'Right', likeCount: 15}
-    ],
-    newPostState: 'YOY',
-    profile: null,
-    followed: true,
+    ] as Array<PostsType>,
+    newPostState: 'YOY' as string,
+    profile: null as ProfileType | null,
+    followed: true as boolean,
     status: ''
 };
+type initialStateType = typeof initialState;
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state: initialStateType = initialState, action: any) : initialStateType  => {
 
     switch (action.type) {
         case  ADD_POST:
@@ -48,7 +59,7 @@ const profileReducer = (state = initialState, action) => {
             return {...state, profile: action.profile}
 
         case SET_USER_PHOTO_SUCCESS:
-            return {...state, profile: {...state.profile, photos: action.photos}}
+            return {...state, profile: {...state.profile, photos: action.photos} as ProfileType}
 
         case UPDATE_USER_PROFILE:
             return {
@@ -58,7 +69,7 @@ const profileReducer = (state = initialState, action) => {
                     aboutMe: action.profile.AboutMe,
                     lookingForAJob: action.profile.lookingForAJob,
                     lookingForAJobDescription: action.profile.lookingForAJobDescription
-                }
+                } as ProfileType
             }
 
         case SET_USER_FOLLOW:
@@ -72,42 +83,64 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const addPostActionCreator = (text) => ({type: ADD_POST, text});
-export const deletePostActionCreator = (postId) => ({type: DELETE_POST, postId});
+type AddPostActionCreatorActionType = {
+    type: typeof ADD_POST,
+    text: string
+}
+export const addPostActionCreator = (text: string): AddPostActionCreatorActionType => ({type: ADD_POST, text});
+type DeletePostActionCreatorActionType = {
+    type: typeof DELETE_POST,
+    postId: number
+}
+export const deletePostActionCreator = (postId: number): DeletePostActionCreatorActionType => ({type: DELETE_POST, postId});
+type setUserProfileActionType = {
+    type: typeof SET_USER_PROFILE,
+    profile: ProfileType
+}
+const setUserProfile = (profile: ProfileType): setUserProfileActionType => ({type: SET_USER_PROFILE, profile})
+type setUserFollowActionType = {
+    type: typeof SET_USER_FOLLOW,
+    followed: boolean
+}
+const setUserFollow = (followed: boolean):setUserFollowActionType => ({type: SET_USER_FOLLOW, followed})
+type setUserStatusActionType = {
+    type: typeof SET_USER_STATUS,
+    status: string
+}
+const setUserStatus = (status: string): setUserStatusActionType => ({type: SET_USER_STATUS, status})
+type setUserPhotoSuccessActionType = {
+    type: typeof SET_USER_PHOTO_SUCCESS,
+    photos: PhotosType
+}
+const setUserPhotoSuccess = (photos: PhotosType):setUserPhotoSuccessActionType => ({type: SET_USER_PHOTO_SUCCESS, photos})
 
-const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
-const setUserFollow = (followed) => ({type: SET_USER_FOLLOW, followed})
-const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
-const setUserPhotoSuccess = (photos) => ({type: SET_USER_PHOTO_SUCCESS, photos})
-const updateUserProfile = (profile) => ({type: UPDATE_USER_PROFILE, profile})
-
-export const getUserProfile = (userId) =>
-    async (dispatch) => {
+export const getUserProfile = (userId: number) =>
+    async (dispatch: any) => {
         let response = await profileAPI.getProfile(userId);
         dispatch(setUserProfile(response.data));
     }
 
-export const savePhoto = (photoFile) =>
-    async (dispatch) => {
+export const savePhoto = (photoFile: any) =>
+    async (dispatch: any) => {
         let response = await profileAPI.uploadPhoto(photoFile);
         if (response.data.resultCode === 0) {
             dispatch(setUserPhotoSuccess(response.data.data.photos))
         }
     }
 
-export const getUserFollow = (userId) =>
-    async (dispatch) => {
+export const getUserFollow = (userId: number) =>
+    async (dispatch: any) => {
         let response = await usersAPI.getFollow(userId);
         dispatch(setUserFollow(response.data));
     }
 
-export const getStatus = (userId) =>
-    async (dispatch) => {
+export const getStatus = (userId: number) =>
+    async (dispatch: any) => {
         let response = await profileAPI.getStatus(userId);
         dispatch(setUserStatus(response.data))
     }
-export const updateStatus = (status) =>
-    async (dispatch) => {
+export const updateStatus = (status: string) =>
+    async (dispatch: any) => {
         try {
             let response = await profileAPI.updateStatus(status);
             if (response.data.resultCode === 0) {
@@ -117,15 +150,15 @@ export const updateStatus = (status) =>
             console.error("Error occurred: "   )
         }
     }
-export const updateProfile = (profile, userId) =>
-    async (dispatch) => {
+export const updateProfile = (profile: ProfileType, userId: number) =>
+    async (dispatch: any) => {
         // const userId = store.getState().auth.id;
         const response = await profileAPI.updateProfile(profile);
         if (response.data.resultCode === 0) {
             dispatch(getUserProfile(userId))
         } else if (response.data.resultCode === 1) {
             const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Same error';
-            const getLastResponseWorld = (str) => {
+            const getLastResponseWorld = (str: string) => {
                 return str.split('>').map((word) => word[0].toLowerCase() + word.slice(1, word.length - 1))[1];
             }
             const action = stopSubmit('profile', {contacts: {[getLastResponseWorld(message)]: message}});
