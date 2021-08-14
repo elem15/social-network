@@ -1,15 +1,21 @@
 import React from "react";
 import s from './FormsContorls.module.css'
-export const renderField =  ({
+
+type PropsType = {
+    input: Array<string>,
+    label: string,
+    type: any,
+    meta: any
+}
+export const renderField: React.FC<PropsType> =  ({
                          input,
                          label,
-                         type,
                          meta: { touched, error, warning }
                      }) =>  (
         <div className={s.formControl + ' ' + (touched && error && s.error)}>
             <label></label>
             <div>
-                <textarea {...input} placeholder={label} type={type}/>
+                <textarea {...input} placeholder={label} />
                 <br/>
                 {touched &&
                 ((error && <span>{error}</span>) ||
@@ -19,7 +25,7 @@ export const renderField =  ({
     )
 
 
-export const renderInput = ({   input,
+export const renderInput: React.FC<PropsType> = ({   input,
                                 label,
                                 type,
                                 meta: { touched, error, warning }

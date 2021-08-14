@@ -4,21 +4,28 @@ import {Field, reset, reduxForm} from "redux-form";
 import {required, maxLength15} from '../../../utils/validators'
 import {renderField} from "../../Common/InputField/FormsControls";
 
-const DialogState = (props) => {
+type PropsType = {
+    addMessage: (newMessageBody: string) => void,
+}
 
-    let addDialog = (newMessageBody) => {
-        props.addMessage(newMessageBody);
+const DialogState: React.FC<PropsType> = ({addMessage}) => {
+
+    let addDialog = (newMessageBody: string) => {
+        addMessage(newMessageBody);
     };
 
-    let addNewMessage = (values) => {
+    let addNewMessage = (values: any) => {
         addDialog(values.newMessageBody)
     }
 
-    return <DialogStateForm onSubmit={addNewMessage}/>
+    return <DialogStateFormRedux onSubmit={addNewMessage}/>
 }
+type DialogStateFormType = {
 
-let DialogStateForm = (props) => {
-    return <form className={s.item + ' ' + s.active} onSubmit={props.handleSubmit}>
+    handleSubmit: any
+}
+const DialogStateForm: React.FC<DialogStateFormType> = ({handleSubmit}) => {
+    return <form className={s.item + ' ' + s.active} onSubmit={handleSubmit}>
         <div>
             <Field component={renderField }
                    name='newMessageBody'
@@ -31,10 +38,10 @@ let DialogStateForm = (props) => {
         </div>
     </form>
 }
-const afterSubmit = (result, dispatch) =>
+const afterSubmit = (result: string, dispatch: any) =>
     dispatch(reset('dialogAddMessageForm'));
 
-DialogStateForm  = reduxForm({form: 'dialogAddMessageForm', onSubmitSuccess: afterSubmit
+const DialogStateFormRedux  = reduxForm({form: 'dialogAddMessageForm', onSubmitSuccess: afterSubmit
 })(DialogStateForm)
 
 export default DialogState;
