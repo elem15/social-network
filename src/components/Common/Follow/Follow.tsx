@@ -1,6 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 
-const Follow = ({ followed, userId, isFollowingProgress, unFollow, follow }) => {
+type PropsType = {
+    followed: boolean,
+    userId: number,
+    isFollowingProgress: number[],
+    unFollow: (userId: number) => void,
+    follow: (userId: number) => void
+}
+const Follow: React.FC<PropsType> = ({ followed, userId, isFollowingProgress, unFollow, follow }) => {
 
 
     return (

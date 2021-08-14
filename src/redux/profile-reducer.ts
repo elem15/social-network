@@ -1,7 +1,7 @@
 import {profileAPI, usersAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import exp from "constants";
-import {ContactsType, PhotosType, PostsType} from "../Types/Types";
+import {ContactsType, PhotosType, PostsType, ProfileType} from "../Types/Types";
 const ADD_POST = 'social_network/profile/ADD_POST';
 const SET_USER_PROFILE = 'social_network/profile/SET_USER_PROFILE';
 const SET_USER_FOLLOW = 'social_network/profile/SET_USER_FOLLOW';
@@ -11,15 +11,6 @@ const SET_USER_PHOTO_SUCCESS = 'social_network/profile/SET_USER_PHOTO_SUCCESS';
 const UPDATE_USER_PROFILE = 'social_network/profile/UPDATE_USER_PROFILE';
 
 
-type ProfileType = {
-    aboutMe: string,
-    contacts: ContactsType,
-    fullName: "Elem",
-    lookingForAJob: true,
-    lookingForAJobDescription: "REACK DEV",
-    photos: PhotosType,
-    userId: 17889
-}
 let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likeCount: 11},
@@ -37,7 +28,7 @@ const profileReducer = (state: initialStateType = initialState, action: any) : i
 
     switch (action.type) {
         case  ADD_POST:
-            let countId = state.posts.length + 1;
+            const countId = state.posts.length + 1;
 
             return {
                 ...state,
@@ -51,6 +42,7 @@ const profileReducer = (state: initialStateType = initialState, action: any) : i
 
         case DELETE_POST:
             return {
+
                 ...state,
                 posts: [...state.posts.filter(p => p.id !== action.postId)]
             }

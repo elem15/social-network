@@ -3,8 +3,16 @@ import styles from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import {NavLink} from 'react-router-dom';
 import Follow from "../Common/Follow/Follow";
+import {UserType} from "../../Types/Types";
 
-const User = ({ user, isFollowingProgress, unFollow, follow }) => {
+type PropsType = {
+    user: UserType,
+    isFollowingProgress: number[],
+    unFollow: (userId: number) => void,
+    follow: (userId: number) => void
+}
+
+const User: React.FC<PropsType> = ({ user, isFollowingProgress, unFollow, follow }) => {
 
     return (
 

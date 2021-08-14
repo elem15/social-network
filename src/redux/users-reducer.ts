@@ -26,7 +26,8 @@ const usersReducer = (state = initialState, action: any): InitialStateActionType
         case FOLLOW:
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.userID, 'id', {followed: true})
+                users: updateObjectInArray(state.users,
+                     action.userID, 'id',  {followed: true})
             }
 
         case UNFOLLOW:
@@ -36,7 +37,7 @@ const usersReducer = (state = initialState, action: any): InitialStateActionType
               }
 
         case SET_USERS: {
-            return {...state, users: action.users}
+            return { ...state, users: action.users}
         }
 
         case SET_CURRENT_PAGE: {
@@ -83,7 +84,7 @@ type SetCurrentPageActionType = {
     type: typeof SET_CURRENT_PAGE,
     currentPage: number
 }
-export const setCurrentPage = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage});
+const setCurrentPage = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage});
 type SetTotalUsersCountActionType = {
     type: typeof SET_TOTAL_USERS_COUNT,
     totalUsersCount: number

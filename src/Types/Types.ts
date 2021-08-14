@@ -1,6 +1,24 @@
 export type PostsType = {
     id: number, message: string, likeCount: number
 }
+
+export type DialogsType = {
+    id: number, name: string, src: string
+}
+export type MessagesType = {
+    id: number, message: string, name: string, st: string
+}
+
+export type ProfileType = {
+    aboutMe: string,
+    contacts: ContactsType,
+    fullName: string,
+    lookingForAJob: true,
+    lookingForAJobDescription: string,
+    photos: PhotosType,
+    userId: number
+}
+
 export type ContactsType = {
     facebook: string,
     github: string,

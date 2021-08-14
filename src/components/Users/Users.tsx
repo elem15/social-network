@@ -3,10 +3,25 @@ import styles from "./Users.module.css";
 import Preloader from "../Common/Preloader/Preloader";
 import Paginator from "../Common/Paginator/Paginator";
 import User from "./User";
+import {UserType} from "../../Types/Types";
 
-const Users = ({
+type PropsType = {
+    totalUsersCount: number,
+    pageSize: number,
+    currentPage: number,
+    onPageChanged: ((p: number) => void),
+    isFollowingProgress: number[],
+    unFollow: (userId: number) => void,
+    follow: (userId: number) => void,
+    isFetching: boolean,
+    toggleIsFetching: ((isFetching: boolean) => void),
+    users: Array<UserType>
+}
+
+const Users: React.FC<PropsType> = ({
                    totalUsersCount, pageSize, currentPage, onPageChanged,
-                   isFollowingProgress, unFollow, follow, isFetching, users
+                   isFollowingProgress, unFollow, follow,
+                   isFetching, users
                }) => {
 
     return (
@@ -18,7 +33,8 @@ const Users = ({
 
                 <div className={styles.users}>
                     {
-                        users.map(u => <User key={u.id} user={u} isFollowingProgress={isFollowingProgress}
+                        users.map(u => <User key={u.id} user={u} isFollowingProgress=
+                                                    {isFollowingProgress}
                                                    unFollow={unFollow} follow={follow}/>
                         )
                     }

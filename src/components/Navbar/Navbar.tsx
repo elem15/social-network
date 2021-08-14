@@ -1,9 +1,10 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './Navbar.module.css';
+import {initialStateActionType} from "../../redux/dialog-reducer";
 
 
-const Navbar = (props) => {
+const Navbar = (props: initialStateActionType) => {
 
                 return <nav className={s.nav}>
                     <div>

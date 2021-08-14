@@ -52,7 +52,8 @@ class App extends React.Component {
                             <Route path='/Dialogs'
                                    render={() => <Suspense fallback={<Preloader/>}><Dialogs/></Suspense>}/>
                             <Route path='/Users'
-                                   render={() => <Suspense fallback={<Preloader/>}><UsersContainer/></Suspense>}/>
+                                   render={() => <Suspense fallback={<Preloader/>}>
+                                       <UsersContainer pageTitle={'Users'}/></Suspense>}/>
                             <Route path='/Login' render={() => <Suspense fallback={<Preloader/>}><Login/></Suspense>}/>
                             <Route exact path='/*' render={() => <div>404 PAGE NOT FOUND</div>}/>
                         </Switch>

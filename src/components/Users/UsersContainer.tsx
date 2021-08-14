@@ -3,8 +3,7 @@ import {connect} from "react-redux";
 import {
     follow,
     unFollow,
-    setCurrentPage,
-    requestUsers,
+    requestUsers, toggleIsFetching,
 } from "../../redux/users-reducer";
 import Users from "./Users";
 // import {withAuthRedirect} from "../../HOC/withAuthRedirect";
@@ -17,21 +16,44 @@ import {
     getTotalUsersCount,
     selectUsers
 } from "../../redux/users-selectors";
+import {UserType} from "../../Types/Types";
+import {AppStateType} from "../../redux/redux-store";
 
-class UsersContainer extends React.Component {
+type OwnPropsType = {
+    pageTitle: string
+}
+type MapStatePropsType = {
+    currentPage: number,
+    pageSize: number,
+    isFollowingProgress: number[],
+    isFetching: boolean,
+    users: Array<UserType>,
+    totalUsersCount: number,
+}
+type MapDispatchPropsType = {
+    unFollow: (userId: number) => void,
+    follow: (userId: number) => void,
+    requestUsers: (currentPage: number, pageSize: number) => void,
+    toggleIsFetching: ((isFetching: boolean) => void)
+}
+
+type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
+
+class UsersContainer extends React.Component<PropsType>  {
 
     componentDidMount() {
         const {requestUsers, currentPage, pageSize} = this.props;
         requestUsers(currentPage, pageSize);
     }
 
-    onPageChanged = (pageNumber) => {
+    onPageChanged = (pageNumber: number) => {
         const {requestUsers, pageSize} = this.props;
         requestUsers(pageNumber, pageSize);
     }
 
     render() {
         return <>
+            <h2>{this.props.pageTitle}</h2>
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
@@ -47,7 +69,7 @@ class UsersContainer extends React.Component {
     }
 }
 
-// const mapStateToProps = (state) => {
+// const mapStateToProps = (state: AppStateType) => {
 //     return {
 //         users: state.usersPage.users,
 //         pageSize: state.usersPage.pageSize,
@@ -57,7 +79,7 @@ class UsersContainer extends React.Component {
 //         isFollowingProgress: state.usersPage.isFollowingProgress
 //     }
 // };
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: selectUsers(state),
         pageSize: getPageSize(state),
@@ -68,12 +90,16 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default compose(
-    connect(mapStateToProps, {
+export default
+compose(
+    //TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState
+connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
+(mapStateToProps, {
         follow,
         unFollow,
-        setCurrentPage,
         requestUsers: requestUsers,
-    }),
+        toggleIsFetching: toggleIsFetching
+    }
+    ),
     // withAuthRedirect
 )(UsersContainer);
