@@ -13,7 +13,7 @@ type InitialStateType = {
     rememberMe: boolean,
     isAuth: boolean,
     serverMessage: string | null,
-    captchaURL: string | null
+    captchaURL: string | undefined
 }
 
 let initialState: InitialStateType = {
@@ -24,7 +24,7 @@ let initialState: InitialStateType = {
     rememberMe: false,
     isAuth: false,
     serverMessage: null,
-    captchaURL: null
+    captchaURL: undefined
 }
 
 const authReducer = (state = initialState, action: any) : InitialStateType => {

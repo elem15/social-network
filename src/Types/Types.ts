@@ -3,10 +3,14 @@ export type PostsType = {
 }
 
 export type DialogsType = {
-    id: number, name: string, src: string
+    id: number, name: string, src: string | undefined
 }
 export type MessagesType = {
     id: number, message: string, name: string, st: string
+}
+
+export type FriendsType = {
+    id: number, name: string, src: string | undefined
 }
 
 export type ProfileType = {

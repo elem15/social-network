@@ -13,6 +13,7 @@ import Preloader from "./components/Common/Preloader/Preloader";
 import {compose} from "redux";
 import {getInitialization} from "./redux/app-reducer";
 import store from "./redux/redux-store";
+import LoginContainer from "./components/Login/LoginContainer";
 
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const Login = React.lazy(() => import("./components/Login/Login"));
@@ -54,7 +55,7 @@ class App extends React.Component {
                             <Route path='/Users'
                                    render={() => <Suspense fallback={<Preloader/>}>
                                        <UsersContainer pageTitle={'Users'}/></Suspense>}/>
-                            <Route path='/Login' render={() => <Suspense fallback={<Preloader/>}><Login/></Suspense>}/>
+                            <Route path='/Login' render={() => <Suspense fallback={<Preloader/>}><LoginContainer/></Suspense>}/>
                             <Route exact path='/*' render={() => <div>404 PAGE NOT FOUND</div>}/>
                         </Switch>
                     </div>

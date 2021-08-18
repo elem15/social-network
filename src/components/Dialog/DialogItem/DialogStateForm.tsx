@@ -21,7 +21,6 @@ const DialogState: React.FC<PropsType> = ({addMessage}) => {
     return <DialogStateFormRedux onSubmit={addNewMessage}/>
 }
 type DialogStateFormType = {
-
     handleSubmit: any
 }
 const DialogStateForm: React.FC<DialogStateFormType> = ({handleSubmit}) => {
