@@ -30,3 +30,7 @@
     padding: 8px;
     margin-right: 300px;
 }
+.button {
+    color: white;
+    background-color: red;
+}

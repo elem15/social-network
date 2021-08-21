@@ -12,6 +12,9 @@ export type MessagesType = {
 export type FriendsType = {
     id: number, name: string, src: string | undefined
 }
+export type ComposersType = {
+    id: number, name: string, isLike: boolean
+}
 
 export type ProfileType = {
     aboutMe: string,

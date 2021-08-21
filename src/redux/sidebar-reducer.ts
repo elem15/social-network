@@ -11,7 +11,7 @@ const initialState = {
 };
 type InitialStateActionType = typeof initialState;
 
-const sidebarReducer = (state = initialState, action: any): InitialStateActionType => {
+const sidebarReducer = (state: InitialStateActionType = initialState, action: any) => {
     switch (action.type) {
         default:
             return state;

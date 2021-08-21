@@ -5,7 +5,7 @@ import Login from "./Login";
 
 type MapStatePropsType = {
     isAuth: boolean
-    captchaURL: string | undefined
+    captchaURL: string | null
     serverMessage: string | null
 }
 type MapDispatchPropsType = {

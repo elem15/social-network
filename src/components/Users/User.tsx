@@ -38,6 +38,4 @@ const User: React.FC<PropsType> = ({ user, isFollowingProgress, unFollow, follow
 
     )
 }
-
-
 export default User;

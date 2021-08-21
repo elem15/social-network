@@ -1,5 +1,15 @@
 import React from 'react';
 
+// type PropsTypeFC = {
+//     state: any
+// }
+// type PropsType = {
+//     state: {isToggleOn: boolean}
+//     prevState: {isToggleOn: boolean}
+//     isToggleOn: boolean
+//
+// }
+
 const Settings = () => {
     return (                 
         <div>
@@ -11,7 +21,7 @@ const Settings = () => {
     )
 }
 function Form() {
-    function handleSubmit(e) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         console.log('Отправлена форма.');
     }
@@ -22,8 +32,16 @@ function Form() {
         </form>
     );
 }
-class Toggle extends React.Component {
-    constructor(props) {
+
+interface IProps {
+}
+
+interface IState {
+    isToggleOn?: boolean;
+}
+
+class Toggle extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
         this.state = {isToggleOn: true};
 
@@ -32,7 +50,7 @@ class Toggle extends React.Component {
     }
 
     handleClick() {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
             isToggleOn: !prevState.isToggleOn
         }));
     }
@@ -45,6 +63,4 @@ class Toggle extends React.Component {
         );
     }
 }
-
-
 export default Settings;

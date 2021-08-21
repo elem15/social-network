@@ -1,10 +1,19 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './Navbar.module.css';
-import {initialStateActionType} from "../../redux/dialog-reducer";
+import {DialogsType} from "../../Types/Types";
+
+type MapStatePropsType = {
+    dialogs: Array<DialogsType>
+}
+type MapDispatchPropsType = {
+}
+type OwnPropsType = {
+}
+type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
 
 
-const Navbar = (props: initialStateActionType) => {
+const Navbar: React.FC<PropsType> = ({dialogs}) => {
 
                 return <nav className={s.nav}>
                     <div>
@@ -37,15 +46,15 @@ const Navbar = (props: initialStateActionType) => {
                         <br/>
                         <ul className={s.friend}>
                             <li>
-                                <img src={props.dialogs[1].src}/> <br/>
-                                {props.dialogs[1].name}
+                                <img src={dialogs[1].src}/> <br/>
+                                {dialogs[1].name}
                             </li>
-                            <li><img src={props.dialogs[2].src}/> <br/>
-                                {props.dialogs[2].name}
+                            <li><img src={dialogs[2].src}/> <br/>
+                                {dialogs[2].name}
                             </li>
                             <li>
-                                <img src={props.dialogs[3].src}/><br/>
-                                {props.dialogs[3].name}
+                                <img src={dialogs[3].src}/><br/>
+                                {dialogs[3].name}
                             </li>
                         </ul>
                     </div>

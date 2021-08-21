@@ -7,6 +7,7 @@ import authReducer from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 import appReducer from "./app-reducer";
+import musicReducer from "./music-reducer";
 
 const rootReducer = combineReducers({
     initializeReducer: appReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     dialogPage: dialogReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
+    musicReducer: musicReducer,
     auth: authReducer,
     form: formReducer
 })

@@ -6,7 +6,7 @@ import {maxLength33, required} from "../../utils/validators";
 
 
 type OwnPropsType = {
-    // captchaURL: string | undefined
+    // captchaURL: string | null
 }
 type MapStatePropsType = {
     submitting: boolean

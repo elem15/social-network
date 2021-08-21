@@ -6,7 +6,7 @@ import LoginFormWithCaptcha from "./LiginFormWithCaptcha";
 type OwnPropsType = {}
 type MapStatePropsType = {
     isAuth: boolean
-    captchaURL: string | undefined
+    captchaURL: string | null
 }
 type MapDispatchPropsType = {
     onSubmit: any
