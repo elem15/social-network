@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 type PropsType = {
    status: string,
-   id: number, 
+   id: number | undefined,
    userId: number,
    updateStatus: (newStatus: string) => void
 }

@@ -4,12 +4,23 @@ import style from './ProfileInfo.module.css'
 import {Field, reduxForm} from 'redux-form'
 import {renderInput} from "../../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../../utils/validators";
-import createField from "redux-form/lib/createField";
+import {ProfileType} from "../../../Types/Types";
+
+type OwnPropsType = {
+   }
+type MapStatePropsType = {
+    submitting: boolean
+    error: string
+    initialValues: ProfileType
+}
+type MapDispatchPropsType = {
+    handleSubmit: any
+}
+type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
+let ProfileDataForm: React.FC<PropsType> = ({ handleSubmit, submitting, error, initialValues }) => {
 
 
-const ProfileDataForm = ({ handleSubmit, submitting, error, ...props }) => {
-
-    return (
+    return ( <div>
             <form onSubmit={ handleSubmit }>
                     <button type="submit" disabled={submitting}>save</button>
                 <div>
@@ -31,20 +42,20 @@ const ProfileDataForm = ({ handleSubmit, submitting, error, ...props }) => {
                        label="My professional skills" component={renderInput}
                        validate={[required, maxLength33]}/>
                 </div>
-                <div>
-                    Contacts: {Object.keys(props.profile.contacts).map(key => {
-                    return (<div className={style.contact}>
-                    <Field name={'contacts.' + key} type="text" label={key} component={renderInput}
-                           validate={[]} />  </div>
+                <div>Contacts: {
+                    Object.keys(initialValues.contacts).map(key => {
+                    return (<div className={style.contact} key={key}>
+                            <Field name={'contacts.' + key} type="text" label={key} component={renderInput}
+                                   validate={[]} />  </div>
                     )
                 })}
                 </div>
             </form>
+        </div>
     )
 }
 
+// @ts-ignore
+const ProfileDataFormRedux = reduxForm({form: 'profile'})(ProfileDataForm)
 
-
-const ProfileDataReduxForm = reduxForm({form: 'profile'})(ProfileDataForm)
-
-export default ProfileDataReduxForm;
+export default ProfileDataFormRedux;

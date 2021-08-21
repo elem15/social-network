@@ -18,7 +18,7 @@ export type ComposersType = {
 
 export type ProfileType = {
     aboutMe: string,
-    contacts: ContactsType,
+    contacts: any,
     fullName: string,
     lookingForAJob: true,
     lookingForAJobDescription: string,
@@ -27,7 +27,7 @@ export type ProfileType = {
 }
 
 export type ContactsType = {
-    facebook: string,
+    facebook: string ,
     github: string,
     instagram: string,
     mainLink: string,

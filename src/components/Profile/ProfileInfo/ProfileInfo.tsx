@@ -1,15 +1,35 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import arrow from '../../../assets/images/add.svg'
-import ProfileDataForm from "./ProfileDataForm";
-import ProfileDataReduxForm from "./ProfileDataForm";
+import ProfileDataFormRedux from "./ProfileDataForm";
 import Follow from "../../Common/Follow/Follow";
+import {ProfileType, UserType} from "../../../Types/Types";
 
-const ProfileInfo = (props) => {
-    const onMainPhotoSelected = (e) => {
+type OwnPropsType = {
+}
+type MapStatePropsType = {
+    isAuth: boolean
+    profile: ProfileType | null
+    status: string
+    isFollowingProgress: Array<number>
+    followed: boolean
+    isOwner: boolean
+}
+type MapDispatchPropsType = {
+    updateStatus: (status: string) => void
+    savePhoto: (photoFile: any) => void
+    updateProfile: (profile: ProfileType, userId: number ) => void
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
+}
+
+export type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
+
+const ProfileInfo: React.FC<PropsType> = (props) => {
+    const onMainPhotoSelected = (e: any) => {
         if (e.target.files.length) {
             props.savePhoto(e.target.files[0])
         }
@@ -19,12 +39,12 @@ const ProfileInfo = (props) => {
 
     const [followed, setFollow] = useState(props.followed);
 
-    const follow = (userId) => {
+    const follow = (userId: number) => {
         props.follow(userId);
         setFollow(true);
     }
 
-    const unFollow = (userId) => {
+    const unFollow = (userId: number) => {
         props.unFollow(userId);
         setFollow(false);
     }
@@ -33,8 +53,9 @@ const ProfileInfo = (props) => {
         setFollow(props.followed)
     }, [props.followed])
 
-    const submit = values => {
-      props.updateProfile(values, props.profile.userId).then(() => {
+    const submit = (values: any) => {
+      // @ts-ignore
+        props.updateProfile(values, props.profile.userId).then(() => {
           setEditMode(false);
       })
     }
@@ -46,7 +67,7 @@ const ProfileInfo = (props) => {
             <div>
                 <div className={s.descriptionBlock}>
                     <div className={s.fullName}>{props.profile.fullName}</div>
-                    <ProfileStatusWithHooks userId={props.profile.userId} id={props.id}
+                    <ProfileStatusWithHooks userId={props.profile.userId}
                                             status={props.status} updateStatus={props.updateStatus}
                                             isOwner={props.isOwner} isAuth={props.isAuth}/>
                                             <br/>
@@ -54,7 +75,7 @@ const ProfileInfo = (props) => {
                         <img className={s.avatar} src={props.profile.photos.large || userPhoto}/>
                     </div>
                     {props.isOwner && props.isAuth &&
-                    <div class={s.inputWrapper}>
+                    <div className={s.inputWrapper}>
                         <input type={'file'} id={'input__file'} className={s.inputFile} onChange={onMainPhotoSelected}/>
                         <label htmlFor={"input__file"} className={s.inputFileButton}>
                         <span className={s.inputFileIconWrapper}>
@@ -66,8 +87,8 @@ const ProfileInfo = (props) => {
                     {props.isOwner && !editMode && props.isAuth &&
                     <button onClick={() => setEditMode(true)}>edit profile</button>}
                     {editMode
-                            ?<ProfileDataReduxForm initialValues={props.profile}
-                                                   profile={props.profile} onSubmit={submit}/>
+                        // @ts-ignore
+                        ? <ProfileDataFormRedux onSubmit={submit} initialValues={props.profile}/>
                             :<ProfileData profile={props.profile} /> }
                     <div><br/></div>
                     <div><br/></div>
@@ -78,7 +99,7 @@ const ProfileInfo = (props) => {
 
                     <Follow followed={followed} userId={props.profile.userId}
                             isFollowingProgress={props.isFollowingProgress}
-                            unFollow={unFollow} follow={follow} isAuth={props.isAuth} />
+                            unFollow={unFollow} follow={follow} />
                     </div>}
                 </div>
             </div>
@@ -86,7 +107,11 @@ const ProfileInfo = (props) => {
     }
 }
 
-const ProfileData = (props) => {
+type ProfileDataType = {
+    profile: ProfileType
+}
+
+const ProfileData: React.FC<ProfileDataType> = (props) => {
     return (
         <div>
             <div>Full name: <i>{props.profile.fullName}</i></div>
@@ -94,7 +119,7 @@ const ProfileData = (props) => {
             <div>{props.profile.lookingForAJob ? <span><i>I am looking for a job</i></span> : <span><i>I have a job</i></span>}</div>
             <div>My professional skills: <br/> <i>{props.profile.lookingForAJobDescription}</i></div>
             <div>
-                Contacts: {Object.keys(props.profile.contacts).map(key => {
+                Contacts: {Object.keys(props.profile.contacts).map((key: string) => {
                     return <Contact key={key} contactTitle={key}
                                     contactValue={props.profile.contacts[key]}/>
             })}
@@ -103,7 +128,11 @@ const ProfileData = (props) => {
     )
 }
 
-const Contact = ({contactTitle, contactValue}) => {
+type ContactType = {
+    contactTitle: string
+    contactValue: string
+}
+const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
     return (
         <div className={s.contact}>
             {contactTitle}: <i>{contactValue}</i>

@@ -13,12 +13,49 @@ import {
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import {ownUserName} from "../../redux/auth-reducer";
-import {getIsFollowingProgress} from "../../redux/users-selectors";
 import {follow, unFollow} from "../../redux/users-reducer";
+import {ProfileType, UserType} from "../../Types/Types";
+import {AppStateType} from "../../redux/redux-store";
+import exp from "constants";
 
+type matchType = {
+    isExact: boolean
+    params: {
+        userId: any
+    }
+    path: string
+    url: string
+}
+type OwnPropsType = {
+    match: matchType
+    history: Array<string>
+    users: Array<UserType>
+    isOwner: boolean
+}
+type MapStatePropsType = {
+    isAuth: boolean
+    id: number
+    profile: ProfileType | null
+    status: string
+    isFollowingProgress: Array<number>
+    followed: boolean
 
+}
+type MapDispatchPropsType = {
+    getUserProfile: (userId: number) => void
+    getUserFollow: (userId: number) => void
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
+    savePhoto: (photoFile: any) => void
+    updateProfile: (profile: ProfileType, userId: number ) => void
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
+    ownUserName: () => void
+}
 
-class ProfileContainer extends React.Component {
+export type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
+
+class ProfileContainer extends React.Component<PropsType> {
     setPreviousState() {
         let userId = this.props.match.params.userId;
         if (!userId && this.props.isAuth) {
@@ -36,21 +73,26 @@ class ProfileContainer extends React.Component {
         this.setPreviousState()
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps: PropsType, prevState: MapStatePropsType ) {
         if (this.props.match.params.userId !== prevProps.match.params.userId)
             this.setPreviousState()
     }
-
+    isOwner(uId: number | undefined):boolean {
+        if (uId === undefined) {
+            return true
+        } else return false
+    }
     render() {
 
         return (
-            <Profile {...this.props}
-                     isOwner={!this.props.match.params.userId} profile={this.props.profile}
+            <Profile
+                     isOwner={this.isOwner(this.props.match.params.userId)}
+                     profile={this.props.profile}
                      status={this.props.status}
                      updateStatus={this.props.updateStatus}
-                     id={this.props.id} addPhoto={this.props.savePhoto}
+                     savePhoto={this.props.savePhoto}
                      updateProfile={this.props.updateProfile}
-                     users={this.props.users} follow={this.props.follow}
+                     follow={this.props.follow}
                      unFollow={this.props.unFollow}
                      isFollowingProgress={this.props.isFollowingProgress}
                      followed={this.props.followed} isAuth={this.props.isAuth}
@@ -59,7 +101,7 @@ class ProfileContainer extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.postPage.profile,
     followed: state.postPage.followed,
     status: state.postPage.status,
@@ -69,12 +111,12 @@ let mapStateToProps = (state) => ({
 });
 
 export default compose(
-    connect(mapStateToProps, {
+    withAuthRedirect,
+    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
+    (mapStateToProps, {
         ownUserName, getUserProfile,
         getUserFollow, getStatus, updateStatus, savePhoto, updateProfile, follow,
         unFollow
     }),
-    withRouter,
-    // withAuthRedirect
-)
-(ProfileContainer)
+    withRouter
+)(ProfileContainer);

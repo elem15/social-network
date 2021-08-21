@@ -1,15 +1,5 @@
 import React from 'react';
 
-// type PropsTypeFC = {
-//     state: any
-// }
-// type PropsType = {
-//     state: {isToggleOn: boolean}
-//     prevState: {isToggleOn: boolean}
-//     isToggleOn: boolean
-//
-// }
-
 const Settings = () => {
     return (                 
         <div>
@@ -23,7 +13,7 @@ const Settings = () => {
 function Form() {
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log('Отправлена форма.');
+        alert('Отправлена форма.');
     }
 
     return (
@@ -44,8 +34,6 @@ class Toggle extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {isToggleOn: true};
-
-        // Эта привязка обязательна для работы `this` в колбэке.
         this.handleClick = this.handleClick.bind(this);
     }
 

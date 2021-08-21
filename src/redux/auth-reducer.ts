@@ -6,7 +6,7 @@ const SET_USER_DATA = 'social_network/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL = 'social_network/auth/GET_CAPTCHA_URL';
 
 type InitialStateType = {
-    id: number | null,
+    id: number,
     email: string | null,
     login: string | null,
     password: string | null,
@@ -17,7 +17,7 @@ type InitialStateType = {
 }
 
 let initialState: InitialStateType = {
-    id: null,
+    id: 0,
     email: null,
     login: null,
     password: null,
@@ -42,7 +42,7 @@ const authReducer = (state = initialState, action: any) : InitialStateType => {
 }
 
 type SetAuthUserDataActionPayloadType = {
-    id: number | null,
+    id: number,
     email: string | null,
     login: string | null,
     isAuth: boolean
@@ -51,7 +51,7 @@ type SetAuthUserDataActionType = {
     type: typeof SET_USER_DATA,
     payload: SetAuthUserDataActionPayloadType
 }
-const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean)
+const setAuthUserData = (id: number, email: string | null, login: string | null, isAuth: boolean)
     : SetAuthUserDataActionType => ({
     type: SET_USER_DATA,
     payload: {id, email, login, isAuth}
@@ -93,7 +93,7 @@ export const userSignOut = () =>
     async (dispatch: any) => {
         let response = await authAPI.exit()
         if (response.data.resultCode === 0) {
-            dispatch(setAuthUserData(null, null, null, false));
+            dispatch(setAuthUserData(0, null, null, false));
         }
     }
 const captchaURL = () =>

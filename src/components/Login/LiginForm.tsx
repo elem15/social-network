@@ -38,7 +38,7 @@ const LoginFormContent: React.FC<PropsType> = ({ handleSubmit, submitting, error
         </div>
     )
 }
-//// @ts-ignore
+
 const LoginForm = reduxForm({form: 'login'})(LoginFormContent)
 
 export default LoginForm
