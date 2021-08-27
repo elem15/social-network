@@ -1,7 +1,8 @@
 import {profileAPI, usersAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
-import exp from "constants";
-import {ContactsType, PhotosType, PostsType, ProfileType} from "../Types/Types";
+import { PhotosType, PostsType, ProfileType} from "../Types/Types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 const ADD_POST = 'social_network/profile/ADD_POST';
 const SET_USER_PROFILE = 'social_network/profile/SET_USER_PROFILE';
 const SET_USER_FOLLOW = 'social_network/profile/SET_USER_FOLLOW';
@@ -23,7 +24,9 @@ let initialState = {
     status: ''
 };
 type initialStateType = typeof initialState;
-
+type ActionType = AddPostActionCreatorActionType | DeletePostActionCreatorActionType | setUserProfileActionType |
+    setUserFollowActionType | setUserStatusActionType | setUserPhotoSuccessActionType
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 const profileReducer = (state: initialStateType = initialState, action: any) : initialStateType  => {
 
     switch (action.type) {
@@ -106,44 +109,44 @@ type setUserPhotoSuccessActionType = {
 }
 const setUserPhotoSuccess = (photos: PhotosType):setUserPhotoSuccessActionType => ({type: SET_USER_PHOTO_SUCCESS, photos})
 
-export const getUserProfile = (userId: number) =>
-    async (dispatch: any) => {
+export const getUserProfile = (userId: number): ThunkType =>
+    async (dispatch) => {
         let response = await profileAPI.getProfile(userId);
         dispatch(setUserProfile(response.data));
     }
 
-export const savePhoto = (photoFile: any) =>
-    async (dispatch: any) => {
+export const savePhoto = (photoFile: any): ThunkType =>
+    async (dispatch) => {
         let response = await profileAPI.uploadPhoto(photoFile);
         if (response.data.resultCode === 0) {
             dispatch(setUserPhotoSuccess(response.data.data.photos))
         }
     }
 
-export const getUserFollow = (userId: number) =>
-    async (dispatch: any) => {
+export const getUserFollow = (userId: number): ThunkType =>
+    async (dispatch) => {
         let response = await usersAPI.getFollow(userId);
         dispatch(setUserFollow(response.data));
     }
 
-export const getStatus = (userId: number) =>
-    async (dispatch: any) => {
+export const getStatus = (userId: number): ThunkType =>
+    async (dispatch) => {
         let response = await profileAPI.getStatus(userId);
         dispatch(setUserStatus(response.data))
     }
-export const updateStatus = (status: string) =>
-    async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType =>
+    async (dispatch) => {
         try {
             let response = await profileAPI.updateStatus(status);
             if (response.data.resultCode === 0) {
                 dispatch(setUserStatus(status))
             }
         } catch (e) {
-            console.error("Error occurred: "   )
+            console.error("Error occurred: ")
         }
     }
-export const updateProfile = (profile: ProfileType, userId: number) =>
-    async (dispatch: any) => {
+export const updateProfile = (profile: ProfileType, userId: number): ThunkType =>
+    async (dispatch) => {
         // const userId = store.getState().auth.id;
         const response = await profileAPI.updateProfile(profile);
         if (response.data.resultCode === 0) {
@@ -154,6 +157,7 @@ export const updateProfile = (profile: ProfileType, userId: number) =>
                 return str.split('>').map((word) => word[0].toLowerCase() + word.slice(1, word.length - 1))[1];
             }
             const action = stopSubmit('profile', {contacts: {[getLastResponseWorld(message)]: message}});
+            // @ts-ignore
             dispatch(action);
             return Promise.reject(message)
         }

@@ -1,5 +1,7 @@
-import {authAPI, securityAPI} from "../api/api";
+import {authAPI, ResultCodeEnum, ResultCodeForCaptcha, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 
 const SET_USER_DATA = 'social_network/auth/SET_USER_DATA';
@@ -26,7 +28,7 @@ let initialState: InitialStateType = {
     serverMessage: null,
     captchaURL: null
 }
-
+type ActionType = SetAuthUserDataActionType | GetCaptchaURLActionType
 const authReducer = (state = initialState, action: any) : InitialStateType => {
 
     switch (action.type) {
@@ -57,46 +59,46 @@ const setAuthUserData = (id: number, email: string | null, login: string | null,
     payload: {id, email, login, isAuth}
 });
 
-export const ownUserName = () =>
-    async (dispatch: any) => {
-        let response = await authAPI.me();
-        if (response.data.resultCode === 0) {
-            let {id, email, login} = response.data.data;
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+export const ownUserName = (): ThunkType =>
+    async (dispatch) => {
+        let meData = await authAPI.me();
+        if (meData.resultCode === ResultCodeEnum.Success) {
+            let {id, email, login} = meData.data;
             dispatch(setAuthUserData(id, email, login, true));
         }
     }
-
 type GetCaptchaURLActionType = {
     type: typeof GET_CAPTCHA_URL,
     payload: {captchaURL: string}
 }
 const getCaptchaURL = (captchaURL: string) : GetCaptchaURLActionType => ({type: GET_CAPTCHA_URL, payload: {captchaURL}});
 
-export const userSignIn = (login: string, password: string, rememberMe=false, captcha: string | null = null) =>
+export const userSignIn = (login: string, password: string, rememberMe=false, captcha: string | null = null): ThunkType =>
     async (dispatch: any) => {
-        let response = await authAPI.login(login, password, rememberMe, captcha);
+        let authLogin = await authAPI.login(login, password, rememberMe, captcha);
         // dispatch(deleteCaptchaURL());
-        if (response.data.resultCode === 0) {
+        if (authLogin.resultCode === ResultCodeEnum.Success) {
             dispatch(ownUserName());
-        } else if (response.data.resultCode === 10) {
+        } else if (authLogin.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {
             let action = stopSubmit('login', {captcha: 'Enter the captcha'});
             dispatch(action);
             dispatch(captchaURL());
-        } else if (response.data.resultCode === 1) {
-            let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Same error';
+        } else if (authLogin.resultCode === ResultCodeEnum.Error) {
+            let message = authLogin.messages.length > 0 ? authLogin.messages[0] : 'Same error';
             let action = stopSubmit('login', {_error: message});
             dispatch(action);
         }
     }
 
-export const userSignOut = () =>
+export const userSignOut = (): ThunkType =>
     async (dispatch: any) => {
         let response = await authAPI.exit()
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodeEnum.Success) {
             dispatch(setAuthUserData(0, null, null, false));
         }
     }
-const captchaURL = () =>
+const captchaURL = (): ThunkType =>
     async (dispatch: any) => {
         let response = await securityAPI.captcha()
         if (response.data.url) {
