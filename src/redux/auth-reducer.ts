@@ -94,15 +94,15 @@ export const userSignIn = (login: string, password: string, rememberMe=false, ca
 export const userSignOut = (): ThunkType =>
     async (dispatch: any) => {
         let response = await authAPI.exit()
-        if (response.data.resultCode === ResultCodeEnum.Success) {
+        if (response.resultCode === ResultCodeEnum.Success) {
             dispatch(setAuthUserData(0, null, null, false));
         }
     }
 const captchaURL = (): ThunkType =>
     async (dispatch: any) => {
         let response = await securityAPI.captcha()
-        if (response.data.url) {
-            dispatch(getCaptchaURL(response.data.url));
+        if (response.url) {
+            dispatch(getCaptchaURL(response.url));
         }
     }
 

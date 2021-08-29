@@ -1,4 +1,4 @@
-import {profileAPI, usersAPI} from "../api/api";
+import {profileAPI, ResultCodeEnum, usersAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import { PhotosType, PostsType, ProfileType} from "../Types/Types";
 import {ThunkAction} from "redux-thunk";
@@ -112,33 +112,33 @@ const setUserPhotoSuccess = (photos: PhotosType):setUserPhotoSuccessActionType =
 export const getUserProfile = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.getProfile(userId);
-        dispatch(setUserProfile(response.data));
+        dispatch(setUserProfile(response));
     }
 
 export const savePhoto = (photoFile: any): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.uploadPhoto(photoFile);
-        if (response.data.resultCode === 0) {
-            dispatch(setUserPhotoSuccess(response.data.data.photos))
+        if (response.resultCode === ResultCodeEnum.Success) {
+            dispatch(setUserPhotoSuccess(response.data.photos))
         }
     }
 
 export const getUserFollow = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await usersAPI.getFollow(userId);
-        dispatch(setUserFollow(response.data));
+        dispatch(setUserFollow(response));
     }
 
 export const getStatus = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.getStatus(userId);
-        dispatch(setUserStatus(response.data))
+        dispatch(setUserStatus(response))
     }
 export const updateStatus = (status: string): ThunkType =>
     async (dispatch) => {
         try {
             let response = await profileAPI.updateStatus(status);
-            if (response.data.resultCode === 0) {
+            if (response.resultCode === ResultCodeEnum.Success) {
                 dispatch(setUserStatus(status))
             }
         } catch (e) {
@@ -149,15 +149,15 @@ export const updateProfile = (profile: ProfileType, userId: number): ThunkType =
     async (dispatch) => {
         // const userId = store.getState().auth.id;
         const response = await profileAPI.updateProfile(profile);
-        if (response.data.resultCode === 0) {
+        if (response.resultCode === ResultCodeEnum.Success) {
             dispatch(getUserProfile(userId))
-        } else if (response.data.resultCode === 1) {
-            const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Same error';
+        } else if (response.resultCode === ResultCodeEnum.Error) {
+            const message = response.messages.length > 0 ? response.messages[0] : 'Same error';
             const getLastResponseWorld = (str: string) => {
                 return str.split('>').map((word) => word[0].toLowerCase() + word.slice(1, word.length - 1))[1];
             }
             const action = stopSubmit('profile', {contacts: {[getLastResponseWorld(message)]: message}});
-            // @ts-ignore
+          // @ts-ignore
             dispatch(action);
             return Promise.reject(message)
         }
