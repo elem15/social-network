@@ -7,7 +7,7 @@ import Settings from './components/Settings/Settings';
 import FriendsContainer from "./components/Friends/FriendsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import Header from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {compose} from "redux";
@@ -20,7 +20,7 @@ import {UserOutlined, LaptopOutlined, NotificationOutlined} from '@ant-design/ic
 import s from "./components/Navbar/Navbar.module.css";
 
 const {SubMenu} = Menu;
-const {Header, Content, Sider} = Layout
+const {Content, Sider} = Layout
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const Login = React.lazy(() => import("./components/Login/Login"));
 const Dialogs = React.lazy(() => import('./components/Dialog/Dialogs'));
@@ -47,19 +47,7 @@ class App extends React.Component {
 
         return (
             <Layout>
-                <Header className="header">
-                    <div className="logo"/>
-                    <Row>
-                        <Col span={20}>
-                            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                                <Menu.Item key="1"><Link to='/Users'>Developers</Link></Menu.Item>
-                            </Menu>
-                        </Col>
-                        <Col span={4}>
-                            <Avatar style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
-                        </Col>
-                    </Row>
-                </Header>
+                <Header />
                 <Layout>
                     <Sider width={200} className="site-layout-background">
                         <Menu
