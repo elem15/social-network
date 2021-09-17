@@ -7,7 +7,7 @@ import Settings from './components/Settings/Settings';
 import FriendsContainer from "./components/Friends/FriendsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import Header from "./components/Header/HeaderContainer";
+import Header from "./components/Header/Header";
 import {connect, Provider} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {compose} from "redux";
