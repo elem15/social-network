@@ -1,4 +1,4 @@
-import {authAPI, ResultCodeEnum, ResultCodeForCaptcha, securityAPI} from "../api/api";
+import {authAPI, profileAPI, ResultCodeEnum, ResultCodeForCaptcha, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
@@ -105,5 +105,11 @@ const captchaURL = (): ThunkType =>
             dispatch(getCaptchaURL(response.url));
         }
     }
+
+// export const getUserProfile = (userId: number): ThunkType =>
+//     async (dispatch) => {
+//         let response = await profileAPI.getProfile(userId);
+//         dispatch(setUserProfile(response));
+//     }
 
 export default authReducer;

@@ -3,9 +3,9 @@ import {Link, NavLink} from "react-router-dom";
 import {Avatar, Button, Col, Layout, Menu, Row, Typography, Space} from "antd";
 import {UserOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
-import {selectCurrentUserLogin, selectIsAuth} from "../../redux/auth-selectors";
+import {selectCurrentUserId, selectCurrentUserLogin, selectIsAuth} from "../../redux/auth-selectors";
 import {userSignOut} from "../../redux/auth-reducer";
-import {photosSelect} from "../../redux/profile-selectors";
+import {photosSelect, profileIdSelect} from "../../redux/profile-selectors";
 
 
  type PropsType = {
@@ -18,7 +18,9 @@ const Header: React.FC<PropsType> = () => {
 
     const isAuth = useSelector(selectIsAuth)
     const login = useSelector(selectCurrentUserLogin)
+    const ID = useSelector(selectCurrentUserId)
     const photos= useSelector(photosSelect)
+    const profileId = useSelector(profileIdSelect)
 
     const dispatch = useDispatch()
 
@@ -30,7 +32,7 @@ const Header: React.FC<PropsType> = () => {
     const {Header} = Layout
 
     const isPhoto = () => {
-    if (photos?.small !== null) return true
+    if (photos?.small !== null && ID === profileId) return true
     else return false
 }
     return (
