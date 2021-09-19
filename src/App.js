@@ -18,6 +18,7 @@ import 'antd/dist/antd.css';
 import {Layout, Menu, Breadcrumb, Button, Avatar, Col, Row} from 'antd';
 import {UserOutlined, LaptopOutlined, NotificationOutlined} from '@ant-design/icons';
 import s from "./components/Navbar/Navbar.module.css";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 const {SubMenu} = Menu;
 const {Content, Sider} = Layout
@@ -47,7 +48,7 @@ class App extends React.Component {
 
         return (
             <Layout>
-                <Header />
+                <HeaderContainer />
                 <Layout>
                     <Sider width={200} className="site-layout-background">
                         <Menu

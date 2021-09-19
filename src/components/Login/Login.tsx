@@ -22,6 +22,7 @@ type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
 class Login extends React.Component<PropsType> {
     submit = (values: any) => {
         this.props.userSignIn(values.email, values.password, values.rememberMe, values.captcha)
+
     }
     unSubmit = () => {
         this.props.userSignOut()
