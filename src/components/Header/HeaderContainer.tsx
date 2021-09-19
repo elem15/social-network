@@ -14,7 +14,8 @@ type PropsType ={
 
 class HeaderContainer extends React.Component<PropsType> {
     state = {
-        result: this.props.profile
+        result: null,
+        authId: this.props.id
     }
     componentDidMount() {
         this.getProfile()
@@ -22,6 +23,12 @@ class HeaderContainer extends React.Component<PropsType> {
     getProfile = async () => {
         await profileAPI.getProfile(this.props.id).then(result => this.setState({result}))
     }
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any): void {
+        if(this.props.id !== prevProps.id) {
+            this.getProfile()
+        }
+    }
+
     render() {
         const {result} = this.state
 

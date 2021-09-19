@@ -49,7 +49,7 @@ const Header: React.FC<PropsType> = ({profile}) => {
     const {Header} = Layout
 
     const isPhoto = () => {
-    if (profile?.photos !== null) return true
+    if (profile?.photos.small !== null) return true
     else return false
 }
 
@@ -69,7 +69,7 @@ const Header: React.FC<PropsType> = ({profile}) => {
                        <Button onClick={logoutCallback}>Log out</Button>
                        <span> </span><span> </span><span> </span>
                        <Text type="success">{login}</Text>
-                       {isPhoto()
+                       {profile?.photos.small
                            ?
                            <Avatar
                                src={ profile?.photos.small } />
