@@ -31,7 +31,7 @@ class HeaderContainer extends React.Component<PropsType> {
 
     render() {
         const {result} = this.state
-
+// @ts-ignore
         return <Header profile={result} />
     }
 }

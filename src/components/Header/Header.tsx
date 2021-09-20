@@ -17,10 +17,10 @@ import {ProfileType} from "../../Types/Types";
 
 
  type PropsType = {
-       profile: ProfileType | null
+       // profile: ProfileType | null
  }
 
-const Header: React.FC<PropsType> = ({profile}) => {
+const Header: React.FC<PropsType> = () => {
 
     const isAuth = useSelector(selectIsAuth)
     const login = useSelector(selectCurrentUserLogin)
@@ -28,16 +28,14 @@ const Header: React.FC<PropsType> = ({profile}) => {
     const profileCurrent = useSelector(profileSelect)
     const profileId = useSelector(profileIdSelect)
 
-    // const [profile, setProfile] = useState(profileCurrent)
+    const [profile, setProfile] = useState(profileCurrent)
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //               const response = await profileAPI.getProfile(ID)
-    //               setProfile(response)
-    //         }
-    //         fetchData()
-    //     }, [] )
-    console.log(profile)
+    useEffect(() => {
+        const fetchData = async () => {
+            await profileAPI.getProfile(ID).then(profile => setProfile(profile))
+            }
+            fetchData()
+        }, [ID] )
 
     const dispatch = useDispatch()
 
