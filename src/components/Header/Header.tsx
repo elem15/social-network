@@ -1,23 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Link, NavLink} from "react-router-dom";
-import {Avatar, Button, Col, Layout, Menu, Row, Typography, Space} from "antd";
+import React, {useEffect} from 'react';
+import {Link} from "react-router-dom";
+import {Avatar, Button, Col, Layout, Menu, Row, Space, Typography} from "antd";
 import {UserOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {
+    selectAuthProfile,
     selectCurrentUserId,
     selectCurrentUserLogin,
     selectIsAuth,
-
-
 } from "../../redux/auth-selectors";
-import {userSignOut} from "../../redux/auth-reducer";
-import {profileIdSelect, profileSelect} from "../../redux/profile-selectors";
-import {profileAPI} from "../../api/api";
-import {ProfileType} from "../../Types/Types";
+import {getUserProfile, userSignOut} from "../../redux/auth-reducer";
 
 
- type PropsType = {
-       // profile: ProfileType | null
+type PropsType = {
  }
 
 const Header: React.FC<PropsType> = () => {
@@ -25,26 +20,24 @@ const Header: React.FC<PropsType> = () => {
     const isAuth = useSelector(selectIsAuth)
     const login = useSelector(selectCurrentUserLogin)
     const ID = useSelector(selectCurrentUserId)
-    const profileCurrent = useSelector(profileSelect)
-    const profileId = useSelector(profileIdSelect)
-
-    const [profile, setProfile] = useState(profileCurrent)
+    const profile = useSelector(selectAuthProfile)
 
     useEffect(() => {
-        const fetchData = async () => {
-            await profileAPI.getProfile(ID).then(profile => setProfile(profile))
-            }
-            fetchData()
+            getUserProfileLocal()
         }, [ID] )
 
     const dispatch = useDispatch()
+
+    const getUserProfileLocal = () => {
+        dispatch(getUserProfile(ID))
+    }
 
     const logoutCallback = () => {
         dispatch(userSignOut())
     }
 
     const { Text } = Typography
-    const {Header} = Layout
+    const { Header } = Layout
 
     return (
         <Header className="header">
@@ -62,7 +55,8 @@ const Header: React.FC<PropsType> = () => {
                        <Button onClick={logoutCallback}>Log out</Button>
                        <span> </span><span> </span><span> </span>
                        <Text type="success">{login}</Text>
-                       {profile?.photos.small
+                       {
+                       profile?.photos.small
                            ?
                            <Avatar
                                src={ profile?.photos.small } />

@@ -1,11 +1,13 @@
-import {authAPI, ResultCodeEnum, ResultCodeForCaptcha, securityAPI} from "../api/api";
+import {authAPI, profileAPI, ResultCodeEnum, ResultCodeForCaptcha, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
+import {ProfileType} from "../Types/Types";
 
 
 const SET_USER_DATA = 'social_network/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL = 'social_network/auth/GET_CAPTCHA_URL';
+const GET_PROFILE = 'social_network/auth/GET_PROFILE';
 
 type InitialStateType = {
     id: number,
@@ -16,6 +18,7 @@ type InitialStateType = {
     isAuth: boolean,
     serverMessage: string | null,
     captchaURL: string | null
+    profile: ProfileType | null
 }
 
 let initialState: InitialStateType = {
@@ -26,9 +29,11 @@ let initialState: InitialStateType = {
     rememberMe: false,
     isAuth: false,
     serverMessage: null,
-    captchaURL: null
+    captchaURL: null,
+    profile: null
 }
-type ActionType = SetAuthUserDataActionType | GetCaptchaURLActionType
+type ActionType = SetAuthUserDataActionType | GetCaptchaURLActionType | GetProfileActionType
+
 const authReducer = (state = initialState, action: any) : InitialStateType => {
 
     switch (action.type) {
@@ -37,6 +42,11 @@ const authReducer = (state = initialState, action: any) : InitialStateType => {
             return {
                 ...state,
                 ...action.payload,
+            }
+        case GET_PROFILE:
+            return {
+                ...state,
+                profile: action.profile,
             }
         default:
             return state;
@@ -58,8 +68,24 @@ const setAuthUserData = (id: number, email: string | null, login: string | null,
     type: SET_USER_DATA,
     payload: {id, email, login, isAuth}
 });
+type GetProfileActionType = {
+    type: typeof GET_PROFILE,
+    profile: ProfileType
+}
+const getProfileUserData = (profile: ProfileType)
+    : GetProfileActionType => ({
+    type: GET_PROFILE,
+    profile: profile
+});
 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+
+export const getUserProfile = (userId: number): ThunkType =>
+    async (dispatch) => {
+        let profile = await profileAPI.getProfile(userId);
+        dispatch(getProfileUserData(profile));
+    }
+
 export const ownUserName = (): ThunkType =>
     async (dispatch) => {
         let meData = await authAPI.me();
