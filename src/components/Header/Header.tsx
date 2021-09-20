@@ -46,11 +46,6 @@ const Header: React.FC<PropsType> = () => {
     const { Text } = Typography
     const {Header} = Layout
 
-    const isPhoto = () => {
-    if (profile?.photos.small !== null) return true
-    else return false
-}
-
     return (
         <Header className="header">
             <div className="logo"/>
