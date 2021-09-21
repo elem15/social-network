@@ -15,73 +15,76 @@ import {getInitialization} from "./redux/app-reducer";
 import store from "./redux/redux-store";
 import LoginContainer from "./components/Login/LoginContainer";
 import 'antd/dist/antd.css';
-import {Layout, Menu, Breadcrumb, Button, Avatar, Col, Row} from 'antd';
-import {UserOutlined, LaptopOutlined, NotificationOutlined} from '@ant-design/icons';
+import {Layout, Menu, Breadcrumb, Button, Avatar, Col, Row } from 'antd';
+import {ProfileOutlined, UsergroupAddOutlined, LoginOutlined} from '@ant-design/icons';
 import s from "./components/Navbar/Navbar.module.css";
+import {createBrowserHistory} from "history";
 // import HeaderContainer from "./components/Header/HeaderContainer";
 
 const {SubMenu} = Menu;
-const {Content, Sider} = Layout
+const {Content, Sider, Footer} = Layout
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const Login = React.lazy(() => import("./components/Login/Login"));
 const Dialogs = React.lazy(() => import('./components/Dialog/Dialogs'));
+
 
 class App extends React.Component {
     catchAllUnhandledErrors = (e) => {
         console.error("Error occurred: " + e.reason.message);
         return false;
     }
-
     componentDidMount() {
         this.props.getInitialization();
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
-
+    setAdress (adress) {
+        this.adress = adress
+    }
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
 
     render() {
+
         if (!this.props.initialization) {
             return <Preloader/>
         }
 
         return (
-            <Layout>
+            <Layout  >
                 <Header />
                 <Layout>
-                    <Sider width={200} className="site-layout-background">
+                    <Sider width={200} collapsedWidth={50} collapsed={true} className="site-layout-background">
                         <Menu
                             mode="inline"
-                            defaultSelectedKeys={['1']}
-                            defaultOpenKeys={['sub1']}
+                            // defaultSelectedKeys={['1']}
+                            // defaultOpenKeys={['sub1']}
                             style={{height: '100%', borderRight: 0}}
                         >
-                            <SubMenu key="sub1" icon={<UserOutlined/>} title="My profile">
-                                <Menu.Item key="1"><Link to='/Profile'>Profile</Link></Menu.Item>
-                                <Menu.Item key="2"><Link exact to='/Dialogs'>Message</Link></Menu.Item>
-                                <Menu.Item key="3"><Link to='/News'>News</Link></Menu.Item>
-                                <Menu.Item key="4"><Link to='/Music'>Music</Link></Menu.Item>
+                            <SubMenu key="sub1" icon={<ProfileOutlined />} title="My profile">
+                                <Menu.Item key="1"><Link to='/Profile' onClick={() => this.setAdress('Profile')}>Profile</Link></Menu.Item>
+                                <Menu.Item key="2"><Link exact to='/Dialogs' onClick={() => this.setAdress('Message')}>Message</Link></Menu.Item>
+                                <Menu.Item key="3"><Link to='/News' onClick={() => this.setAdress('News')}>News</Link></Menu.Item>
+                                <Menu.Item key="4"><Link to='/Music' onClick={() => this.setAdress('Music')}>Music</Link></Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub2" icon={<LaptopOutlined/>} title="Developers">
-                                <Menu.Item key="5"><Link to='/Users'>Users</Link></Menu.Item>
-                                <Menu.Item key="6"><Link to='/Friends'>Friends</Link></Menu.Item>
+                            <SubMenu key="sub2" icon={<UsergroupAddOutlined />} title="Developers">
+                                <Menu.Item key="5"><Link to='/Users' onClick={() => this.setAdress('Users')}>Users</Link></Menu.Item>
+                                <Menu.Item key="6"><Link to='/Friends' onClick={() => this.setAdress('Friends')}>Friends</Link></Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub3" icon={<NotificationOutlined/>} title="Authentication">
-                                <Menu.Item key="9"><Link to='/Login'>Login</Link></Menu.Item>
+                            <SubMenu key="sub3" icon={<LoginOutlined />} title="Authentication">
+                                <Menu.Item key="9"><Link to='/Login' onClick={() => this.setAdress('Login')}>Login</Link></Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
                     <Layout style={{padding: '0 24px 24px'}}>
                         <Breadcrumb style={{margin: '16px 0'}}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to='/Profile' onClick={() => this.setAdress('Profile')}>Home</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item>{this.adress}</Breadcrumb.Item>
                         </Breadcrumb>
                         <Content
                             className="site-layout-background"
                             style={{
-                                padding: 24,
+                                padding: 12,
                                 margin: 0,
                                 minHeight: 280,
                             }}
@@ -104,6 +107,7 @@ class App extends React.Component {
                                     <a href={"/Profile"} type={"link"}>OK!</a></div>}/>
                             </Switch>
                         </Content>
+                        <Footer style={{ textAlign: 'center' }}>Social Network ©2021 Created by Elem</Footer>
                     </Layout>
                 </Layout>
             </Layout>

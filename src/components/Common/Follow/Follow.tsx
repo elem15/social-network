@@ -1,4 +1,5 @@
 import React from "react";
+import {Button} from "antd";
 
 type PropsType = {
     followed: boolean,
@@ -14,12 +15,12 @@ const Follow: React.FC<PropsType> =
     return (
         <div>
             {followed
-                ? <button disabled={isFollowingProgress.some(id => id === userId)} onClick={() => {
+                ? <Button disabled={isFollowingProgress.some(id => id === userId)} onClick={() => {
                     unFollow(userId);
-                }}>Unfollow</button>
-                : <button disabled={isFollowingProgress.some(id => id === userId)} onClick={() => {
+                }}>Unfollow</Button>
+                : <Button disabled={isFollowingProgress.some(id => id === userId)} onClick={() => {
                     follow(userId);
-                }}>Follow</button>
+                }}>Follow</Button>
             }
         </div>
     )

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {Avatar, Button, Col, Layout, Menu, Row, Space, Typography} from "antd";
 import {UserOutlined} from '@ant-design/icons';
@@ -22,13 +22,15 @@ const Header: React.FC<PropsType> = () => {
     const ID = useSelector(selectCurrentUserId)
     const profile = useSelector(selectAuthProfile)
 
-    useEffect(() => {
-            getUserProfileLocal()
+    // const [profile, setProfile] = useState(profileInit)
+
+    useEffect( () => {
+        getUserProfileLocal(ID)
         }, [ID] )
 
     const dispatch = useDispatch()
 
-    const getUserProfileLocal = () => {
+    const getUserProfileLocal = (ID: number) => {
         dispatch(getUserProfile(ID))
     }
 
@@ -43,12 +45,12 @@ const Header: React.FC<PropsType> = () => {
         <Header className="header">
             <div className="logo"/>
             <Row>
-                <Col span={12}>
+                <Col xs={{span: 8, offset: 0}} sm={{span: 18, offset: 0}} lg={{span: 19, offset: 0}}>
                     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1"><Link to='/Users'>Developers</Link></Menu.Item>
                     </Menu>
                 </Col>
-                <Col span={12}> {
+                <Col xs={{span: 12, offset: 1}} sm={{span: 5, offset: 0}} lg={{span: 3, offset: 0}}> {
                     isAuth
                     ?
                    <Space direction="horizontal">
@@ -61,10 +63,11 @@ const Header: React.FC<PropsType> = () => {
                            <Avatar
                                src={ profile?.photos.small } />
                            :
-                           <Avatar alt={login || ''} style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>} />}
+                           <Avatar alt={login || ''} style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>} />
+                       }
                    </Space>
                     :
-                    <Link to={'/Login'}>Login</Link>
+                        <Button><Link to={'/Login'}>Login</Link></Button>
                 }
                 </Col>
             </Row>

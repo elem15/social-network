@@ -34,4 +34,3 @@ const mapDispatchToProps = (dispatch: any) => {
 
 export default connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
 (mapStateToProps, mapDispatchToProps)(MyPosts);
-

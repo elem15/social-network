@@ -7,9 +7,11 @@ import arrow from '../../../assets/images/add.svg'
 import ProfileDataFormRedux from "./ProfileDataForm";
 import Follow from "../../Common/Follow/Follow";
 import {ProfileType, UserType} from "../../../Types/Types";
+import {Col, Row, Typography, Image, Button, Space} from "antd";
+const { Title, Text } = Typography
 
-type OwnPropsType = {
-}
+
+type OwnPropsType = {}
 type MapStatePropsType = {
     isAuth: boolean
     profile: ProfileType | null
@@ -21,7 +23,7 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
     updateStatus: (status: string) => void
     savePhoto: (photoFile: any) => void
-    updateProfile: (profile: ProfileType, userId: number ) => void
+    updateProfile: (profile: ProfileType, userId: number) => void
     follow: (userId: number) => void
     unFollow: (userId: number) => void
 }
@@ -54,26 +56,24 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
     }, [props.followed])
 
     const submit = (values: any) => {
-      // @ts-ignore
+        // @ts-ignore
         props.updateProfile(values, props.profile.userId).then(() => {
-          setEditMode(false);
-      })
+            setEditMode(false);
+        })
     }
 
     if (!props.profile) {
         return <Preloader/>
     } else {
         return (
-            <div>
-                <div className={s.descriptionBlock}>
-                    <div className={s.fullName}>{props.profile.fullName}</div>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32  }}>
+
+                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 10, offset: 0}} lg={{ span: 10, offset: 0 }}>
+                    <Title level={2}>{props.profile.fullName}</Title>
                     <ProfileStatusWithHooks userId={props.profile.userId}
                                             status={props.status} updateStatus={props.updateStatus}
                                             isOwner={props.isOwner} isAuth={props.isAuth}/>
-                                            <br/>
-                    <div>
-                        <img className={s.avatar} src={props.profile.photos.large || userPhoto}/>
-                    </div>
+                        <Image width={170} style={{borderRadius: '3px'}} src={props.profile.photos.large || userPhoto}/>
                     {props.isOwner && props.isAuth &&
                     <div className={s.inputWrapper}>
                         <input type={'file'} id={'input__file'} className={s.inputFile} onChange={onMainPhotoSelected}/>
@@ -84,12 +84,16 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
                             <span className={s.inputFileButtonText}>Download your photo</span>
                         </label>
                     </div>}
+                </Col>
+
+                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 12, offset: 0}}  lg={{ span: 10, offset: 0 }}>
+                    <Title level={3}>Profile</Title>
                     {props.isOwner && !editMode && props.isAuth &&
-                    <button onClick={() => setEditMode(true)}>edit profile</button>}
+                    <Button onClick={() => setEditMode(true)}>edit profile</Button>}
+                    <br/><br/>
                     {editMode
-                        // @ts-ignore
                         ? <ProfileDataFormRedux onSubmit={submit} initialValues={props.profile}/>
-                            :<ProfileData profile={props.profile} /> }
+                        : <ProfileData profile={props.profile}/>}
                     <div><br/></div>
                     <div><br/></div>
                     {!props.isOwner &&
@@ -97,12 +101,12 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
                         ? <span>Subscribed to {props.profile.fullName}</span>
                         : <span>You can subscribe to {props.profile.fullName}</span>}
 
-                    <Follow followed={followed} userId={props.profile.userId}
-                            isFollowingProgress={props.isFollowingProgress}
-                            unFollow={unFollow} follow={follow} />
+                        <Follow followed={followed} userId={props.profile.userId}
+                                isFollowingProgress={props.isFollowingProgress}
+                                unFollow={unFollow} follow={follow}/>
                     </div>}
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }
@@ -113,18 +117,19 @@ type ProfileDataType = {
 
 const ProfileData: React.FC<ProfileDataType> = (props) => {
     return (
-        <div>
-            <div>Full name: <i>{props.profile.fullName}</i></div>
-            <div>About me: <i>{props.profile.aboutMe}</i></div>
-            <div>{props.profile.lookingForAJob ? <span><i>I am looking for a job</i></span> : <span><i>I have a job</i></span>}</div>
-            <div>My professional skills: <br/> <i>{props.profile.lookingForAJobDescription}</i></div>
-            <div>
+        <Space direction="vertical">
+            <Text><b>Full name:</b> <i>{props.profile.fullName}</i></Text>
+            <Text><b>About me:</b> <i>{props.profile.aboutMe}</i></Text>
+            <Text>{props.profile.lookingForAJob ? <span><i>I am looking for a job</i></span> :
+                <span><i>I have a job</i></span>}</Text>
+            <Text><b>My professional skills:</b> <i>{props.profile.lookingForAJobDescription}</i></Text>
+            <Text>
                 Contacts: {Object.keys(props.profile.contacts).map((key: string) => {
-                    return <Contact key={key} contactTitle={key}
-                                    contactValue={props.profile.contacts[key]}/>
+                return <Contact key={key} contactTitle={key}
+                                contactValue={props.profile.contacts[key]}/>
             })}
-            </div>
-        </div>
+            </Text>
+        </Space>
     )
 }
 
@@ -135,7 +140,7 @@ type ContactType = {
 const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
     return (
         <div className={s.contact}>
-            {contactTitle}: <i>{contactValue}</i>
+            <span className={s.contactTitle}>{contactTitle}</span>: <i>{contactValue}</i>
         </div>
     )
 }
