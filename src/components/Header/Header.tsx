@@ -11,9 +11,9 @@ import {
 } from "../../redux/auth-selectors";
 import {getUserProfile, userSignOut} from "../../redux/auth-reducer";
 
-
 type PropsType = {
- }
+
+}
 
 const Header: React.FC<PropsType> = () => {
 
@@ -42,15 +42,15 @@ const Header: React.FC<PropsType> = () => {
     const { Header } = Layout
 
     return (
-        <Header className="header">
+        <Header className="header"  >
             <div className="logo"/>
-            <Row>
+            <Row >
                 <Col xs={{span: 8, offset: 0}} sm={{span: 18, offset: 0}} lg={{span: 19, offset: 0}}>
                     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1"><Link to='/Users'>Developers</Link></Menu.Item>
                     </Menu>
                 </Col>
-                <Col xs={{span: 12, offset: 1}} sm={{span: 5, offset: 0}} lg={{span: 3, offset: 0}}> {
+                <Col xs={{span: 10, offset: 1}} sm={{span: 5, offset: 0}} lg={{span: 3, offset: 0}}> {
                     isAuth
                     ?
                    <Space direction="horizontal">

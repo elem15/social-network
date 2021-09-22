@@ -31,11 +31,12 @@ export type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
 const Profile: React.FC<PropsType> = (props) => {
 
     return (
+
         <Layout>
             <ProfileHead/>
             <Divider />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32  }}>
-                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 22, offset: 0}} lg={{ span: 16, offset: 0 }}>
+                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 22, offset: 2}} lg={{ span: 14, offset: 0 }}>
                     <ProfileInfo profile={props.profile} follow={props.follow}
                                  status={props.status} updateStatus={props.updateStatus}
                                  isOwner={props.isOwner} savePhoto={props.savePhoto}
@@ -43,11 +44,12 @@ const Profile: React.FC<PropsType> = (props) => {
                                  isFollowingProgress={props.isFollowingProgress}
                                  unFollow={props.unFollow} isAuth={props.isAuth}
                     /></Col>
-                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 22, offset: 0}} lg={{ span: 6, offset: 1 }}>
+                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 22, offset: 2}} lg={{ span: 8, offset: 1 }}>
                     <MyPostsContainer/>
                 </Col>
             </Row>
         </Layout>
+
     )
 }
 

@@ -25,11 +25,11 @@ const Post: React.FC<PropsType> = (props) => {
             <Col span={12}>
             <Text keyboard>{props.message} </Text>
             </Col>
-            <Col span={2} offset={1}>
+            <Col span={3} offset={1}>
             <span className={`${s.item} ${s.active}`}>{props.likeCount} </span>
             <span> <LikeOutlined onClick={likeIncrement}/></span>
             </Col>
-            <Col span={2} offset={1}>
+            <Col span={3} offset={1}>
             <span className={`${s.item} ${s.active}`}>{props.disLikeCount} </span>
             <span> <DislikeOutlined  onClick={disLikeIncrement}/></span>
             </Col>

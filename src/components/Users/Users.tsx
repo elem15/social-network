@@ -9,6 +9,7 @@ type PropsType = {
     totalUsersCount: number,
     pageSize: number,
     currentPage: number,
+    isAuth: boolean,
     onPageChanged: ((p: number) => void),
     isFollowingProgress: number[],
     unFollow: (userId: number) => void,
@@ -21,7 +22,7 @@ type PropsType = {
 const Users: React.FC<PropsType> = ({
                    totalUsersCount, pageSize, currentPage, onPageChanged,
                    isFollowingProgress, unFollow, follow,
-                   isFetching, users
+                   isFetching, users, isAuth
                }) => {
 
     return (
@@ -33,9 +34,11 @@ const Users: React.FC<PropsType> = ({
 
                 <div className={styles.users}>
                     {
-                        users.map(u => <User key={u.id} user={u} isFollowingProgress=
-                                                    {isFollowingProgress}
-                                                   unFollow={unFollow} follow={follow}/>
+                        users.map(u => <User key={u.id} user={u}
+                                             isFollowingProgress={isFollowingProgress}
+                                             unFollow={unFollow} follow={follow}
+                                             isAuth={isAuth}
+                            />
                         )
                     }
                 </div>

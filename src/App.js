@@ -29,6 +29,9 @@ const Dialogs = React.lazy(() => import('./components/Dialog/Dialogs'));
 
 
 class App extends React.Component {
+    state = {
+        Address: ''
+    }
     catchAllUnhandledErrors = (e) => {
         console.error("Error occurred: " + e.reason.message);
         return false;
@@ -37,8 +40,11 @@ class App extends React.Component {
         this.props.getInitialization();
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
-    setAdress (adress) {
-        this.adress = adress
+    setAddress = (Address) => {
+        this.setState({
+            Address: Address
+        })
+
     }
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
@@ -49,12 +55,23 @@ class App extends React.Component {
         if (!this.props.initialization) {
             return <Preloader/>
         }
+        const BreadCrmp = ({page}) => {
+            return (
+                <Breadcrumb style={{margin: '16px 0'}}>
+                    <Breadcrumb.Item><Link to='/Profile'>Home</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item>{page}</Breadcrumb.Item>
+                </Breadcrumb>
+            )
+        }
+
+        const { Address } = this.state
 
         return (
-            <Layout  >
-                <Header />
-                <Layout>
-                    <Sider width={200} collapsedWidth={50} collapsed={true} className="site-layout-background">
+
+            <Layout className={s.layout}>
+                <Header  />
+                <Layout >
+                    <Sider width={200} collapsedWidth={50} sx={{}} collapsed={true} className="site-layout-background">
                         <Menu
                             mode="inline"
                             // defaultSelectedKeys={['1']}
@@ -62,49 +79,48 @@ class App extends React.Component {
                             style={{height: '100%', borderRight: 0}}
                         >
                             <SubMenu key="sub1" icon={<ProfileOutlined />} title="My profile">
-                                <Menu.Item key="1"><Link to='/Profile' onClick={() => this.setAdress('Profile')}>Profile</Link></Menu.Item>
-                                <Menu.Item key="2"><Link exact to='/Dialogs' onClick={() => this.setAdress('Message')}>Message</Link></Menu.Item>
-                                <Menu.Item key="3"><Link to='/News' onClick={() => this.setAdress('News')}>News</Link></Menu.Item>
-                                <Menu.Item key="4"><Link to='/Music' onClick={() => this.setAdress('Music')}>Music</Link></Menu.Item>
+                                <Menu.Item key="1"><Link to='/Profile' >Profile</Link></Menu.Item>
+                                <Menu.Item key="2"><Link exact to='/Dialogs' >Message</Link></Menu.Item>
+                                <Menu.Item key="3"><Link to='/News' >News</Link></Menu.Item>
+                                <Menu.Item key="4"><Link to='/Music'>Music</Link></Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub2" icon={<UsergroupAddOutlined />} title="Developers">
-                                <Menu.Item key="5"><Link to='/Users' onClick={() => this.setAdress('Users')}>Users</Link></Menu.Item>
-                                <Menu.Item key="6"><Link to='/Friends' onClick={() => this.setAdress('Friends')}>Friends</Link></Menu.Item>
+                                <Menu.Item key="5"><Link to='/Users'>Users</Link></Menu.Item>
+                                <Menu.Item key="6"><Link to='/Friends'>Friends</Link></Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub3" icon={<LoginOutlined />} title="Authentication">
-                                <Menu.Item key="9"><Link to='/Login' onClick={() => this.setAdress('Login')}>Login</Link></Menu.Item>
+                                <Menu.Item key="9"><Link to='/Login'>Login</Link></Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
-                    <Layout style={{padding: '0 24px 24px'}}>
-                        <Breadcrumb style={{margin: '16px 0'}}>
-                            <Breadcrumb.Item><Link to='/Profile' onClick={() => this.setAdress('Profile')}>Home</Link></Breadcrumb.Item>
-                            <Breadcrumb.Item>{this.adress}</Breadcrumb.Item>
-                        </Breadcrumb>
+                    <Layout style={{padding: '0 24px 24px',}}>
+
                         <Content
                             className="site-layout-background"
                             style={{
                                 padding: 12,
                                 margin: 0,
                                 minHeight: 280,
+
                             }}
                         >
                             <Switch>
-                                <Route exact path='/' render={() => <Redirect to={"/Profile"}/>}/>
-                                <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                                <Route path='/News' render={() => <News/>}/>
-                                <Route path='/Music' render={() => <Music/>}/>
-                                <Route path='/Settings' render={() => <Settings/>}/>
-                                <Route path='/Friends' render={() => <FriendsContainer/>}/>
+                                <Route exact path='/' render={() => <Redirect to={"/Profile"}/>} render={() => this.setAddress('Profile')}/>
+                                <Route path='/Profile/:userId?' render={() => <><BreadCrmp page={'Profile'}/><ProfileContainer/></>}/>
+                                <Route path='/News' render={() => <><BreadCrmp page={'News'}/><News/></>}/>
+                                <Route path='/Music' render={() => <><BreadCrmp page={'Music'}/><Music/></>}/>
+                                <Route path='/Settings' render={() => <><BreadCrmp page={'Setting'}/><Settings/></>}/>
+                                <Route path='/Friends' render={() => <><BreadCrmp page={'Friends'}/><FriendsContainer/></>}/>
                                 <Route path='/Dialogs'
-                                       render={() => <Suspense fallback={<Preloader/>}><Dialogs/></Suspense>}/>
+                                       render={() => <Suspense fallback={<Preloader/>}><BreadCrmp page={'Preloader'}/><Dialogs/></Suspense>}/>
                                 <Route path='/Users'
                                        render={() => <Suspense fallback={<Preloader/>}>
+                                           <BreadCrmp page={'Users'}/>
                                            <UsersContainer pageTitle={'Users'}/></Suspense>}/>
                                 <Route path='/Login'
-                                       render={() => <Suspense fallback={<Preloader/>}><LoginContainer/></Suspense>}/>
-                                <Route exact path='/*' render={() => <div>404 PAGE NOT FOUND<br/>
-                                    <a href={"/Profile"} type={"link"}>OK!</a></div>}/>
+                                       render={() => <Suspense fallback={<Preloader/>}><BreadCrmp page={'Login'}/><LoginContainer/></Suspense>}/>
+                                <Route exact path='/*' render={() => <><BreadCrmp page={'404'}/><div>404 PAGE NOT FOUND<br/>
+                                    <a href={"/Profile"} type={"link"}>OK!</a></div></>}/>
                             </Switch>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>Social Network ©2021 Created by Elem</Footer>

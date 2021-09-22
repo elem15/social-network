@@ -8,11 +8,12 @@ import {UserType} from "../../Types/Types";
 type PropsType = {
     user: UserType,
     isFollowingProgress: number[],
+    isAuth: boolean
     unFollow: (userId: number) => void,
     follow: (userId: number) => void
 }
 
-const User: React.FC<PropsType> = ({ user, isFollowingProgress, unFollow, follow }) => {
+const User: React.FC<PropsType> = ({ user, isAuth, isFollowingProgress, unFollow, follow }) => {
 
     return (
 
@@ -23,14 +24,14 @@ const User: React.FC<PropsType> = ({ user, isFollowingProgress, unFollow, follow
                     <img src={user.photos.small != null ? user.photos.small : userPhoto} className={styles.userPhoto}/>
                     </NavLink>
                 </div>
-             <Follow followed={user.followed} userId={user.id}
-                     isFollowingProgress={isFollowingProgress}
-                     unFollow={unFollow} follow={follow}/>
+                {isAuth &&
+                    <Follow followed={user.followed} userId={user.id}
+                         isFollowingProgress={isFollowingProgress}
+                         unFollow={unFollow} follow={follow}/>}
             </span>
             <span>
                 <span><div>{'user.location.city'}</div><div>{'user.location.country'}</div></span>
                 <span><div>{user.name}</div><div>{user.status}</div></span>
-                <span><div>Мой ID: {user.id}</div></span>
             </span>
 
             <hr/>

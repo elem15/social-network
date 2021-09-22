@@ -9,7 +9,7 @@ import Users from "./Users";
 // import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import {
-    getCurrentPage,
+    getCurrentPage, getIsAuth,
     getIsFetching,
     getIsFollowingProgress,
     getPageSize,
@@ -29,6 +29,7 @@ type MapStatePropsType = {
     isFetching: boolean,
     users: Array<UserType>,
     totalUsersCount: number,
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     unFollow: (userId: number) => void,
@@ -64,6 +65,7 @@ class UsersContainer extends React.Component<PropsType>  {
                    isFetching={this.props.isFetching}
                    isFollowingProgress={this.props.isFollowingProgress}
                    toggleIsFetching={this.props.toggleIsFetching}
+                   isAuth={this.props.isAuth}
             />
         </>
     }
@@ -86,7 +88,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        isFollowingProgress: getIsFollowingProgress(state)
+        isFollowingProgress: getIsFollowingProgress(state),
+        isAuth: getIsAuth(state)
     }
 };
 
