@@ -1,5 +1,5 @@
 export type PostsType = {
-    id: number, message: string, likeCount: number
+    id: number, message: string, likeCount: number, disLikeCount: number
 }
 
 export type DialogsType = {

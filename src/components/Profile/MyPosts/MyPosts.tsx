@@ -81,6 +81,8 @@ const PostFormRedux  = reduxForm({form: 'post', onSubmitSuccess: afterSubmit})(P
 type MyPostsType = {
     addPost: (text:string) => void
     posts: Array<PostsType>
+    likeIncrement: (id: number) => void
+    disLikeIncrement: (id: number) => void
 }
 const MyPosts: React.FC<MyPostsType> = props => {
 
@@ -90,12 +92,18 @@ const MyPosts: React.FC<MyPostsType> = props => {
     const submit = (values:any) => {
         addPost(values.post);
     }
-            return (
+             return (
                 <>
                     <Title level={3}>My posts</Title>
                     <Demo addPost={addPost}/>
                     <Divider/>
-                    {[...props.posts].reverse().map(m => <Post message={m.message} likeCount={m.likeCount} key={m.id}/>)}
+                    {[...props.posts].reverse().map(m => <Post likeIncrement={props.likeIncrement}
+                                                               disLikeIncrement={props.disLikeIncrement}
+                                                               message={m.message}
+                                                               likeCount={m.likeCount}
+                                                               disLikeCount={m.disLikeCount}
+                                                               key={m.id}
+                                                               id={m.id}/>)}
                 </>
             )
     }

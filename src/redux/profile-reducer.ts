@@ -10,13 +10,14 @@ const SET_USER_STATUS = 'social_network/profile/SET_USER_STATUS';
 const DELETE_POST = 'social_network/profile/DELETE_POST';
 const SET_USER_PHOTO_SUCCESS = 'social_network/profile/SET_USER_PHOTO_SUCCESS';
 const UPDATE_USER_PROFILE = 'social_network/profile/UPDATE_USER_PROFILE';
-
+const LIKE_INCREMENT = 'social_network/profile/LIKE_INCREMENT'
+const DISLIKE_INCREMENT = 'social_network/profile/DISLIKE_INCREMENT'
 
 let initialState = {
     posts: [
-        {id: 1, message: 'Hi, how are you?', likeCount: 11},
-        {id: 2, message: 'Okay', likeCount: 13},
-        {id: 3, message: 'Right', likeCount: 15}
+        {id: 1, message: 'Hi, how are you?', likeCount: 11, disLikeCount: 2},
+        {id: 2, message: 'Okay', likeCount: 13, disLikeCount: 3},
+        {id: 3, message: 'Right', likeCount: 15, disLikeCount: 1 }
     ] as Array<PostsType>,
     newPostState: 'YOY' as string,
     profile: null as ProfileType | null,
@@ -25,7 +26,7 @@ let initialState = {
 };
 type initialStateType = typeof initialState;
 type ActionType = AddPostActionCreatorActionType | DeletePostActionCreatorActionType | setUserProfileActionType |
-    setUserFollowActionType | setUserStatusActionType | setUserPhotoSuccessActionType
+    setUserFollowActionType | setUserStatusActionType | setUserPhotoSuccessActionType | likeIncrementType | disLikeIncrementType
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 const profileReducer = (state: initialStateType = initialState, action: any) : initialStateType  => {
 
@@ -39,13 +40,39 @@ const profileReducer = (state: initialStateType = initialState, action: any) : i
                     {
                         id: countId,
                         message: action.text,
-                        likeCount: 17 + countId
+                        likeCount: Math.floor(Math.random()*3) + countId,
+                        disLikeCount: Math.floor(Math.random()*2)
                     }]
+            };
+
+        case LIKE_INCREMENT:
+            return {
+                ...state,
+                posts: [...state.posts.map(p => (p.id === action.id)
+                    ? {
+                    id: p.id,
+                    message: p.message,
+                    likeCount: p.likeCount + 1,
+                    disLikeCount: p.disLikeCount}
+                    : p
+                )]
+            };
+        case DISLIKE_INCREMENT:
+            return {
+                ...state,
+                posts: [...state.posts.map(p => (p.id === action.id)
+                    ? {
+                        id: p.id,
+                        message: p.message,
+                        likeCount: p.likeCount,
+                        disLikeCount: p.disLikeCount + 1
+                    }
+                    : p
+                )]
             };
 
         case DELETE_POST:
             return {
-
                 ...state,
                 posts: [...state.posts.filter(p => p.id !== action.postId)]
             }
@@ -83,11 +110,14 @@ type AddPostActionCreatorActionType = {
     text: string
 }
 export const addPostActionCreator = (text: string): AddPostActionCreatorActionType => ({type: ADD_POST, text});
+
 type DeletePostActionCreatorActionType = {
     type: typeof DELETE_POST,
     postId: number
 }
-export const deletePostActionCreator = (postId: number): DeletePostActionCreatorActionType => ({type: DELETE_POST, postId});
+export const deletePostActionCreator = (postId: number): DeletePostActionCreatorActionType =>
+    ({type: DELETE_POST, postId});
+
 type setUserProfileActionType = {
     type: typeof SET_USER_PROFILE,
     profile: ProfileType
@@ -109,6 +139,22 @@ type setUserPhotoSuccessActionType = {
 }
 const setUserPhotoSuccess = (photos: PhotosType):setUserPhotoSuccessActionType => ({type: SET_USER_PHOTO_SUCCESS, photos})
 
+type likeIncrementType = {
+    type: typeof LIKE_INCREMENT
+    id: number
+}
+export const likeIncrement  = (id: number) => ({
+    type: LIKE_INCREMENT,
+    id: id
+})
+type disLikeIncrementType = {
+    type: typeof DISLIKE_INCREMENT
+    id: number
+}
+export const disLikeIncrement  = (id: number) => ({
+    type: DISLIKE_INCREMENT,
+    id: id
+})
 export const getUserProfile = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.getProfile(userId);
