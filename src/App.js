@@ -8,18 +8,17 @@ import FriendsContainer from "./components/Friends/FriendsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import Header from "./components/Header/Header";
-import {connect, Provider} from "react-redux";
+import {connect, Provider, useSelector} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {compose} from "redux";
 import {getInitialization} from "./redux/app-reducer";
 import store from "./redux/redux-store";
 import LoginContainer from "./components/Login/LoginContainer";
 import 'antd/dist/antd.css';
-import {Layout, Menu, Breadcrumb, Button, Avatar, Col, Row } from 'antd';
+import {Layout, Menu, Breadcrumb } from 'antd';
 import {ProfileOutlined, UsergroupAddOutlined, LoginOutlined} from '@ant-design/icons';
 import s from "./components/Navbar/Navbar.module.css";
-import {createBrowserHistory} from "history";
-// import HeaderContainer from "./components/Header/HeaderContainer";
+import { userSignOut } from './redux/auth-reducer';
 
 const {SubMenu} = Menu;
 const {Content, Sider, Footer} = Layout
@@ -46,12 +45,14 @@ class App extends React.Component {
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
+    signOut = () => {
+        this.props.userSignOut()
+    }
     state = {
         collapsed: false,
     };
 
     onCollapse = collapsed => {
-        console.log(collapsed);
         this.setState({ collapsed });
     };
 
@@ -90,7 +91,14 @@ class App extends React.Component {
                                 <Menu.Item key="6"><Link to='/Friends'>Friends</Link></Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub3" icon={<LoginOutlined />} title="Authentication">
-                                <Menu.Item key="9"><Link to='/Login'>Login</Link></Menu.Item>
+                                <Menu.Item key="9">
+                                    {!this.props.isAuth
+                                        ?
+                                        <Link to='/Login'>Login</Link>
+                                        :
+                                        <div onClick={this.signOut}>Log out</div>
+                                    }
+                                </Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
@@ -134,11 +142,12 @@ class App extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    initialization: state.initializeReducer.initialization
+    initialization: state.initializeReducer.initialization,
+    isAuth: state.auth.isAuth
 })
 
 const AppContainer = compose(withRouter,
-    connect(mapStateToProps, {getInitialization}))(App);
+    connect(mapStateToProps, {getInitialization, userSignOut}))(App);
 /*basename={process.env.PUBLIC_URL}*/
 const SamuraiJSApp = () => {
     return <HashRouter>
