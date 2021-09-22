@@ -29,9 +29,6 @@ const Dialogs = React.lazy(() => import('./components/Dialog/Dialogs'));
 
 
 class App extends React.Component {
-    state = {
-        Address: ''
-    }
     catchAllUnhandledErrors = (e) => {
         console.error("Error occurred: " + e.reason.message);
         return false;
@@ -49,6 +46,14 @@ class App extends React.Component {
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
+    state = {
+        collapsed: false,
+    };
+
+    onCollapse = collapsed => {
+        console.log(collapsed);
+        this.setState({ collapsed });
+    };
 
     render() {
 
@@ -63,19 +68,15 @@ class App extends React.Component {
                 </Breadcrumb>
             )
         }
-
-        const { Address } = this.state
-
+        const { collapsed } = this.state;
         return (
 
             <Layout className={s.layout}>
                 <Header  />
                 <Layout >
-                    <Sider width={200} collapsedWidth={50} sx={{}} collapsed={true} className="site-layout-background">
+                    <Sider theme='light' collapsedWidth={50} collapsible collapsed={collapsed} onCollapse={this.onCollapse} breakpoint={"lg"}>
                         <Menu
                             mode="inline"
-                            // defaultSelectedKeys={['1']}
-                            // defaultOpenKeys={['sub1']}
                             style={{height: '100%', borderRight: 0}}
                         >
                             <SubMenu key="sub1" icon={<ProfileOutlined />} title="My profile">

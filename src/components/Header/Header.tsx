@@ -11,6 +11,7 @@ import {
 } from "../../redux/auth-selectors";
 import {getUserProfile, userSignOut} from "../../redux/auth-reducer";
 
+const {Content, Sider, Footer} = Layout
 type PropsType = {
 
 }
@@ -41,38 +42,40 @@ const Header: React.FC<PropsType> = () => {
     const { Text } = Typography
     const { Header } = Layout
 
-    return (
-        <Header className="header"  >
-            <div className="logo"/>
-            <Row >
-                <Col xs={{span: 8, offset: 0}} sm={{span: 18, offset: 0}} lg={{span: 19, offset: 0}}>
-                    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="1"><Link to='/Users'>Developers</Link></Menu.Item>
-                    </Menu>
-                </Col>
-                <Col xs={{span: 10, offset: 1}} sm={{span: 5, offset: 0}} lg={{span: 3, offset: 0}}> {
-                    isAuth
+    const header = <><Header className="header">
+
+        <div className="logo"/>
+        <Row>
+            <Col xs={{span: 8, offset: 0}} sm={{span: 13, offset: 0}} md={{span: 16, offset: 0}} lg={{span: 19, offset: 0}}>
+
+                <Menu theme="dark" mode="horizontal"  defaultSelectedKeys={['1']} inlineCollapsed={true}>
+                    <Menu.Item key="1"><Link to='/Users'>Developers</Link></Menu.Item>
+                </Menu>
+
+            </Col>
+            <Col xs={{span: 10, offset: 3}} sm={{span: 7, offset: 0}} md={{span: 5, offset: 0}} lg={{span: 3, offset: 0}}> {
+                isAuth
                     ?
-                   <Space direction="horizontal">
-                       <Button onClick={logoutCallback}>Log out</Button>
-                       <span> </span><span> </span><span> </span>
-                       <Text type="success">{login}</Text>
-                       {
-                       profile?.photos.small
-                           ?
-                           <Avatar
-                               src={ profile?.photos.small } />
-                           :
-                           <Avatar alt={login || ''} style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>} />
-                       }
-                   </Space>
+                    <Space direction="horizontal">
+                        <Button onClick={logoutCallback}>Log out</Button>
+
+                        <Text type="success"><Link to='/Profile'>{login}</Link></Text>
+                        {
+                            profile?.photos.small
+                                ?
+                                <Avatar
+                                    src={profile?.photos.small}/>
+                                :
+                                <Avatar alt={login || ''} style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
+                        }
+                    </Space>
                     :
-                        <Button><Link to={'/Login'}>Login</Link></Button>
-                }
-                </Col>
-            </Row>
-        </Header>
-    )
+                    <Button><Link to={'/Login'}>Login</Link></Button>
+            }
+            </Col>
+        </Row>
+    </Header></>;
+    return header
 }
 
 export default Header;

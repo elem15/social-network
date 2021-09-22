@@ -68,7 +68,7 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
         return (
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32  }}>
 
-                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 10, offset: 0}} lg={{ span: 10, offset: 0 }}>
+                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 9, offset: 1}} md={{ span: 10, offset: 0 }}>
                     <Title level={2}>{props.profile.fullName}</Title>
                     <ProfileStatusWithHooks userId={props.profile.userId}
                                             status={props.status} updateStatus={props.updateStatus}
@@ -86,7 +86,7 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
                     </div>}
                 </Col>
 
-                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 12, offset: 0}}  lg={{ span: 10, offset: 0 }}>
+                <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 12, offset: 2}} md={{ span: 10, offset: 1 }}>
                     <Title level={3}>Profile</Title>
                     {props.isOwner && !editMode && props.isAuth &&
                     <Button onClick={() => setEditMode(true)}>edit profile</Button>}
@@ -140,7 +140,7 @@ type ContactType = {
 const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
     return (
         <div className={s.contact}>
-            <span className={s.contactTitle}>{contactTitle}</span>: <i>{contactValue}</i>
+            <span className={s.contactTitle} >{contactTitle}</span>: <i>{contactValue}</i>
         </div>
     )
 }

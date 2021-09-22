@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Typography, Space, Button, Input} from 'antd';
 import {HighlightOutlined, SmileOutlined, SmileFilled} from '@ant-design/icons';
+import {useDispatch} from "react-redux";
 
 const {Text, Link, Paragraph} = Typography;
 
@@ -21,41 +22,48 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
     const [status, setStatus] = useState(props.status);
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value);
 
-    useEffect(() => {
-        setStatus(props.status)
-    }, [props.status])
+    // useEffect(() => {
+    //     setStatus(props.status)
+    // }, [props.status])
 
-    let inActivateMode = () => {
-        if (props.isOwner) {
-            setEditMode(false);
-            props.updateStatus(status);
-        }
+    const inActivateMode = () => {
+            props.updateStatus(editableStr);
     }
+    const onKeyDownHandler = (e: any) => e.keyCode === 13 && props.updateStatus(editableStr)
     const [editableStr, setEditableStr] = useState(props.status)
-    useEffect(() => {
-        props.updateStatus(editableStr)
-    }, [editableStr])
+    // useEffect(() => {
+    //     props.updateStatus(editableStr)
+    // }, [props.status])
     return (
         <>
             <Text type="secondary">status:
-                <Paragraph
-                    editable={{tooltip: 'click to edit status', onChange: setEditableStr}}>{editableStr}</Paragraph>
+                {(props.isOwner && props.isAuth)
+                    ?
+                    <Paragraph
+                    // @ts-ignore
+                    //     onClick={inActivateMode}
+                        onBlur={inActivateMode}
+                        // onKeyDown={onKeyDownHandler}
+                        editable={{tooltip: 'click to edit status',  onChange: setEditableStr, }}>{editableStr}
+                    </Paragraph>
+                    :
+                    <Paragraph>{props.status}</Paragraph>
+                }
 
-                {/*{!editMode &&*/}
-
-                {/*    <Button type={"text"} disabled={!props.isOwner || !props.isAuth} onClick={activateEditMode}>{props.status}</Button>*/}
-                {/*}*/}
-
-                {/*{editMode &&*/}
-                {/*    <Input placeholder="Basic usage"*/}
-                {/*           autoFocus={true}*/}
-                {/*           onBlur={inActivateMode}*/}
-                {/*           onChange={onStatusChange}*/}
-                {/*           value={status}*/}
-                {/*    />}*/}
             </Text>
         </>
     )
 }
+{/*{!editMode &&*/}
 
+{/*    <Button type={"text"} disabled={!props.isOwner || !props.isAuth} onClick={activateEditMode}>{props.status}</Button>*/}
+{/*}*/}
+
+{/*{editMode &&*/}
+{/*    <Input placeholder="Basic usage"*/}
+{/*           autoFocus={true}*/}
+{/*           onBlur={inActivateMode}*/}
+{/*           onChange={onStatusChange}*/}
+{/*           value={status}*/}
+{/*    />}*/}
 export default ProfileStatusWithHooks;
