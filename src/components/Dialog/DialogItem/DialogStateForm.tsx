@@ -1,8 +1,9 @@
 import React from 'react';
 import s from '../Dialogs.module.css';
 import {Field, reset, reduxForm} from "redux-form";
-import {required, maxLength15} from '../../../utils/validators'
+import {required, maxLength33} from '../../../utils/validators'
 import {renderField} from "../../Common/InputField/FormsControls";
+import {Divider, Form, Typography, Input, Button, Checkbox } from "antd";
 
 type PropsType = {
     addMessage: (newMessageBody: string) => void,
@@ -25,15 +26,16 @@ type DialogStateFormType = {
 }
 const DialogStateForm: React.FC<DialogStateFormType> = ({handleSubmit}) => {
     return <form className={s.item + ' ' + s.active} onSubmit={handleSubmit}>
-        <div>
-            <Field component={renderField }
+        <div className={s.field}>
+            <Field className={s.field}
+                   component={renderField }
                    name='newMessageBody'
                    label='Enter you message'
-                   validate={[required, maxLength15]}
+                   validate={[required, maxLength33]}
             />
         </div>
         <div>
-            <button>Add post</button>
+            <button className={s.button}><Button>Add post</Button></button>
         </div>
     </form>
 }

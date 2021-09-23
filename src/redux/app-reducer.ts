@@ -8,7 +8,7 @@ export type InitialStateType = {
     initialization: boolean,
 }
 
-let initialState: InitialStateType = {
+const initialState: InitialStateType = {
     initialization: false,
 }
 type ActionType = InitializationSuccessfulActionType

@@ -9,7 +9,7 @@ type PropsType = {
 
 const Message: React.FC<PropsType> = (props) => {
 
-    let messageItems = props.messages.map(m => <MessageInside message={m.message}
+    const messageItems = [...props.messages].reverse().map(m => <MessageInside message={m.message}
                                                               name={m.name}
                                                               st={m.st}
                                                               key={m.id}

@@ -10,20 +10,9 @@ type PropsType = {
 }
 
 const DialogItem: React.FC<PropsType> = (props) => {
-    return <div className={s.dialogContent}> {
-        props.dialogs.map((d:DialogsType) => <div key={d.id}>
-
-                <div className={s.item + ' ' + s.active}>
-                    <NavLink to={'/Dialogs/' + d.id}><img src={d.src}/><br/>
-                        {d.name}</NavLink>
-                    <br/>
-                </div>
-            </div>
-        )
-    }
+    return <div className={s.dialogContent}>
         <DialogStateForm addMessage={props.addMessage}/>
     </div>
-
 }
 
 export default DialogItem;

@@ -15,7 +15,6 @@ type PropsType = {
 
 const Post: React.FC<PropsType> = (props) => {
     const [like, setLike] = useState(true)
-    console.log(like)
     const likeIncrement  = () => {
         setLike(true)
         props.likeIncrement(props.id)

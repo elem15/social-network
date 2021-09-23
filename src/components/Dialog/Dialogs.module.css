@@ -1,13 +1,23 @@
 .dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+    /*display: grid;*/
+    /*grid-template-columns: 2fr 10fr;*/
+}
+.button {
+    border: none;
+    margin: 15px;
 }
 .dialogContent {
     margin-left: 15px;
     margin-top: 15px;
+    text-align: center;
 }
 .dialogItems {
     padding: 10px;
+}
+.field {
+    min-width: 50%;
+    padding: 10px;
+    background-color: ghostwhite;
 }
 .item img{
     height: 50px;
@@ -28,5 +38,5 @@
 }
 .messages {
     padding: 8px;
-    margin-right: 300px;
+    /*margin: 30px;*/
 }
