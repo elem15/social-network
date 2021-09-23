@@ -36,12 +36,7 @@ class App extends React.Component {
         this.props.getInitialization();
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
-    setAddress = (Address) => {
-        this.setState({
-            Address: Address
-        })
 
-    }
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
@@ -72,7 +67,7 @@ class App extends React.Component {
         const { collapsed } = this.state;
         return (
 
-            <Layout className={s.layout}>
+            <Layout >
                 <Header  />
                 <Layout >
                     <Sider theme='light' collapsedWidth={50} collapsible collapsed={collapsed} onCollapse={this.onCollapse} breakpoint={"lg"}>
@@ -114,7 +109,7 @@ class App extends React.Component {
                             }}
                         >
                             <Switch>
-                                <Route exact path='/' render={() => <Redirect to={"/Profile"}/>} render={() => this.setAddress('Profile')}/>
+                                <Route exact path='/' render={() => <Redirect to={"/Profile"}/>} />
                                 <Route path='/Profile/:userId?' render={() => <><BreadCrmp page={'Profile'}/><ProfileContainer/></>}/>
                                 <Route path='/News' render={() => <><BreadCrmp page={'News'}/><News/></>}/>
                                 <Route path='/Music' render={() => <><BreadCrmp page={'Music'}/><Music/></>}/>
