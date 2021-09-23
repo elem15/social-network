@@ -17,7 +17,6 @@ import LoginContainer from "./components/Login/LoginContainer";
 import 'antd/dist/antd.css';
 import {Layout, Menu, Breadcrumb } from 'antd';
 import {ProfileOutlined, UsergroupAddOutlined, LoginOutlined} from '@ant-design/icons';
-import s from "./components/Navbar/Navbar.module.css";
 import { userSignOut } from './redux/auth-reducer';
 
 const {SubMenu} = Menu;

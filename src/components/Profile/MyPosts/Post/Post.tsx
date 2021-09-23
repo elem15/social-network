@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './Post.module.css'
 import {Typography, Space, Row, Col} from 'antd';
-import { LikeOutlined, DislikeOutlined } from '@ant-design/icons'
+import { LikeOutlined, DislikeOutlined, LikeTwoTone, DislikeTwoTone  } from '@ant-design/icons'
 const { Text, Link } = Typography;
 
 type PropsType = {
@@ -14,24 +14,40 @@ type PropsType = {
 }
 
 const Post: React.FC<PropsType> = (props) => {
+    const [like, setLike] = useState(true)
+    console.log(like)
     const likeIncrement  = () => {
-        return props.likeIncrement(props.id)
+        setLike(true)
+        props.likeIncrement(props.id)
     }
     const disLikeIncrement  = () => {
-        return props.disLikeIncrement(props.id)
+        setLike(false)
+        props.disLikeIncrement(props.id)
     }
     return (                 
         <Row>
-            <Col span={12}>
+            <Col span={14}>
             <Text keyboard>{props.message} </Text>
             </Col>
-            <Col span={3} offset={1}>
+            <Col span={3} offset={1} className={s.position}>
             <span className={`${s.item} ${s.active}`}>{props.likeCount} </span>
-            <span> <LikeOutlined onClick={likeIncrement}/></span>
+            <span> {like
+                ?
+                <LikeTwoTone twoToneColor="#eb2f96"  onClick={likeIncrement}/>
+                :
+                <LikeTwoTone   onClick={likeIncrement}/>
+            }
+            </span>
             </Col>
-            <Col span={3} offset={1}>
+            <Col span={4} offset={2}>
+            <span>{!like
+                ?
+                <DislikeTwoTone twoToneColor="#eb2f96"  onClick={disLikeIncrement}/>
+                :
+                <DislikeTwoTone   onClick={disLikeIncrement}/>
+            }
             <span className={`${s.item} ${s.active}`}>{props.disLikeCount} </span>
-            <span> <DislikeOutlined  onClick={disLikeIncrement}/></span>
+            </span>
             </Col>
         </Row>
     )
