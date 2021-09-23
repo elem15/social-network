@@ -16,6 +16,7 @@ type MapStatePropsType = {
     isFollowingProgress: Array<number>
     followed: boolean
     isOwner: boolean
+    ownerOnHisPage: boolean
 }
 type MapDispatchPropsType = {
     updateStatus: (status: string) => void
@@ -45,6 +46,7 @@ const Profile: React.FC<PropsType> = (props) => {
                                  updateProfile={props.updateProfile} followed={props.followed}
                                  isFollowingProgress={props.isFollowingProgress}
                                  unFollow={props.unFollow} isAuth={props.isAuth}
+                                 ownerOnHisPage={props.ownerOnHisPage}
                     /></Col>
                 <Col className="gutter-row" xs={{span: 24, offset: 0}}
                      sm={{span: 22, offset: 2}}
@@ -52,6 +54,7 @@ const Profile: React.FC<PropsType> = (props) => {
                     <MyPostsContainer/>
                 </Col>
             </Row>
+            <Divider></Divider>
         </Layout>
 
     )

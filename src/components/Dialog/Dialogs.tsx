@@ -1,5 +1,4 @@
 import React from 'react';
-import s from './Dialogs.module.css';
 import DialogsItemContainer from "./DialogItem/DialogsItemContainer";
 import MessageContainer from "./Message/MessageContainer";
 import {Col, Layout, Row} from "antd";
@@ -23,7 +22,6 @@ const Dialogs = () => {
             </Row>
         </Layout>
     )
-
 }
 
 export default Dialogs;

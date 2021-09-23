@@ -22,18 +22,11 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
     const [status, setStatus] = useState(props.status);
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value);
 
-    // useEffect(() => {
-    //     setStatus(props.status)
-    // }, [props.status])
-
     const inActivateMode = () => {
             props.updateStatus(editableStr);
     }
     const onKeyDownHandler = (e: any) => e.keyCode === 13 && props.updateStatus(editableStr)
     const [editableStr, setEditableStr] = useState(props.status)
-    // useEffect(() => {
-    //     props.updateStatus(editableStr)
-    // }, [props.status])
     return (
         <>
             <Text type="secondary">status:
@@ -41,10 +34,14 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
                     ?
                     <Paragraph
                     // @ts-ignore
-                    //     onClick={inActivateMode}
                         onBlur={inActivateMode}
-                        // onKeyDown={onKeyDownHandler}
-                        editable={{tooltip: 'click to edit status',  onChange: setEditableStr, }}>{editableStr}
+                        editable={{tooltip: 'click to edit status',  onChange: setEditableStr, }}>
+                        {editableStr
+                            ?
+                            <span>{editableStr}</span>
+                            :
+                            <span>{props.status}</span>
+                        }
                     </Paragraph>
                     :
                     <Paragraph>{props.status}</Paragraph>
@@ -54,6 +51,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
         </>
     )
 }
+export default ProfileStatusWithHooks;
 {/*{!editMode &&*/}
 
 {/*    <Button type={"text"} disabled={!props.isOwner || !props.isAuth} onClick={activateEditMode}>{props.status}</Button>*/}
@@ -66,4 +64,3 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
 {/*           onChange={onStatusChange}*/}
 {/*           value={status}*/}
 {/*    />}*/}
-export default ProfileStatusWithHooks;

@@ -69,23 +69,36 @@ class ProfileContainer extends React.Component<PropsType> {
         this.props.getStatus(userId);
     }
 
+
+    isOwnerOnHisPage() {
+
+            if (+this.props.match.params.userId === this.props.id) {
+               this.ownerOnHisPage = true
+            }
+            else if (+this.props.match.params.userId !== this.props.id)
+                this.ownerOnHisPage = false
+    }
+    ownerOnHisPage = false
     componentDidMount() {
         this.setPreviousState()
+        this.isOwnerOnHisPage()
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: MapStatePropsType ) {
         if (this.props.match.params.userId !== prevProps.match.params.userId)
             this.setPreviousState()
+            this.isOwnerOnHisPage()
     }
     isOwner(uId: number | undefined):boolean {
         if (uId === undefined) {
             return true
         } else return false
     }
-    render() {
 
+    render() {
         return (
             <Profile
+                     ownerOnHisPage={this.ownerOnHisPage}
                      isOwner={this.isOwner(this.props.match.params.userId)}
                      profile={this.props.profile}
                      status={this.props.status}

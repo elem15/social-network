@@ -48,7 +48,7 @@ const Header: React.FC<PropsType> = () => {
         <Row>
             <Col xs={{span: 8, offset: 0}} sm={{span: 13, offset: 0}} md={{span: 16, offset: 0}} lg={{span: 19, offset: 0}}>
 
-                <Menu theme="dark" mode="horizontal"  defaultSelectedKeys={['1']} inlineCollapsed={true}>
+                <Menu theme="dark" mode="horizontal"  defaultSelectedKeys={['1']} >
                     <Menu.Item key="1"><Link to='/Users'>Developers</Link></Menu.Item>
                 </Menu>
 

@@ -96,7 +96,7 @@ const MyPosts: React.FC<MyPostsType> = props => {
                 <>
                     <Title level={3}>My posts</Title>
                     <Demo addPost={addPost}/>
-                    <Divider/>
+
                     {[...props.posts].reverse().map(m => <Post likeIncrement={props.likeIncrement}
                                                                disLikeIncrement={props.disLikeIncrement}
                                                                message={m.message}

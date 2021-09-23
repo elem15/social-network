@@ -7,7 +7,7 @@ import arrow from '../../../assets/images/add.svg'
 import ProfileDataFormRedux from "./ProfileDataForm";
 import Follow from "../../Common/Follow/Follow";
 import {ProfileType, UserType} from "../../../Types/Types";
-import {Col, Row, Typography, Image, Button, Space} from "antd";
+import {Col, Row, Typography, Image, Button, Space, Divider} from "antd";
 const { Title, Text } = Typography
 
 
@@ -19,6 +19,7 @@ type MapStatePropsType = {
     isFollowingProgress: Array<number>
     followed: boolean
     isOwner: boolean
+    ownerOnHisPage: boolean
 }
 type MapDispatchPropsType = {
     updateStatus: (status: string) => void
@@ -83,20 +84,20 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
                             </span>
                             <span className={s.inputFileButtonText}>Download your photo</span>
                         </label>
-                    </div>}
+                    </div>} <div><br/></div>
                 </Col>
 
                 <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 12, offset: 2}} md={{ span: 10, offset: 1 }}>
                     <Title level={3}>Profile</Title>
                     {props.isOwner && !editMode && props.isAuth &&
                     <Button onClick={() => setEditMode(true)}>edit profile</Button>}
-                    <br/><br/>
+                    <div><br/></div>
                     {editMode
                         ? <ProfileDataFormRedux onSubmit={submit} initialValues={props.profile}/>
                         : <ProfileData profile={props.profile}/>}
                     <div><br/></div>
-                    <div><br/></div>
-                    {!props.isOwner &&
+
+                    {(!props.isOwner && !props.ownerOnHisPage) &&
                     <div>{followed
                         ? <span>Subscribed to {props.profile.fullName}</span>
                         : <span>You can subscribe to {props.profile.fullName}</span>}
@@ -105,7 +106,9 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
                                 isFollowingProgress={props.isFollowingProgress}
                                 unFollow={unFollow} follow={follow}/>
                     </div>}
+                    <div><br/></div>
                 </Col>
+
             </Row>
         )
     }
