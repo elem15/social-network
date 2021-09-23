@@ -1,9 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {Typography, Space, Button, Input} from 'antd';
-import {HighlightOutlined, SmileOutlined, SmileFilled} from '@ant-design/icons';
-import {useDispatch} from "react-redux";
+import {Typography} from 'antd';
 
-const {Text, Link, Paragraph} = Typography;
+const {Text,  Paragraph} = Typography;
 
 
 type PropsType = {
@@ -25,7 +23,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
     const inActivateMode = () => {
             props.updateStatus(editableStr);
     }
-    const onKeyDownHandler = (e: any) => e.keyCode === 13 && props.updateStatus(editableStr)
+
     const [editableStr, setEditableStr] = useState(props.status)
     return (
         <>
@@ -35,13 +33,14 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
                     <Paragraph
                     // @ts-ignore
                         onBlur={inActivateMode}
-                        editable={{tooltip: 'click to edit status',  onChange: setEditableStr, }}>
+                        editable={{tooltip: 'click to edit status',  onChange: setEditableStr }}>
                         {editableStr
                             ?
                             <span>{editableStr}</span>
                             :
                             <span>{props.status}</span>
                         }
+
                     </Paragraph>
                     :
                     <Paragraph>{props.status}</Paragraph>

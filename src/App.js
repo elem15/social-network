@@ -15,12 +15,13 @@ import {getInitialization} from "./redux/app-reducer";
 import store from "./redux/redux-store";
 import LoginContainer from "./components/Login/LoginContainer";
 import 'antd/dist/antd.css';
-import {Layout, Menu, Breadcrumb } from 'antd';
+import {Layout, Menu, Breadcrumb, Typography} from 'antd';
 import {ProfileOutlined, UsergroupAddOutlined, LoginOutlined} from '@ant-design/icons';
 import { userSignOut } from './redux/auth-reducer';
 
 const {SubMenu} = Menu;
 const {Content, Sider, Footer} = Layout
+const {Title} = Typography
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const Login = React.lazy(() => import("./components/Login/Login"));
 const Dialogs = React.lazy(() => import('./components/Dialog/Dialogs'));
@@ -55,15 +56,10 @@ class App extends React.Component {
         if (!this.props.initialization) {
             return <Preloader/>
         }
-        const BreadCrmp = ({page}) => {
-            return (
-                <Breadcrumb style={{margin: '16px 0'}}>
-                    <Breadcrumb.Item><Link to='/Profile'>Home</Link></Breadcrumb.Item>
-                    <Breadcrumb.Item>{page}</Breadcrumb.Item>
-                </Breadcrumb>
-            )
-        }
+
         const { collapsed } = this.state;
+        const pathname = this.props.location.pathname.split('').splice(1, this.props.location.pathname.length).join('')
+
         return (
 
             <Layout >
@@ -76,7 +72,7 @@ class App extends React.Component {
                         >
                             <SubMenu key="sub1" icon={<ProfileOutlined />} title="My profile">
                                 <Menu.Item key="1"><Link to='/Profile' >Profile</Link></Menu.Item>
-                                <Menu.Item key="2"><Link exact to='/Dialogs' >Message</Link></Menu.Item>
+                                <Menu.Item key="2"><Link to='/Dialogs' >Message</Link></Menu.Item>
                                 <Menu.Item key="3"><Link to='/News' >News</Link></Menu.Item>
                                 <Menu.Item key="4"><Link to='/Music'>Music</Link></Menu.Item>
                             </SubMenu>
@@ -97,7 +93,10 @@ class App extends React.Component {
                         </Menu>
                     </Sider>
                     <Layout style={{padding: '0 24px 24px',}}>
-
+                        <Breadcrumb style={{margin: '16px 0'}}>
+                            <Breadcrumb.Item><Link to='/Profile'>Home</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item>{pathname}</Breadcrumb.Item>
+                        </Breadcrumb>
                         <Content
                             className="site-layout-background"
                             style={{
@@ -109,21 +108,20 @@ class App extends React.Component {
                         >
                             <Switch>
                                 <Route exact path='/' render={() => <Redirect to={"/Profile"}/>} />
-                                <Route path='/Profile/:userId?' render={() => <><BreadCrmp page={'Profile'}/><ProfileContainer/></>}/>
-                                <Route path='/News' render={() => <><BreadCrmp page={'News'}/><News/></>}/>
-                                <Route path='/Music' render={() => <><BreadCrmp page={'Music'}/><Music/></>}/>
-                                <Route path='/Settings' render={() => <><BreadCrmp page={'Setting'}/><Settings/></>}/>
-                                <Route path='/Friends' render={() => <><BreadCrmp page={'Friends'}/><FriendsContainer/></>}/>
+                                <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                                <Route path='/News' render={() => <News/>}/>
+                                <Route path='/Music' render={() => <Music/>}/>
+                                <Route path='/Settings' render={() => <Settings/>}/>
+                                <Route path='/Friends' render={() => <FriendsContainer/>}/>
                                 <Route path='/Dialogs'
-                                       render={() => <Suspense fallback={<Preloader/>}><BreadCrmp page={'Preloader'}/><Dialogs/></Suspense>}/>
+                                       render={() => <Suspense fallback={<Preloader/>}><Dialogs/></Suspense>}/>
                                 <Route path='/Users'
                                        render={() => <Suspense fallback={<Preloader/>}>
-                                           <BreadCrmp page={'Users'}/>
                                            <UsersContainer pageTitle={'Users'}/></Suspense>}/>
                                 <Route path='/Login'
-                                       render={() => <Suspense fallback={<Preloader/>}><BreadCrmp page={'Login'}/><LoginContainer/></Suspense>}/>
-                                <Route exact path='/*' render={() => <><BreadCrmp page={'404'}/><div>404 PAGE NOT FOUND<br/>
-                                    <a href={"/Profile"} type={"link"}>OK!</a></div></>}/>
+                                       render={() => <Suspense fallback={<Preloader/>}><LoginContainer/></Suspense>}/>
+                                <Route exact path='/*' render={() => <Title type={1}>404 PAGE NOT FOUND<br/><br/>
+                                    <a href={"/Profile"} type={"link"}>HOME</a></Title>}/>
                             </Switch>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>Social Network ©2021 Created by Elem</Footer>
