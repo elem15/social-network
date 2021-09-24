@@ -27,7 +27,7 @@ const PostForm: React.FC<PropsType> = ({ handleSubmit }) => {
 type PostType = {
     addPost: any
 }
-const Demo: React.FC<PostType> = ({addPost}) => {
+const Messages: React.FC<PostType> = ({addPost}) => {
 
     const [form] = Form.useForm()
 
@@ -40,7 +40,6 @@ const Demo: React.FC<PostType> = ({addPost}) => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-
 
     return (
         <Form
@@ -95,7 +94,7 @@ const MyPosts: React.FC<MyPostsType> = props => {
              return (
                 <>
                     <Title level={3}>My posts</Title>
-                    <Demo addPost={addPost}/>
+                    <Messages addPost={addPost}/>
 
                     {[...props.posts].reverse().map(m => <Post likeIncrement={props.likeIncrement}
                                                                disLikeIncrement={props.disLikeIncrement}

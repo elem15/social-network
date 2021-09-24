@@ -1,5 +1,8 @@
 import React from "react";
 import s from './FormsContorls.module.css'
+import { Typography } from 'antd';
+
+const { Text } = Typography;
 
 type PropsType = {
     input: Array<string>,
@@ -15,7 +18,7 @@ export const renderField: React.FC<PropsType> =  ({
         <div className={s.formControl + ' ' + (touched && error && s.error)}>
             <label></label>
             <div>
-                <textarea {...input} placeholder={label} />
+                <textarea className={s.textarea} {...input} placeholder={label} />
                 <br/>
                 {touched &&
                 ((error && <span>{error}</span>) ||
@@ -31,9 +34,9 @@ export const renderInput: React.FC<PropsType> = ({   input,
                                 meta: { touched, error, warning }
                             }) => (
     <div className={s.formControl + ' ' + (touched && error && s.error)}>
-        <label>{label}</label>
+        <label><Text type='secondary'>{label}</Text></label>
         <div >
-            <input {...input} placeholder={label} type={type} />
+            <input {...input} className={s.textarea} placeholder={label} type={type} />
             <br/>
             {touched &&
             ((error && <span>{error}</span>) ||

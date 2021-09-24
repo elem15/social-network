@@ -68,8 +68,6 @@ class ProfileContainer extends React.Component<PropsType> {
         this.props.getUserFollow(userId);
         this.props.getStatus(userId);
     }
-
-
     isOwnerOnHisPage() {
 
             if (+this.props.match.params.userId === this.props.id) {
@@ -83,7 +81,6 @@ class ProfileContainer extends React.Component<PropsType> {
         this.setPreviousState()
         this.isOwnerOnHisPage()
     }
-
     componentDidUpdate(prevProps: PropsType, prevState: MapStatePropsType ) {
         if (this.props.match.params.userId !== prevProps.match.params.userId)
             this.setPreviousState()

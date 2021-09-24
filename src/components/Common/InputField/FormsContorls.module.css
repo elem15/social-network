@@ -1,13 +1,23 @@
 .formControl.error input,
 .formControl.error textarea {
-    border: red 2px solid;
+    border: red 1px solid;
+    box-shadow: 2px 2px 2px 1px indianred;
 }
 .formControl.error span {
     font-size: 12px;
     line-height: 10px;
+    color: red;
 }
 .formSummaryError {
     color: red;
-    border: red 3px solid;
-    padding: 1px;
+    border: red 2px solid;
+
+
+}
+.textarea {
+    width: 90%;
+    border-color: #1890ff;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 0px cornflowerblue;
+    border-width: 1px;
 }

@@ -85,3 +85,6 @@
 .contactTitle {
   font-weight: 500;
 }
+.button {
+  border-width: 0;
+}

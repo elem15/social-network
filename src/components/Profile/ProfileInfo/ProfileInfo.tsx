@@ -89,9 +89,10 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 
                 <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 12, offset: 2}} md={{ span: 10, offset: 1 }}>
                     <Title level={3}>Profile</Title>
+
                     {props.isOwner && !editMode && props.isAuth &&
-                    <Button onClick={() => setEditMode(true)}>edit profile</Button>}
-                    <div><br/></div>
+                    <><Button onClick={() => setEditMode(true)}>edit profile</Button><Divider/></>}
+
                     {editMode
                         ? <ProfileDataFormRedux onSubmit={submit} initialValues={props.profile}/>
                         : <ProfileData profile={props.profile}/>}

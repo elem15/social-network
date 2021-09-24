@@ -5,6 +5,8 @@ import {Field, reduxForm} from 'redux-form'
 import {renderInput} from "../../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../../utils/validators";
 import {ProfileType} from "../../../Types/Types";
+import {Button, Divider, Space, Typography} from "antd";
+const { Title, Text } = Typography
 
 type OwnPropsType = {
    }
@@ -17,12 +19,11 @@ type MapDispatchPropsType = {
     handleSubmit: any
 }
 type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
-let ProfileDataForm: React.FC<PropsType> = ({ handleSubmit, submitting, error, initialValues }) => {
-
-
-    return ( <div>
+const ProfileDataForm: React.FC<PropsType> = ({ handleSubmit, submitting, error, initialValues }) => {
+    return ( <Space direction="vertical">
             <form onSubmit={ handleSubmit }>
-                    <button type="submit" disabled={submitting}>save</button>
+                    <button className={style.button} type="submit" disabled={submitting}><Button>save</Button></button>
+                <Divider/>
                 <div>
                     {error && <span className={s.formSummaryError}>{error}</span>}
                 </div>
@@ -42,7 +43,8 @@ let ProfileDataForm: React.FC<PropsType> = ({ handleSubmit, submitting, error, i
                        label="My professional skills" component={renderInput}
                        validate={[required, maxLength33]}/>
                 </div>
-                <div>Contacts: {
+                <Divider/>
+                <div><Title level={5}>Contacts:</Title>  {
                     Object.keys(initialValues.contacts).map(key => {
                     return (<div className={style.contact} key={key}>
                             <Field name={'contacts.' + key} type="text" label={key} component={renderInput}
@@ -51,7 +53,7 @@ let ProfileDataForm: React.FC<PropsType> = ({ handleSubmit, submitting, error, i
                 })}
                 </div>
             </form>
-        </div>
+        </Space>
     )
 }
 
