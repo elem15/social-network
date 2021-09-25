@@ -3,6 +3,19 @@
 }
 .composer {
     cursor: pointer;
+    color:  darkblue;
+    transition: .2s;
+}
+.composer:hover {
+    color: slateblue;
+
+}
+.composer.active {
+    color: slateblue;
+    transition: .2s;
+}
+.composer.active:hover {
+    color: dodgerblue;
 }
 .direct {
     position: relative;
