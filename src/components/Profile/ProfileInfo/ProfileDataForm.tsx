@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import s from '../../../components/Common/InputField/FormsContorls.module.css'
 import style from './ProfileInfo.module.css'
 import {Field, reduxForm} from 'redux-form'
@@ -6,6 +6,7 @@ import {renderInput} from "../../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../../utils/validators";
 import {ProfileType} from "../../../Types/Types";
 import {Button, Divider, Space, Typography} from "antd";
+
 const { Title, Text } = Typography
 
 type OwnPropsType = {

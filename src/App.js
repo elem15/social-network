@@ -70,8 +70,8 @@ class App extends React.Component {
                             mode="inline"
                             style={{height: '100%', borderRight: 0}}
                         >
-                            <SubMenu key="sub1" icon={<ProfileOutlined />} title="My profile">
-                                <Menu.Item key="1"><Link to='/Profile' >Profile</Link></Menu.Item>
+                            <SubMenu key="sub1" icon={<ProfileOutlined />} title="Profile">
+                                <Menu.Item key="1"><Link to='/Profile' >My profile</Link></Menu.Item>
                                 <Menu.Item key="2"><Link to='/Dialogs' >Message</Link></Menu.Item>
                                 <Menu.Item key="3"><Link to='/News' >News</Link></Menu.Item>
                                 <Menu.Item key="4"><Link to='/Music'>Music</Link></Menu.Item>

@@ -1,21 +1,24 @@
 import React from 'react';
 import s from './Music.module.css'
 import {ComposersType} from "../../Types/Types";
+import {Divider, Typography} from 'antd';
+import { RightOutlined, BorderOutlined } from '@ant-design/icons';
+
+const { Title } = Typography;
 
 type PropsType = {
     composers: Array<ComposersType>
-    selectComposer:  (id: number) => void
+    selectComposer: (id: number) => void
 }
 
 const Music: React.FC<PropsType> = ({composers, selectComposer}) => {
     return (<div className={s.main}>
-        <div>
-            <h2> Choose your favorite composer</h2>
+        <Title level={3}> Choose your favorite composer</Title><br/>
             <div>
                 {composers.map(composer => <Composer key={composer.id} id={composer.id} selectComposer={selectComposer}
-                                                     name={composer.name} isLike={composer.isLike}/>
+                                                     name={composer.name} isLike={composer.isLike}
+                                                     sample={composer.sample}/>
                 )}
-            </div>
         </div>
     </div>)
 }
@@ -24,15 +27,31 @@ type ComposerType = {
     name: string
     id: number
     isLike: boolean
-    selectComposer:  (id: number) => void
+    sample: string
+    selectComposer: (id: number) => void
 }
-const Composer: React.FC<ComposerType> = ({name, id, isLike, selectComposer}) => {
+const Composer: React.FC<ComposerType> = ({name, id, isLike, sample, selectComposer}) => {
     const selectBestComposer = (id: number) => selectComposer(id)
-    return <div><div><strong>{name}</strong></div>
-        <div><button onClick={()=>selectBestComposer(id)}>
-            {isLike? 'favorite' : 'not so favorite'}</button></div>
-        <br/>
-    </div>
-}
+    return <>
+        <Title level={4} className={s.composer} onClick={() => selectBestComposer(id)}>{name}</Title>
+        {isLike ?
+            <div className={s.direct}>
+                <BorderOutlined  onClick={() => selectBestComposer(id)}/>
+                <audio
+                    className={s.audioControl}
+                    controls
+                    src={sample}
+                >
+                    Your browser does not support` the
+                    <code>audio</code> element.
+                </audio>
+            </div>
+            :
+            <RightOutlined onClick={() => selectBestComposer(id)}/>
 
+        }
+        <Divider/>
+
+    </>
+}
 export default Music;

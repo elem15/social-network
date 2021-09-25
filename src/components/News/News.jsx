@@ -34,7 +34,7 @@ const Messages = ({getSearch, searchQuery}) => {
             initialValues={{remember: true}}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            autoComplete="off"
+            autoComplete="on"
             placeholder={searchQuery}
         >
             <Form.Item
@@ -85,7 +85,6 @@ class News extends Component {
     render() {
         const {searchQuery, result} = this.state
         const {hits = []} = result
-
         return (
             <Layout>
                 <Title>Hacker News</Title>
@@ -99,9 +98,9 @@ class News extends Component {
                                  lg={{span: 8, offset: 3}}
                                  xl={{span: 6, offset: 1}}
                                  xxl={{span: 5, offset: 1}}
+                                 key={objectID}
                             >
                                 <NewsPost
-                                    key={objectID}
                                     author={author}
                                     created_at={created_at}
                                     num_comments={num_comments}

@@ -1,29 +1,11 @@
 import React from 'react';
-import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {Field, reduxForm, reset} from "redux-form";
-import {renderField} from "../../Common/InputField/FormsControls";
-import {maxLength33, required} from "../../../utils/validators";
 import {PostsType} from "../../../Types/Types";
-import {Divider, Form, Typography, Input, Button, Checkbox } from "antd";
+import {Button, Form, Input, Typography} from "antd";
 
 const { Title, Text } = Typography
 
-type PropsType = {
-    handleSubmit: any
-}
-const PostForm: React.FC<PropsType> = ({ handleSubmit }) => {
-    return (
-        <form onSubmit={ handleSubmit }>
-                <Field name="post"
-                       component={renderField }
-                       label='Enter you message'
-                       validate={[required, maxLength33]}
-                />
-                <button>Add post</button>
-        </form>
-    )
-}
+
 type PostType = {
     addPost: any
 }
@@ -51,7 +33,7 @@ const Messages: React.FC<PostType> = ({addPost}) => {
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            autoComplete="off"
+            autoComplete="on"
             placeholder="message"
         >
             <Form.Item
@@ -72,10 +54,6 @@ const Messages: React.FC<PostType> = ({addPost}) => {
 };
 
 
-const afterSubmit = (result: string, dispatch: any) =>
-    dispatch(reset('post'));
-
-const PostFormRedux  = reduxForm({form: 'post', onSubmitSuccess: afterSubmit})(PostForm)
 
 type MyPostsType = {
     addPost: (text:string) => void

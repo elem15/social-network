@@ -1,3 +1,16 @@
 .main {
-    margin: 15px;
+    margin: 0px;
+}
+.composer {
+    cursor: pointer;
+}
+.direct {
+    position: relative;
+
+}
+.audioControl {
+    position: absolute;
+    width: 270px;
+    bottom: -16px;
+    left: 14px;
 }

@@ -36,9 +36,9 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
                         editable={{tooltip: 'click to edit status',  onChange: setEditableStr }}>
                         {editableStr
                             ?
-                            <span>{editableStr}</span>
+                            editableStr
                             :
-                            <span>{props.status}</span>
+                            props.status
                         }
 
                     </Paragraph>
