@@ -18,12 +18,14 @@ type PropsType = {
     isFetching: boolean,
     toggleIsFetching: ((isFetching: boolean) => void),
     users: Array<UserType>
+    portionNumber: number
+    setPortionNumber: (num: number) => void
 }
 
 const Users: React.FC<PropsType> = ({
                    totalUsersCount, pageSize, currentPage, onPageChanged,
                    isFollowingProgress, unFollow, follow,
-                   isFetching, users, isAuth
+                   isFetching, users, isAuth, portionNumber, setPortionNumber
                }) => {
 
     return (
@@ -31,7 +33,9 @@ const Users: React.FC<PropsType> = ({
             <div> {isFetching ? <Preloader/> : null}</div>
             <div>
                 <Paginator totalItemCount={totalUsersCount} pageSize={pageSize}
-                           currentPage={currentPage} onPageChanged={onPageChanged}/>
+                           currentPage={currentPage} onPageChanged={onPageChanged}
+                           portionNumber={portionNumber} setPortionNumber={setPortionNumber}
+                />
                 <Row>
                     {
                         users.map(u =>

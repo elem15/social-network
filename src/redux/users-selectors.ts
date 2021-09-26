@@ -21,6 +21,9 @@ export const getIsFetching = (state: AppStateType) => {
 export const getIsFollowingProgress = (state: AppStateType) => {
     return state.usersPage.isFollowingProgress
 }
+export const getPortionNumber = (state: AppStateType) => {
+    return state.usersPage.portionNumber
+}
 export const getIsAuth = (state: AppStateType) => {
     return state.auth.isAuth
 }

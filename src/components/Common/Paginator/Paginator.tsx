@@ -3,22 +3,25 @@ import styles from "./Paginator.module.css";
 import cn from 'classnames';
 
 type PropsType = {
-    totalItemCount: number,
-    pageSize: number,
-    currentPage: number,
-    onPageChanged: ((p: number) => void),
+    totalItemCount: number
+    pageSize: number
+    currentPage: number
+    onPageChanged: ((p: number) => void)
     portionSize?: number
+    portionNumber: number
+    setPortionNumber: (num: number) => void
 }
 
-const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
+const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage,
+                                            onPageChanged, portionSize = 10,
+                                            portionNumber, setPortionNumber}) => {
 
-    let pagesCount = Math.ceil(totalItemCount / pageSize);
+    const pagesCount = Math.ceil(totalItemCount / pageSize);
     let pages: Array<number> = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
-    let [portionNumber, setPortionNumber] = useState<number>(1);
     let portionCount = Math.ceil(pagesCount / portionSize);
     if(portionNumber === null) {portionNumber=1}
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
@@ -34,7 +37,7 @@ const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage, 
             {pages
                 .filter((p: number) => p <= rightPortionPageNumber && p >= leftPortionPageNumber)
                 .map(p => {
-                    let selectedPage = currentPage === p;
+                    const selectedPage = currentPage === p;
                     return <span key={p}
                                  className={cn({[styles.selectedPage]: selectedPage},
                                      {[styles.unSelectedPage]: !selectedPage})} onClick={() => {

@@ -100,8 +100,8 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 
                     {(!props.isOwner && !props.ownerOnHisPage) &&
                     <div>{followed
-                        ? <span>Subscribed to {props.profile.fullName}</span>
-                        : <span>You can subscribe to {props.profile.fullName}</span>}
+                        ? <div>Subscribed to {props.profile.fullName}</div>
+                        : <div>You can subscribe to {props.profile.fullName}</div>}
 
                         <Follow followed={followed} userId={props.profile.userId}
                                 isFollowingProgress={props.isFollowingProgress}

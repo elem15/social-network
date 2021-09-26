@@ -3,7 +3,9 @@ import {connect} from "react-redux";
 import {
     follow,
     unFollow,
-    requestUsers, toggleIsFetching,
+    requestUsers,
+    toggleIsFetching,
+    setPortionNumber
 } from "../../redux/users-reducer";
 import Users from "./Users";
 // import {withAuthRedirect} from "../../HOC/withAuthRedirect";
@@ -14,11 +16,13 @@ import {
     getIsFollowingProgress,
     getPageSize,
     getTotalUsersCount,
+    getPortionNumber,
     selectUsers
 } from "../../redux/users-selectors";
 import {UserType} from "../../Types/Types";
 import {AppStateType} from "../../redux/redux-store";
 import {Typography} from "antd";
+
 
 const {Title} = Typography
 
@@ -33,12 +37,15 @@ type MapStatePropsType = {
     users: Array<UserType>,
     totalUsersCount: number,
     isAuth: boolean
+    portionNumber: number
+
 }
 type MapDispatchPropsType = {
     unFollow: (userId: number) => void,
     follow: (userId: number) => void,
     requestUsers: (currentPage: number, pageSize: number) => void,
     toggleIsFetching: ((isFetching: boolean) => void)
+    setPortionNumber: (num: number) => void
 }
 
 type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
@@ -69,6 +76,9 @@ class UsersContainer extends React.Component<PropsType>  {
                    isFollowingProgress={this.props.isFollowingProgress}
                    toggleIsFetching={this.props.toggleIsFetching}
                    isAuth={this.props.isAuth}
+                   portionNumber={this.props.portionNumber}
+                   setPortionNumber={this.props.setPortionNumber}
+
             />
         </>
     }
@@ -82,7 +92,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         isFollowingProgress: getIsFollowingProgress(state),
-        isAuth: getIsAuth(state)
+        isAuth: getIsAuth(state),
+        portionNumber: getPortionNumber(state)
     }
 };
 
@@ -94,7 +105,8 @@ connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
         follow,
         unFollow,
         requestUsers: requestUsers,
-        toggleIsFetching: toggleIsFetching
+        toggleIsFetching: toggleIsFetching,
+        setPortionNumber
     }
     ),
     // withAuthRedirect
