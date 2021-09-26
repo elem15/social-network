@@ -168,6 +168,7 @@ export const disLikeIncrement  = (id: number) => ({
 export const getUserProfile = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.getProfile(userId);
+        await dispatch(getStatus(userId))
         await dispatch(setUserProfile(response));
         await dispatch(setProfileInitialization())
     }
@@ -207,6 +208,7 @@ export const updateProfile = (profile: ProfileType, userId: number): ThunkType =
         // const userId = store.getState().auth.id;
         const response = await profileAPI.updateProfile(profile);
         if (response.resultCode === ResultCodeEnum.Success) {
+            await dispatch(getStatus(userId))
             await dispatch(getUserProfile(userId))
             await dispatch(setProfileInitialization())
         } else if (response.resultCode === ResultCodeEnum.Error) {

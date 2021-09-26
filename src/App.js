@@ -75,7 +75,7 @@ class App extends React.Component {
                             style={{height: '100%', borderRight: 0}}
                         >
                             <SubMenu key="sub1" icon={<ProfileOutlined/>} title="Profile">
-                                <Menu.Item key="1"><Link to='/Profile/'>My profile</Link></Menu.Item>
+                                <Menu.Item key="1"><Link to='/'>My profile</Link></Menu.Item>
                                 <Menu.Item key="2"><Link to='/Dialogs'>Dialogs</Link></Menu.Item>
                                 <Menu.Item key="3"><Link to='/News'>News</Link></Menu.Item>
                                 <Menu.Item key="4"><Link to='/Music'>Music</Link></Menu.Item>
@@ -111,7 +111,8 @@ class App extends React.Component {
                             }}
                         >
                             <Switch>
-
+                                <Route exact path='/' render={() => <ProfileContainer/> } />
+                                <Route path='/social-network' render={() => <ProfileContainer/> } />
                                 <Route path='/Profile/:userId?' render={() => <ProfileContainer/> }/>
                                 <Route path='/News' render={() => <Suspense fallback={<Preloader/>}><News/></Suspense>}/>
                                 <Route path='/Music' render={() => <Music/>}/>
