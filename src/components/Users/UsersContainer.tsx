@@ -18,6 +18,9 @@ import {
 } from "../../redux/users-selectors";
 import {UserType} from "../../Types/Types";
 import {AppStateType} from "../../redux/redux-store";
+import {Typography} from "antd";
+
+const {Title} = Typography
 
 type OwnPropsType = {
     pageTitle: string
@@ -54,7 +57,7 @@ class UsersContainer extends React.Component<PropsType>  {
 
     render() {
         return <>
-            <h2>{this.props.pageTitle}</h2>
+            <Title level={4}>{this.props.pageTitle}</Title>
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
@@ -71,16 +74,6 @@ class UsersContainer extends React.Component<PropsType>  {
     }
 }
 
-// const mapStateToProps = (state: AppStateType) => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         isFollowingProgress: state.usersPage.isFollowingProgress
-//     }
-// };
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: selectUsers(state),

@@ -72,7 +72,7 @@ class App extends React.Component {
                         >
                             <SubMenu key="sub1" icon={<ProfileOutlined />} title="Profile">
                                 <Menu.Item key="1"><Link to='/Profile' >My profile</Link></Menu.Item>
-                                <Menu.Item key="2"><Link to='/Dialogs' >Message</Link></Menu.Item>
+                                <Menu.Item key="2"><Link to='/Dialogs' >Dialogs</Link></Menu.Item>
                                 <Menu.Item key="3"><Link to='/News' >News</Link></Menu.Item>
                                 <Menu.Item key="4"><Link to='/Music'>Music</Link></Menu.Item>
                             </SubMenu>

@@ -87,9 +87,8 @@ class News extends Component {
         const {hits = []} = result
         return (
             <Layout>
-                <Title>Hacker News</Title>
+                <Title level={3}>Hacker News</Title>
                 <Messages getSearch={this.getSearch} searchQuery={searchQuery}/>
-                <Title level={5}>{searchQuery}</Title>
                 <Row>
                     {
                         hits.map(({author, created_at, num_comments, objectID, title, points, url}) =>

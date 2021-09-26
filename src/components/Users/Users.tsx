@@ -4,6 +4,7 @@ import Preloader from "../Common/Preloader/Preloader";
 import Paginator from "../Common/Paginator/Paginator";
 import User from "./User";
 import {UserType} from "../../Types/Types";
+import {Col, Row} from "antd";
 
 type PropsType = {
     totalUsersCount: number,
@@ -31,17 +32,24 @@ const Users: React.FC<PropsType> = ({
             <div>
                 <Paginator totalItemCount={totalUsersCount} pageSize={pageSize}
                            currentPage={currentPage} onPageChanged={onPageChanged}/>
-
-                <div className={styles.users}>
+                <Row>
                     {
-                        users.map(u => <User key={u.id} user={u}
-                                             isFollowingProgress={isFollowingProgress}
-                                             unFollow={unFollow} follow={follow}
-                                             isAuth={isAuth}
+                        users.map(u =>
+                            <Col style={{margin: '10px 30px 10px 0'}} xs={{span: 24, offset: 0}} sm={{span: 14, offset: 2}}
+                                 md={{span: 10, offset: 2}}
+                                 lg={{span: 8, offset: 3}}
+                                 xl={{span: 5, offset: 1}}
+                                 xxl={{span: 4, offset: 2}}
+                                 key={u.id}
+                            >
+                            <User  user={u}
+                                   isFollowingProgress={isFollowingProgress}
+                                   unFollow={unFollow} follow={follow} isAuth={isAuth}
                             />
+                            </Col>
                         )
                     }
-                </div>
+                </Row>
             </div>
         </div>
     );

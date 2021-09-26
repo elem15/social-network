@@ -13,7 +13,7 @@ const Follow: React.FC<PropsType> =
 
 
     return (
-        <div>
+        <>
             {followed
                 ? <Button disabled={isFollowingProgress.some(id => id === userId)} onClick={() => {
                     unFollow(userId);
@@ -22,7 +22,7 @@ const Follow: React.FC<PropsType> =
                     follow(userId);
                 }}>Follow</Button>
             }
-        </div>
+        </>
     )
 }
 
