@@ -59,7 +59,7 @@ const Header: React.FC<PropsType> = () => {
                     <Space direction="horizontal">
                         <Button onClick={logoutCallback}>Log out</Button>
 
-                        <Text type="success"><Link to='/Profile'>{login}</Link></Text>
+                        <Text type="success"><Link to='/Profile/'>{login}</Link></Text>
                         {
                             profile?.photos.small
                                 ?

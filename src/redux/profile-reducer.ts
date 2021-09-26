@@ -1,8 +1,8 @@
 import {profileAPI, ResultCodeEnum, usersAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
-import { PhotosType, PostsType, ProfileType} from "../Types/Types";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
+import { PhotosType, PostsType, ProfileType } from "../Types/Types";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "./redux-store";
 const ADD_POST = 'social_network/profile/ADD_POST';
 const SET_USER_PROFILE = 'social_network/profile/SET_USER_PROFILE';
 const SET_USER_FOLLOW = 'social_network/profile/SET_USER_FOLLOW';
@@ -12,7 +12,7 @@ const SET_USER_PHOTO_SUCCESS = 'social_network/profile/SET_USER_PHOTO_SUCCESS';
 const UPDATE_USER_PROFILE = 'social_network/profile/UPDATE_USER_PROFILE';
 const LIKE_INCREMENT = 'social_network/profile/LIKE_INCREMENT'
 const DISLIKE_INCREMENT = 'social_network/profile/DISLIKE_INCREMENT'
-
+const PROFILE_INITIALIZATION = 'social_network/profile/PROFILE_INITIALIZATION'
 let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likeCount: 11, disLikeCount: 2},
@@ -22,11 +22,13 @@ let initialState = {
     newPostState: 'YOY' as string,
     profile: null as ProfileType | null,
     followed: true as boolean,
-    status: ''
+    status: '',
+    initialization: false as boolean
 };
 type initialStateType = typeof initialState;
 type ActionType = AddPostActionCreatorActionType | DeletePostActionCreatorActionType | setUserProfileActionType |
-    setUserFollowActionType | setUserStatusActionType | setUserPhotoSuccessActionType | likeIncrementType | disLikeIncrementType
+    setUserFollowActionType | setUserStatusActionType | setUserPhotoSuccessActionType | likeIncrementType |
+    disLikeIncrementType | setProfileInitialisationActionType
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 const profileReducer = (state: initialStateType = initialState, action: any) : initialStateType  => {
 
@@ -80,6 +82,9 @@ const profileReducer = (state: initialStateType = initialState, action: any) : i
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
 
+        case PROFILE_INITIALIZATION:
+            return {...state, initialization: true}
+
         case SET_USER_PHOTO_SUCCESS:
             return {...state, profile: {...state.profile, photos: action.photos} as ProfileType}
 
@@ -104,6 +109,11 @@ const profileReducer = (state: initialStateType = initialState, action: any) : i
             return state;
     }
 }
+
+type setProfileInitialisationActionType = {
+    type: typeof PROFILE_INITIALIZATION
+}
+const setProfileInitialization = (): setProfileInitialisationActionType => ({type: PROFILE_INITIALIZATION})
 
 type AddPostActionCreatorActionType = {
     type: typeof ADD_POST,
@@ -158,7 +168,8 @@ export const disLikeIncrement  = (id: number) => ({
 export const getUserProfile = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.getProfile(userId);
-        dispatch(setUserProfile(response));
+        await dispatch(setUserProfile(response));
+        await dispatch(setProfileInitialization())
     }
 
 export const savePhoto = (photoFile: any): ThunkType =>
@@ -178,7 +189,7 @@ export const getUserFollow = (userId: number): ThunkType =>
 export const getStatus = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.getStatus(userId);
-        dispatch(setUserStatus(response))
+        await dispatch(setUserStatus(response))
     }
 export const updateStatus = (status: string): ThunkType =>
     async (dispatch) => {
@@ -196,7 +207,8 @@ export const updateProfile = (profile: ProfileType, userId: number): ThunkType =
         // const userId = store.getState().auth.id;
         const response = await profileAPI.updateProfile(profile);
         if (response.resultCode === ResultCodeEnum.Success) {
-            dispatch(getUserProfile(userId))
+            await dispatch(getUserProfile(userId))
+            await dispatch(setProfileInitialization())
         } else if (response.resultCode === ResultCodeEnum.Error) {
             const message = response.messages.length > 0 ? response.messages[0] : 'Same error';
             const getLastResponseWorld = (str: string) => {

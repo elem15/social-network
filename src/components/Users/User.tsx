@@ -17,7 +17,7 @@ type PropsType = {
 const User: React.FC<PropsType> = ({user, isAuth, isFollowingProgress, unFollow, follow}) => {
     return (
         <Card title={user.name} extra={<NavLink to={'/Profile/' + user.id}>profile...</NavLink>}
-              style={{width: 220, height: 170}}>
+              style={{width: 220, height: 185}}>
             <Row>
                 <Col span={12}>
                     <NavLink to={'/Profile/' + user.id}>

@@ -1,30 +1,31 @@
 import React, {Suspense} from 'react';
 import {BrowserRouter, HashRouter, Link, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import './App.css';
-import News from './components/News/News';
+
 import Music from './components/Music/MusicContainer';
 import Settings from './components/Settings/Settings';
 import FriendsContainer from "./components/Friends/FriendsContainer";
-import {NavbarContainer} from "./components/Navbar/NavbarContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import Header from "./components/Header/Header";
+import Dialogs from "./components/Dialog/Dialogs";
 import {connect, Provider, useSelector} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {compose} from "redux";
 import {getInitialization} from "./redux/app-reducer";
 import store from "./redux/redux-store";
-import LoginContainer from "./components/Login/LoginContainer";
 import 'antd/dist/antd.css';
 import {Layout, Menu, Breadcrumb, Typography} from 'antd';
 import {ProfileOutlined, UsergroupAddOutlined, LoginOutlined} from '@ant-design/icons';
-import { userSignOut } from './redux/auth-reducer';
+import {userSignOut} from './redux/auth-reducer';
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 const {SubMenu} = Menu;
 const {Content, Sider, Footer} = Layout
 const {Title} = Typography
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
-const Login = React.lazy(() => import("./components/Login/Login"));
-const Dialogs = React.lazy(() => import('./components/Dialog/Dialogs'));
+const Login = React.lazy(() => import("./components/Login/LoginContainer"));
+const Profile = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const News = React.lazy( () => import('./components/News/News'));
+
 
 
 class App extends React.Component {
@@ -32,6 +33,7 @@ class App extends React.Component {
         console.error("Error occurred: " + e.reason.message);
         return false;
     }
+
     componentDidMount() {
         this.props.getInitialization();
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
@@ -40,6 +42,7 @@ class App extends React.Component {
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
+
     signOut = () => {
         this.props.userSignOut()
     }
@@ -48,7 +51,7 @@ class App extends React.Component {
     };
 
     onCollapse = collapsed => {
-        this.setState({ collapsed });
+        this.setState({collapsed});
     };
 
     render() {
@@ -57,30 +60,31 @@ class App extends React.Component {
             return <Preloader/>
         }
 
-        const { collapsed } = this.state;
+        const {collapsed} = this.state;
         const pathname = this.props.location.pathname.split('').splice(1, this.props.location.pathname.length).join('')
 
         return (
 
-            <Layout >
-                <Header  />
-                <Layout >
-                    <Sider theme='light' collapsedWidth={50} collapsible collapsed={collapsed} onCollapse={this.onCollapse} breakpoint={"lg"}>
+            <Layout>
+                <Header/>
+                <Layout>
+                    <Sider theme='light' collapsedWidth={50} collapsible collapsed={collapsed}
+                           onCollapse={this.onCollapse} breakpoint={"lg"}>
                         <Menu
                             mode="inline"
                             style={{height: '100%', borderRight: 0}}
                         >
-                            <SubMenu key="sub1" icon={<ProfileOutlined />} title="Profile">
-                                <Menu.Item key="1"><Link to='/Profile' >My profile</Link></Menu.Item>
-                                <Menu.Item key="2"><Link to='/Dialogs' >Dialogs</Link></Menu.Item>
-                                <Menu.Item key="3"><Link to='/News' >News</Link></Menu.Item>
+                            <SubMenu key="sub1" icon={<ProfileOutlined/>} title="Profile">
+                                <Menu.Item key="1"><Link to='/Profile/'>My profile</Link></Menu.Item>
+                                <Menu.Item key="2"><Link to='/Dialogs'>Dialogs</Link></Menu.Item>
+                                <Menu.Item key="3"><Link to='/News'>News</Link></Menu.Item>
                                 <Menu.Item key="4"><Link to='/Music'>Music</Link></Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub2" icon={<UsergroupAddOutlined />} title="Developers">
+                            <SubMenu key="sub2" icon={<UsergroupAddOutlined/>} title="Developers">
                                 <Menu.Item key="5"><Link to='/Users'>Users</Link></Menu.Item>
                                 <Menu.Item key="6"><Link to='/Friends'>Friends</Link></Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub3" icon={<LoginOutlined />} title="Authentication">
+                            <SubMenu key="sub3" icon={<LoginOutlined/>} title="Authentication">
                                 <Menu.Item key="9">
                                     {!this.props.isAuth
                                         ?
@@ -107,24 +111,23 @@ class App extends React.Component {
                             }}
                         >
                             <Switch>
-                                <Route exact path='/' render={() => <Redirect to={"/Profile"}/>} />
-                                <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                                <Route path='/News' render={() => <News/>}/>
+
+                                <Route path='/Profile/:userId?' render={() => <ProfileContainer/> }/>
+                                <Route path='/News' render={() => <Suspense fallback={<Preloader/>}><News/></Suspense>}/>
                                 <Route path='/Music' render={() => <Music/>}/>
                                 <Route path='/Settings' render={() => <Settings/>}/>
                                 <Route path='/Friends' render={() => <FriendsContainer/>}/>
-                                <Route path='/Dialogs'
-                                       render={() => <Suspense fallback={<Preloader/>}><Dialogs/></Suspense>}/>
+                                <Route path='/Dialogs' render={() => <Dialogs/>}/>
                                 <Route path='/Users'
                                        render={() => <Suspense fallback={<Preloader/>}>
                                            <UsersContainer pageTitle={'Users'}/></Suspense>}/>
                                 <Route path='/Login'
-                                       render={() => <Suspense fallback={<Preloader/>}><LoginContainer/></Suspense>}/>
+                                       render={() => <Suspense fallback={<Preloader/>}><Login/></Suspense>}/>
                                 <Route exact path='/*' render={() => <Title type={1}>404 PAGE NOT FOUND<br/><br/>
                                     <a href={"/Profile"} type={"link"}>HOME</a></Title>}/>
                             </Switch>
                         </Content>
-                        <Footer style={{ textAlign: 'center' }}>Social Network ©2021 Created by Elem</Footer>
+                        <Footer style={{textAlign: 'center'}}>Social Network ©2021 Created by Elem</Footer>
                     </Layout>
                 </Layout>
             </Layout>
@@ -142,10 +145,12 @@ const AppContainer = compose(withRouter,
     connect(mapStateToProps, {getInitialization, userSignOut}))(App);
 /*basename={process.env.PUBLIC_URL}*/
 const SamuraiJSApp = () => {
-    return <HashRouter>
+    return (
+        <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </HashRouter>
+</BrowserRouter>
+    )
 }
 export default SamuraiJSApp;

@@ -19,7 +19,7 @@ type PropsType = {
     toggleIsFetching: ((isFetching: boolean) => void),
     users: Array<UserType>
     portionNumber: number
-    setPortionNumber: (num: number) => void
+    setPortionNumber: (portionNumber: number) => void
 }
 
 const Users: React.FC<PropsType> = ({

@@ -45,7 +45,7 @@ type MapDispatchPropsType = {
     follow: (userId: number) => void,
     requestUsers: (currentPage: number, pageSize: number) => void,
     toggleIsFetching: ((isFetching: boolean) => void)
-    setPortionNumber: (num: number) => void
+    setPortionNumber: (portionNumber: number) => void
 }
 
 type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType

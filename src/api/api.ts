@@ -78,7 +78,7 @@ type CaptchaResponseType = {
     url: string
 }
 export const usersAPI = {
-    requestUsers(currentPage = 1, pageSize = 5) {
+    requestUsers(currentPage = 1, pageSize = 10) {
         return instance.get<UserResponseType>(`users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
     },
     follow(id: number) {
@@ -95,7 +95,7 @@ export const profileAPI = {
     getProfile(userId: number = 17889) {
         return instance.get<ProfileType>(`profile/${userId}`).then(res => res.data)
     },
-    getStatus(userId: number) {
+    getStatus(userId: number = 17889) {
         return instance.get<string>(`profile/status/${userId}`).then(res => res.data)
     },
     updateStatus(status: string) {

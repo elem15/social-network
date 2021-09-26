@@ -16,7 +16,6 @@ import {ownUserName} from "../../redux/auth-reducer";
 import {follow, unFollow} from "../../redux/users-reducer";
 import {ProfileType, UserType} from "../../Types/Types";
 import {AppStateType} from "../../redux/redux-store";
-import exp from "constants";
 
 type matchType = {
     isExact: boolean
@@ -39,7 +38,7 @@ type MapStatePropsType = {
     status: string
     isFollowingProgress: Array<number>
     followed: boolean
-
+    initialization: boolean
 }
 type MapDispatchPropsType = {
     getUserProfile: (userId: number) => void
@@ -82,9 +81,11 @@ class ProfileContainer extends React.Component<PropsType> {
         this.isOwnerOnHisPage()
     }
     componentDidUpdate(prevProps: PropsType, prevState: MapStatePropsType ) {
-        if (this.props.match.params.userId !== prevProps.match.params.userId)
+        const userId = this.props.match.params.userId
+        if (userId !== prevProps.match.params.userId)
             this.setPreviousState()
             this.isOwnerOnHisPage()
+
     }
     isOwner(uId: number | undefined):boolean {
         if (uId === undefined) {
@@ -106,6 +107,7 @@ class ProfileContainer extends React.Component<PropsType> {
                      unFollow={this.props.unFollow}
                      isFollowingProgress={this.props.isFollowingProgress}
                      followed={this.props.followed} isAuth={this.props.isAuth}
+                     initialization={this.props.initialization}
             />
         )
     }
@@ -117,7 +119,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     status: state.postPage.status,
     id: state.auth.id,
     isAuth: state.auth.isAuth,
-    isFollowingProgress: state.usersPage.isFollowingProgress
+    isFollowingProgress: state.usersPage.isFollowingProgress,
+    initialization: state.postPage.initialization
 });
 
 export default compose(

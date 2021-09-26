@@ -23,6 +23,7 @@ const mapStateToProps = (state: AppStateType): PropsType =>{
     }
 }
 
+// const userSignIn = (email: string, password: string, rememberMe: string, captcha: string) => console.log(email, password, rememberMe, captcha)
 const LoginContainer = connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
 (mapStateToProps, {userSignIn, userSignOut})(Login);
 
