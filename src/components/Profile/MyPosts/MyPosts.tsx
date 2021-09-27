@@ -37,7 +37,7 @@ const Messages: React.FC<PostType> = ({addPost}) => {
             placeholder="message"
         >
             <Form.Item
-                label="Message"
+                label=""
                 name="message"
                 rules={[{ required: true, message: 'Please input your message!' }]}
             >

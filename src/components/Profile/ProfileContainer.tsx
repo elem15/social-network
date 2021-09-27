@@ -8,7 +8,9 @@ import {
     getStatus,
     updateStatus,
     savePhoto,
-    updateProfile
+    updateProfile,
+    deleteUserProfile,
+    deleteUserStatus
 } from "../../redux/profile-reducer";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
@@ -50,6 +52,8 @@ type MapDispatchPropsType = {
     follow: (userId: number) => void
     unFollow: (userId: number) => void
     ownUserName: () => void
+    deleteUserProfile: () => void
+    deleteUserStatus: () => void
 }
 
 export type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
@@ -63,6 +67,8 @@ class ProfileContainer extends React.Component<PropsType> {
                 this.props.history.push('/Login')
             }
         }
+        this.props.deleteUserProfile()
+        this.props.deleteUserStatus()
         this.props.getUserProfile(userId);
         this.props.getUserFollow(userId);
         this.props.getStatus(userId);
@@ -80,12 +86,17 @@ class ProfileContainer extends React.Component<PropsType> {
         this.setPreviousState()
         this.isOwnerOnHisPage()
     }
+    componentWillUnmount(): void {
+        this.props.deleteUserProfile()
+        this.props.deleteUserStatus()
+    }
+
     componentDidUpdate(prevProps: PropsType, prevState: MapStatePropsType ) {
         const userId = this.props.match.params.userId
         if (userId !== prevProps.match.params.userId)
+            // this.props.getStatus(userId);
             this.setPreviousState()
             this.isOwnerOnHisPage()
-
     }
     isOwner(uId: number | undefined):boolean {
         if (uId === undefined) {
@@ -108,6 +119,8 @@ class ProfileContainer extends React.Component<PropsType> {
                      isFollowingProgress={this.props.isFollowingProgress}
                      followed={this.props.followed} isAuth={this.props.isAuth}
                      initialization={this.props.initialization}
+                     authId={this.props.id}
+                     getStatus={this.props.getStatus}
             />
         )
     }
@@ -129,7 +142,7 @@ export default compose(
     (mapStateToProps, {
         ownUserName, getUserProfile,
         getUserFollow, getStatus, updateStatus, savePhoto, updateProfile, follow,
-        unFollow
+        unFollow, deleteUserProfile, deleteUserStatus
     }),
     withRouter
 )(ProfileContainer);

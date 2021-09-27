@@ -7,8 +7,10 @@ const ADD_POST = 'social_network/profile/ADD_POST';
 const SET_USER_PROFILE = 'social_network/profile/SET_USER_PROFILE';
 const SET_USER_FOLLOW = 'social_network/profile/SET_USER_FOLLOW';
 const SET_USER_STATUS = 'social_network/profile/SET_USER_STATUS';
+const DELETE_USER_STATUS = 'social_network/profile/DELETE_USER_STATUS';
 const DELETE_POST = 'social_network/profile/DELETE_POST';
 const SET_USER_PHOTO_SUCCESS = 'social_network/profile/SET_USER_PHOTO_SUCCESS';
+const DELETE_USER_PROFILE = 'social_network/profile/DELETE_USER_PROFILE';
 const UPDATE_USER_PROFILE = 'social_network/profile/UPDATE_USER_PROFILE';
 const LIKE_INCREMENT = 'social_network/profile/LIKE_INCREMENT'
 const DISLIKE_INCREMENT = 'social_network/profile/DISLIKE_INCREMENT'
@@ -28,7 +30,7 @@ let initialState = {
 type initialStateType = typeof initialState;
 type ActionType = AddPostActionCreatorActionType | DeletePostActionCreatorActionType | setUserProfileActionType |
     setUserFollowActionType | setUserStatusActionType | setUserPhotoSuccessActionType | likeIncrementType |
-    disLikeIncrementType | setProfileInitialisationActionType
+    disLikeIncrementType | setProfileInitialisationActionType | deleteUserProfileActionType | deleteUserStatusActionType
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 const profileReducer = (state: initialStateType = initialState, action: any) : initialStateType  => {
 
@@ -82,6 +84,9 @@ const profileReducer = (state: initialStateType = initialState, action: any) : i
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
 
+        case DELETE_USER_PROFILE:
+            return {...state, profile: null}
+
         case PROFILE_INITIALIZATION:
             return {...state, initialization: true}
 
@@ -104,6 +109,9 @@ const profileReducer = (state: initialStateType = initialState, action: any) : i
 
         case SET_USER_STATUS:
             return {...state, status: action.status}
+
+        case DELETE_USER_STATUS:
+            return {...state, status: ""}
 
         default:
             return state;
@@ -133,16 +141,26 @@ type setUserProfileActionType = {
     profile: ProfileType
 }
 const setUserProfile = (profile: ProfileType): setUserProfileActionType => ({type: SET_USER_PROFILE, profile})
+type deleteUserProfileActionType = {
+    type: typeof DELETE_USER_PROFILE,
+
+}
+export const deleteUserProfile = (): deleteUserProfileActionType => ({type: DELETE_USER_PROFILE})
 type setUserFollowActionType = {
     type: typeof SET_USER_FOLLOW,
     followed: boolean
 }
+
 const setUserFollow = (followed: boolean):setUserFollowActionType => ({type: SET_USER_FOLLOW, followed})
 type setUserStatusActionType = {
     type: typeof SET_USER_STATUS,
     status: string
 }
 const setUserStatus = (status: string): setUserStatusActionType => ({type: SET_USER_STATUS, status})
+type deleteUserStatusActionType = {
+    type: typeof SET_USER_STATUS,
+}
+export const deleteUserStatus = (): deleteUserProfileActionType => ({type: DELETE_USER_PROFILE})
 type setUserPhotoSuccessActionType = {
     type: typeof SET_USER_PHOTO_SUCCESS,
     photos: PhotosType
@@ -168,7 +186,7 @@ export const disLikeIncrement  = (id: number) => ({
 export const getUserProfile = (userId: number): ThunkType =>
     async (dispatch) => {
         let response = await profileAPI.getProfile(userId);
-        await dispatch(getStatus(userId))
+        // await dispatch(getStatus(userId))
         await dispatch(setUserProfile(response));
         await dispatch(setProfileInitialization())
     }
@@ -208,7 +226,7 @@ export const updateProfile = (profile: ProfileType, userId: number): ThunkType =
         // const userId = store.getState().auth.id;
         const response = await profileAPI.updateProfile(profile);
         if (response.resultCode === ResultCodeEnum.Success) {
-            await dispatch(getStatus(userId))
+            // await dispatch(getStatus(userId))
             await dispatch(getUserProfile(userId))
             await dispatch(setProfileInitialization())
         } else if (response.resultCode === ResultCodeEnum.Error) {

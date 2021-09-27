@@ -20,6 +20,7 @@ type MapStatePropsType = {
     followed: boolean
     isOwner: boolean
     ownerOnHisPage: boolean
+    authId: number
 }
 type MapDispatchPropsType = {
     updateStatus: (status: string) => void
@@ -27,6 +28,7 @@ type MapDispatchPropsType = {
     updateProfile: (profile: ProfileType, userId: number) => void
     follow: (userId: number) => void
     unFollow: (userId: number) => void
+    getStatus: (userId: number) => void
 }
 
 export type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
@@ -71,9 +73,10 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 
                 <Col className="gutter-row" xs={{span: 24, offset: 0}} sm={{span: 9, offset: 1}} md={{ span: 10, offset: 0 }}>
                     <Title level={2}>{props.profile.fullName}</Title>
-                    <ProfileStatusWithHooks userId={props.profile.userId}
+                    <ProfileStatusWithHooks userId={props.profile.userId} authId={props.authId}
                                             status={props.status} updateStatus={props.updateStatus}
-                                            isOwner={props.isOwner} isAuth={props.isAuth}/>
+                                            isOwner={props.isOwner} isAuth={props.isAuth}
+                                            getStatus={props.getStatus}/>
                         <Image width={170} style={{borderRadius: '3px'}} src={props.profile.photos.large || userPhoto}/>
                     {props.isOwner && props.isAuth &&
                     <div className={s.inputWrapper}>

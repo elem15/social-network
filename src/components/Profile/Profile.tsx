@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import ProfileHead from './ProfileHead/ProfileHead';
 import s from './Profile.module.css';
@@ -19,6 +19,7 @@ type MapStatePropsType = {
     isOwner: boolean
     ownerOnHisPage: boolean
     initialization: boolean
+    authId: number
 }
 type MapDispatchPropsType = {
     updateStatus: (status: string) => void
@@ -26,7 +27,7 @@ type MapDispatchPropsType = {
     updateProfile: (profile: ProfileType, userId: number) => void
     follow: (userId: number) => void
     unFollow: (userId: number) => void
-
+    getStatus: (userId: number) => void
 }
 
 export type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
@@ -35,8 +36,9 @@ export type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
 const Profile: React.FC<PropsType> = (props) => {
 
     const [initialize, setInitialization] = useState(false)
-
-    setTimeout(() => setInitialization(true), 1000)
+    useEffect(() => {
+        setTimeout(() => (setInitialization(true)), 1000)
+    },[props.profile, props.status, props.isOwner])
 
     if (!props.initialization) {
         return <Preloader/>
@@ -61,7 +63,8 @@ const Profile: React.FC<PropsType> = (props) => {
                                  updateProfile={props.updateProfile} followed={props.followed}
                                  isFollowingProgress={props.isFollowingProgress}
                                  unFollow={props.unFollow} isAuth={props.isAuth}
-                                 ownerOnHisPage={props.ownerOnHisPage}
+                                 ownerOnHisPage={props.ownerOnHisPage} authId={props.authId}
+                                 getStatus={props.getStatus}
                     /></Col>
                 <Col className="gutter-row" xs={{span: 24, offset: 0}}
                      sm={{span: 22, offset: 2}}

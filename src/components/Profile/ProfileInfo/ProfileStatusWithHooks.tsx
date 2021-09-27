@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Typography} from 'antd';
+import {getStatus} from "../../../redux/profile-reducer";
 
 const {Text,  Paragraph} = Typography;
 
@@ -10,21 +11,15 @@ type PropsType = {
     updateStatus: (status: string) => void
     isOwner: boolean
     isAuth: boolean
+    authId: number
+    getStatus: (userId: number) => void
 }
 
 const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
 
-    const [editMode, setEditMode] = useState(false);
-    const activateEditMode = () => setEditMode(true);
-
-    const [status, setStatus] = useState(props.status);
-    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value);
-
-    const inActivateMode = () => {
-            props.updateStatus(editableStr);
-    }
-
     const [editableStr, setEditableStr] = useState(props.status)
+    const getStatus = () => props.updateStatus(editableStr);
+
     return (
         <>
             <Text type="secondary">status:
@@ -32,20 +27,13 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
                     ?
                     <Paragraph
                     // @ts-ignore
-                        onBlur={inActivateMode}
-                        editable={{tooltip: 'click to edit status',  onChange: setEditableStr }}>
-                        {editableStr
-                            ?
-                            editableStr
-                            :
-                            props.status
-                        }
-
+                        onBlur={getStatus}
+                        editable={{tooltip: 'click to edit status', onChange: setEditableStr }}>
+                        {editableStr}
                     </Paragraph>
                     :
                     <Paragraph>{props.status}</Paragraph>
                 }
-
             </Text>
         </>
     )
