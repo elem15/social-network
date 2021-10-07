@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import styles from "./Paginator.module.css";
 import cn from 'classnames';
+import { LeftOutlined, VerticalRightOutlined, RightOutlined, VerticalLeftOutlined} from '@ant-design/icons';
 
 type PropsType = {
     totalItemCount: number
@@ -13,7 +14,7 @@ type PropsType = {
 }
 
 const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage,
-                                            onPageChanged, portionSize = 10,
+                                            onPageChanged, portionSize = 5,
                                             portionNumber, setPortionNumber}) => {
 
     const pagesCount = Math.ceil(totalItemCount / pageSize);
@@ -30,10 +31,11 @@ const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage,
     return (
         <div className={cn(styles.listContainer, styles.listContainerCn)}>
             {leftPortionPageNumber > 1 &&
-            <button onClick={() => setPortionNumber(1)}>begin</button>
+
+            <VerticalRightOutlined  onClick={() => setPortionNumber(1)}/>
             }
             {leftPortionPageNumber > 1 &&
-            <button onClick={() => setPortionNumber(portionNumber - 1)}>prev</button>}
+            <LeftOutlined onClick={() => setPortionNumber(portionNumber - 1)} />}
             {pages
                 .filter((p: number) => p <= rightPortionPageNumber && p >= leftPortionPageNumber)
                 .map(p => {
@@ -48,10 +50,10 @@ const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage,
                 })}
             <span>
             {rightPortionPageNumber < pagesCount &&
-            <button onClick={() => setPortionNumber(portionNumber + 1)}>next</button>
+            <RightOutlined  onClick={() => setPortionNumber(portionNumber + 1)}/>
             }
                 {rightPortionPageNumber < pagesCount &&
-                <button onClick={() => setPortionNumber(portionCount)}>end</button>
+                <VerticalLeftOutlined onClick={() => setPortionNumber(portionCount)}/>
                 }</span>
         </div>
     )

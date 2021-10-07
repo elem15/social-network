@@ -65,7 +65,7 @@ class App extends React.Component {
 
         return (
 
-            <Layout>
+            <Layout style={{fontSize:"large"}}>
                 <Header/>
                 <Layout>
                     <Sider theme='light' collapsedWidth={50} collapsible collapsed={collapsed}

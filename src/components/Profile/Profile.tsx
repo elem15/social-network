@@ -40,17 +40,13 @@ const Profile: React.FC<PropsType> = (props) => {
         setTimeout(() => (setInitialization(true)), 1000)
     },[props.profile, props.status, props.isOwner])
 
-    if (!props.initialization) {
-        return <Preloader/>
-    }
-
-    if (!initialize) {
+    if (!props.initialization || !initialize) {
         return <Preloader/>
     }
 
     return (
 
-        <Layout>
+        <Layout >
             <ProfileHead/>
             <Divider/>
             <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
