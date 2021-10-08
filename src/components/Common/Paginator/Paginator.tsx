@@ -32,10 +32,10 @@ const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage,
         <div className={cn(styles.listContainer, styles.listContainerCn)}>
             {leftPortionPageNumber > 1 &&
 
-            <VerticalRightOutlined  onClick={() => setPortionNumber(1)}/>
+            <VerticalRightOutlined style={{color: 'green'}} onClick={() => setPortionNumber(1)}/>
             }
             {leftPortionPageNumber > 1 &&
-            <LeftOutlined onClick={() => setPortionNumber(portionNumber - 1)} />}
+            <LeftOutlined style={{color: 'cornflowerblue'}} onClick={() => setPortionNumber(portionNumber - 1)} />}
             {pages
                 .filter((p: number) => p <= rightPortionPageNumber && p >= leftPortionPageNumber)
                 .map(p => {
@@ -50,10 +50,10 @@ const Paginator: React.FC<PropsType> = ({totalItemCount, pageSize, currentPage,
                 })}
             <span>
             {rightPortionPageNumber < pagesCount &&
-            <RightOutlined  onClick={() => setPortionNumber(portionNumber + 1)}/>
+            <RightOutlined style={{color: 'cornflowerblue'}} onClick={() => setPortionNumber(portionNumber + 1)}/>
             }
                 {rightPortionPageNumber < pagesCount &&
-                <VerticalLeftOutlined onClick={() => setPortionNumber(portionCount)}/>
+                <VerticalLeftOutlined style={{color: 'green'}} onClick={() => setPortionNumber(portionCount)}/>
                 }</span>
         </div>
     )
