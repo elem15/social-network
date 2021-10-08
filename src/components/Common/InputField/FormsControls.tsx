@@ -38,6 +38,7 @@ export const renderInput: React.FC<PropsType> = ({   input,
         <div >
             <input {...input} className={s.textarea} placeholder={label} type={type} />
             <br/>
+
             {touched &&
             ((error && <span>{error}</span>) ||
                 (warning && <span>{warning}</span>))}

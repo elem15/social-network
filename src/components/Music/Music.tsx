@@ -41,7 +41,7 @@ const Composer: React.FC<ComposerType> = ({name, id, isLike, sample, selectCompo
                 <h2 className={s.composer + " " + s.active} onClick={() => selectBestComposer(id)}>{name}
                 </h2><br/>
                 <div className={s.direct}>
-                    <BorderOutlined onClick={() => selectBestComposer(id)}/>
+                    <BorderOutlined onClick={() => selectBestComposer(id)}/><span> </span>
                     <audio
                         className={s.audioControl}
                         controls

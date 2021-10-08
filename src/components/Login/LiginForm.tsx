@@ -3,6 +3,7 @@ import s from '../../components/Common/InputField/FormsContorls.module.css'
 import {Field, reduxForm} from 'redux-form'
 import {renderInput} from "../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../utils/validators";
+import {Button} from "antd";
 
 
 type OwnPropsType = {
@@ -19,7 +20,7 @@ type MapDispatchPropsType = {
 type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
 const LoginFormContent: React.FC<PropsType> = ({ handleSubmit, submitting, error,  }) => {
     return (
-        <div>
+        <div style={{maxWidth:'300px'}}>
             <form onSubmit={ handleSubmit }>
                 <div>
                     <Field name="email" type="email" label="Email" component={renderInput} validate={[required, maxLength33]}/>
@@ -30,9 +31,11 @@ const LoginFormContent: React.FC<PropsType> = ({ handleSubmit, submitting, error
                 <div>
                     <Field name="rememberMe" component='input' type="checkbox"/> Remember Me
                 </div>
-                {error && <span className={s.formSummaryError}>{error}</span>}
                 <div>
-                    <button type="submit" disabled={submitting}>Sign in</button>
+                    {error && <span className={s.formSummaryError}>{error}</span>}
+                </div>
+                <div>
+                    <button className={s.button}><Button>Sign in</Button></button>
                 </div>
             </form>
         </div>

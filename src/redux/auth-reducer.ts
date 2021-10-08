@@ -103,7 +103,7 @@ const getCaptchaURL = (captchaURL: string) : GetCaptchaURLActionType => ({type: 
 export const userSignIn = (login: string, password: string, rememberMe=false, captcha: string | null = null): ThunkType =>
     async (dispatch: any) => {
         let authLogin = await authAPI.login(login, password, rememberMe, captcha);
-        // dispatch(deleteCaptchaURL());
+        dispatch(getCaptchaURL(''));
         if (authLogin.resultCode === ResultCodeEnum.Success) {
             dispatch(ownUserName());
         } else if (authLogin.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {

@@ -3,6 +3,7 @@ import s from '../../components/Common/InputField/FormsContorls.module.css'
 import {Field, reduxForm} from 'redux-form'
 import {renderInput} from "../Common/InputField/FormsControls";
 import {maxLength33, required} from "../../utils/validators";
+import {Button} from "antd";
 
 
 type OwnPropsType = {
@@ -35,7 +36,7 @@ const LoginFormContent: React.FC<PropsType> = ({ handleSubmit, submitting, error
                 </div>
                 {error && <span className={s.formSummaryError}>{error}</span>}
                 <div>
-                    <button type="submit" disabled={submitting}>Sign in</button>
+                    <button className={s.button}><Button>Sign in</Button></button>
                 </div>
             </form>
         </div>

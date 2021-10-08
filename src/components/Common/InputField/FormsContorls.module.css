@@ -9,10 +9,10 @@
     color: red;
 }
 .formSummaryError {
+    padding: 3px;
+    margin: 3px;
     color: red;
-    border: red 2px solid;
-
-
+    /*border: red 2px solid;*/
 }
 .textarea {
     width: 90%;
@@ -20,4 +20,8 @@
     border-radius: 2px;
     box-shadow: 1px 1px 1px 0px cornflowerblue;
     border-width: 1px;
+    margin-bottom: 5px;
+}
+.button {
+    border-width: 0;
 }
