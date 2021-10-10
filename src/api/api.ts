@@ -78,8 +78,9 @@ type CaptchaResponseType = {
     url: string
 }
 export const usersAPI = {
-    requestUsers(currentPage = 1, pageSize = 10) {
-        return instance.get<UserResponseType>(`users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
+    requestUsers(currentPage = 1, pageSize = 10, isFriends: boolean | null = null, searchUser = '') {
+        return instance.get<UserResponseType>(`users?page=${currentPage}&count=${pageSize}&friend=${isFriends}&term=${searchUser}`)
+            .then(res => res.data)
     },
     follow(id: number) {
         return instance.post<FollowResponseType>(`follow/${id}`).then(res => res.data)

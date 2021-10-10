@@ -5,7 +5,9 @@ import {
     unFollow,
     requestUsers,
     toggleIsFetching,
-    setPortionNumber
+    setPortionNumber,
+    setSearchUser,
+    setIsFriends
 } from "../../redux/users-reducer";
 import Users from "./Users";
 // import {withAuthRedirect} from "../../HOC/withAuthRedirect";
@@ -17,6 +19,8 @@ import {
     getPageSize,
     getTotalUsersCount,
     getPortionNumber,
+    getIsFriends,
+    getSearchUser,
     selectUsers
 } from "../../redux/users-selectors";
 import {UserType} from "../../Types/Types";
@@ -30,22 +34,25 @@ type OwnPropsType = {
     pageTitle: string
 }
 type MapStatePropsType = {
-    currentPage: number,
-    pageSize: number,
-    isFollowingProgress: number[],
-    isFetching: boolean,
-    users: Array<UserType>,
-    totalUsersCount: number,
+    currentPage: number
+    pageSize: number
+    isFollowingProgress: number[]
+    isFetching: boolean
+    users: Array<UserType>
+    totalUsersCount: number
     isAuth: boolean
     portionNumber: number
-
+    isFriends: boolean | null
+    searchUser: string
 }
 type MapDispatchPropsType = {
     unFollow: (userId: number) => void,
     follow: (userId: number) => void,
-    requestUsers: (currentPage: number, pageSize: number) => void,
+    requestUsers: (currentPage: number, pageSize: number, isFriends: boolean | null, searchUser: string) => void,
     toggleIsFetching: ((isFetching: boolean) => void)
     setPortionNumber: (portionNumber: number) => void
+    setIsFriends: ((isFriends: boolean | null) => void)
+    setSearchUser: ((searchUser: string) => void)
 }
 
 type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
@@ -53,13 +60,17 @@ type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
 class UsersContainer extends React.Component<PropsType>  {
 
     componentDidMount() {
-        const {requestUsers, currentPage, pageSize} = this.props;
-        requestUsers(currentPage, pageSize);
+        const {requestUsers, currentPage, pageSize, isFriends, searchUser} = this.props;
+        requestUsers(currentPage, pageSize, isFriends, searchUser);
     }
 
     onPageChanged = (pageNumber: number) => {
+        const {requestUsers, pageSize, isFriends, searchUser} = this.props;
+        requestUsers(pageNumber, pageSize, isFriends, searchUser);
+    }
+    onSearchUserPageChanged = (pageNumber: number, isFriends: boolean | null, searchUser: string) => {
         const {requestUsers, pageSize} = this.props;
-        requestUsers(pageNumber, pageSize);
+        requestUsers(pageNumber, pageSize, isFriends, searchUser);
     }
 
     render() {
@@ -69,6 +80,9 @@ class UsersContainer extends React.Component<PropsType>  {
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
+                   onSearchUserPageChanged={this.onSearchUserPageChanged}
+                   setIsFriends={this.props.setIsFriends}
+                   setSearchUser={this.props.setSearchUser}
                    users={this.props.users}
                    follow={this.props.follow}
                    unFollow={this.props.unFollow}
@@ -78,6 +92,7 @@ class UsersContainer extends React.Component<PropsType>  {
                    isAuth={this.props.isAuth}
                    portionNumber={this.props.portionNumber}
                    setPortionNumber={this.props.setPortionNumber}
+                   isFriends={this.props.isFriends}
 
             />
         </>
@@ -93,7 +108,9 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         isFetching: getIsFetching(state),
         isFollowingProgress: getIsFollowingProgress(state),
         isAuth: getIsAuth(state),
-        portionNumber: getPortionNumber(state)
+        portionNumber: getPortionNumber(state),
+        isFriends: getIsFriends(state),
+        searchUser: getSearchUser(state)
     }
 };
 
@@ -106,7 +123,9 @@ connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
         unFollow,
         requestUsers: requestUsers,
         toggleIsFetching: toggleIsFetching,
-        setPortionNumber
+        setPortionNumber,
+        setIsFriends,
+        setSearchUser
     }
     ),
     // withAuthRedirect

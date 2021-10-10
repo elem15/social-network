@@ -12,7 +12,10 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
-const SET_PORTION_NUMBER = 'SET_PORTION_NUMBER'
+const SET_PORTION_NUMBER = 'SET_PORTION_NUMBER';
+const SET_IS_FRIENDS = 'SET_IS_FRIENDS';
+const SET_SEARCH_USER = 'SET_SEARCH_USER'
+
 
 let initialState = {
     users: [] as Array<UserType>,
@@ -21,12 +24,15 @@ let initialState = {
     currentPage: 1 as number,
     isFetching: false as boolean,
     isFollowingProgress: [] as Array<number>,
-    portionNumber: 1 as number
+    portionNumber: 1 as number,
+    isFriends: null as boolean | null,
+    searchUser: '' as string
 };
 type InitialStateActionType = typeof initialState;
 type ActionType = ToggleIsFollowingProgressActionType | ToggleIsFetchingActionType |
     SetTotalUsersCountActionType | SetCurrentPageActionType | FollowSuccessActionType |
-    UnFollowSuccessActionType | SetUsersActionType | setPortionNumberActionType
+    UnFollowSuccessActionType | SetUsersActionType | setPortionNumberActionType | SetSearchUserActionType |
+    SetIsFriendsActionType
 
 const usersReducer = (state = initialState, action: ActionType): InitialStateActionType => {
 
@@ -43,27 +49,27 @@ const usersReducer = (state = initialState, action: ActionType): InitialStateAct
                 ...state,
                 users: updateObjectInArray(state.users, action.userID, 'id', {followed: false})
               }
-
         case SET_USERS: {
             return { ...state, users: action.users}
         }
-
         case SET_CURRENT_PAGE: {
             return {...state, currentPage: action.currentPage}
         }
-
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.totalUsersCount}
-        }
-
+        }        
+        case SET_IS_FRIENDS: {
+            return {...state, isFriends: action.isFriends}
+        } 
+        case SET_SEARCH_USER: {
+            return {...state, searchUser: action.searchUser}
+        } 
         case TOGGLE_IS_FETCHING: {
             return {...state, isFetching: action.isFetching}
         }
-
         case SET_PORTION_NUMBER: {
             return {...state, portionNumber: action.portionNumber}
         }
-
         case TOGGLE_IS_FOLLOWING_PROGRESS: {
             return {
                 ...state,
@@ -108,6 +114,16 @@ type SetTotalUsersCountActionType = {
 }
 export const setTotalUsersCount = (totalUsersCount: number): SetTotalUsersCountActionType =>
     ({type: SET_TOTAL_USERS_COUNT, totalUsersCount});
+type SetIsFriendsActionType = {
+    type: typeof SET_IS_FRIENDS,
+    isFriends: boolean | null
+}
+export const setIsFriends = (isFriends: boolean | null): SetIsFriendsActionType => ({ type: SET_IS_FRIENDS, isFriends})
+type SetSearchUserActionType = {
+    type: typeof SET_SEARCH_USER,
+    searchUser: string
+}
+export const setSearchUser = (searchUser: string): SetSearchUserActionType => ({ type: SET_SEARCH_USER, searchUser})
 type ToggleIsFetchingActionType = {
     type: typeof TOGGLE_IS_FETCHING,
     isFetching: boolean
@@ -126,11 +142,11 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number): 
 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 type DispatchType = Dispatch<ActionType>
-export const requestUsers = (currentPage: number, pageSize: number): ThunkType  =>
+export const requestUsers = (currentPage: number, pageSize: number, isFriends: boolean | null, searchUser: string): ThunkType  =>
     async (dispatch, getState) => {
         dispatch(setCurrentPage(currentPage));
         dispatch(toggleIsFetching(true));
-        const response = await usersAPI.requestUsers(currentPage, pageSize);
+        const response = await usersAPI.requestUsers(currentPage, pageSize, isFriends, searchUser);
         if (response.error === null) {
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(response.items));

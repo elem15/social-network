@@ -27,3 +27,9 @@ export const getPortionNumber = (state: AppStateType) => {
 export const getIsAuth = (state: AppStateType) => {
     return state.auth.isAuth
 }
+export const getIsFriends = (state: AppStateType) => {
+    return state.usersPage.isFriends
+}
+export const getSearchUser = (state: AppStateType) => {
+    return state.usersPage.searchUser
+}
