@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Button, Col, Form, Input, Layout, Row, Typography} from 'antd';
 
 import NewsPost from './components/news/news'
+import Preloader from "../Common/Preloader/Preloader";
 
 
 const {Title} = Typography;
@@ -85,6 +86,7 @@ class News extends Component {
     render() {
         const {searchQuery, result} = this.state
         const {hits = []} = result
+        if (hits.length < 1)  return <Preloader/>
         return (
             <Layout>
                 <Title level={3}>Hacker News</Title>
