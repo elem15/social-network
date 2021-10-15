@@ -49,7 +49,7 @@ const ProfileDataForm: React.FC<PropsType> = ({ handleSubmit, submitting, error,
                     Object.keys(initialValues.contacts).map(key => {
                     return (<div className={style.contact} key={key}>
                             <Field name={'contacts.' + key} type="text" label={key} component={renderInput}
-                                   validate={[]} />  </div>
+                                   validate={[maxLength33]} />  </div>
                     )
                 })}
                 </div>

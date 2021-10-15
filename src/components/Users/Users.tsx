@@ -57,11 +57,11 @@ const Users: React.FC<PropsType> = ({
             <Row>
                 <Col style={{margin: '10px 30px 10px 0'}} xs={{span: 24, offset: 0}} sm={{span: 15, offset: 0}}>
                     {isFriends === null &&
-                    <Button type="primary" onClick={() => setFriendsOnly(true)}>show only friends</Button>}
+                    <Button type="primary" onClick={() => setFriendsOnly(true)}>click to show only friends</Button>}
                     {isFriends &&
-                    <Button type="dashed" onClick={() => setFriendsOnly(false)}>show everyone except friends</Button>}
+                    <Button type="dashed" onClick={() => setFriendsOnly(false)}>click to show everyone except friends</Button>}
                     {isFriends === false &&
-                    <Button onClick={() => setFriendsOnly(null)}>show all users</Button>}
+                    <Button onClick={() => setFriendsOnly(null)}>click to show all users</Button>}
 
                     <Paginator totalItemCount={totalUsersCount} pageSize={pageSize}
                                currentPage={currentPage} onPageChanged={onPageChanged}
