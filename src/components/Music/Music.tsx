@@ -3,9 +3,6 @@ import s from './Music.module.css'
 import {ComposersType} from "../../Types/Types";
 import {Divider, Typography} from 'antd';
 import {RightOutlined, BorderOutlined} from '@ant-design/icons';
-import {Anchor} from 'antd';
-
-const {Link} = Anchor;
 
 const {Title} = Typography;
 

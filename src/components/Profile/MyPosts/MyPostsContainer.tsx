@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     addPostActionCreator,
     disLikeIncrement,
@@ -6,7 +5,7 @@ import {
 } from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
-import {PostsType, ProfileType, UserType} from "../../../Types/Types";
+import {PostsType} from "../../../Types/Types";
 import {AppStateType} from "../../../redux/redux-store";
 
 type OwnPropsType = {

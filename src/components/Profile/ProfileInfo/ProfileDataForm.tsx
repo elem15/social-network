@@ -7,7 +7,7 @@ import {maxLength33, required} from "../../../utils/validators";
 import {ProfileType} from "../../../Types/Types";
 import {Button, Divider, Space, Typography} from "antd";
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 type OwnPropsType = {
    }

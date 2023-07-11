@@ -3,7 +3,7 @@ import Post from "./Post/Post";
 import {PostsType} from "../../../Types/Types";
 import {Button, Form, Input, Typography} from "antd";
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 
 type PostType = {
@@ -66,9 +66,7 @@ const MyPosts: React.FC<MyPostsType> = props => {
     const addPost = (post:string) => {
         return props.addPost(post)
     }
-    const submit = (values:any) => {
-        addPost(values.post);
-    }
+
              return (
                 <>
                     <Title level={3}>My posts</Title>

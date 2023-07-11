@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {Avatar, Button, Col, Layout, Menu, Row, Space, Typography} from "antd";
 import {UserOutlined} from '@ant-design/icons';
@@ -11,10 +11,7 @@ import {
 } from "../../redux/auth-selectors";
 import {getUserProfile, userSignOut} from "../../redux/auth-reducer";
 
-const {Content, Sider, Footer} = Layout
-type PropsType = {
-
-}
+type PropsType = {}
 
 const Header: React.FC<PropsType> = () => {
 
@@ -27,6 +24,7 @@ const Header: React.FC<PropsType> = () => {
 
     useEffect( () => {
         getUserProfileLocal(ID)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [ID] )
 
     const dispatch = useDispatch()
@@ -59,7 +57,7 @@ const Header: React.FC<PropsType> = () => {
                     <Space direction="horizontal">
                         <Button onClick={logoutCallback}>Log out</Button>
 
-                        <Text type="success"><Link to='/Profile/'>{login}</Link></Text>
+                        <Text type="success"><Link to='/Profile/' style={{whiteSpace: 'nowrap'}}>{login}</Link></Text>
                         {
                             profile?.photos.small
                                 ?

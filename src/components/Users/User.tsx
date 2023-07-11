@@ -22,7 +22,7 @@ const User: React.FC<PropsType> = ({user, isAuth, isFollowingProgress, unFollow,
                 <Col span={12}>
                     <NavLink to={'/Profile/' + user.id}>
                         <img src={user.photos.small != null ? user.photos.small : userPhoto}
-                             className={styles.userPhoto}/>
+                             className={styles.userPhoto} alt="profile"/>
                     </NavLink>
                 </Col>
                 <Col span={12} style={{textAlign: 'center'}}>

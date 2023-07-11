@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import s from './Post.module.css'
-import {Typography, Space, Row, Col} from 'antd';
-import { LikeOutlined, DislikeOutlined, LikeTwoTone, DislikeTwoTone  } from '@ant-design/icons'
-const { Text, Link } = Typography;
+import {Typography, Row, Col} from 'antd';
+import { LikeTwoTone, DislikeTwoTone  } from '@ant-design/icons'
+const { Text } = Typography;
 
 type PropsType = {
     message: string

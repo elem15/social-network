@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import Music from "./Music";
 import {selectComposer} from "../../redux/music-reducer";
-import {ComposersType, FriendsType} from "../../Types/Types";
+import {ComposersType} from "../../Types/Types";
 import {AppStateType} from "../../redux/redux-store";
 
 type MapStatePropsType = {
