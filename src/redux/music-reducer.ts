@@ -28,7 +28,6 @@ const musicReducer = (state = initialState, action: any): InitialStateActionType
                                 ...u, isLike: false
                             }
                         }
-                        return u
                     })
             };
 

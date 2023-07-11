@@ -27,6 +27,7 @@ const Header: React.FC<PropsType> = () => {
 
     useEffect( () => {
         getUserProfileLocal(ID)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [ID] )
 
     const dispatch = useDispatch()
@@ -59,7 +60,7 @@ const Header: React.FC<PropsType> = () => {
                     <Space direction="horizontal">
                         <Button onClick={logoutCallback}>Log out</Button>
 
-                        <Text type="success"><Link to='/Profile/'>{login}</Link></Text>
+                        <Text type="success"><Link to='/Profile/' style={{whiteSpace: 'nowrap'}}>{login}</Link></Text>
                         {
                             profile?.photos.small
                                 ?
