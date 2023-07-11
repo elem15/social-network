@@ -3,7 +3,7 @@ import Preloader from "../Common/Preloader/Preloader";
 import Paginator from "../Common/Paginator/Paginator";
 import User from "./User";
 import {UserType} from "../../Types/Types";
-import {Form, Button, Col, Input, Row, Checkbox, Switch} from "antd";
+import {Button, Col, Input, Row, Switch} from "antd";
 
 const {Search} = Input;
 

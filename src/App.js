@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react';
-import {BrowserRouter, HashRouter, Link, Redirect, Route, Switch, withRouter} from 'react-router-dom';
+import { HashRouter, Link, Route, Switch, withRouter} from 'react-router-dom';
 import './App.css';
 
 import Music from './components/Music/MusicContainer';
@@ -7,7 +7,7 @@ import Settings from './components/Settings/Settings';
 import FriendsContainer from "./components/Friends/FriendsContainer";
 import Header from "./components/Header/Header";
 import Dialogs from "./components/Dialog/Dialogs";
-import {connect, Provider, useSelector} from "react-redux";
+import {connect, Provider} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {compose} from "redux";
 import {getInitialization} from "./redux/app-reducer";

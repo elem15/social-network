@@ -1,10 +1,10 @@
-import axios, {AxiosResponse} from "axios";
-import {PhotosType, UserType} from "../Types/Types";
+import axios from "axios";
+import { PhotosType, UserType } from "../Types/Types";
 
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-    headers: {'API-KEY': '75852ffb-adc3-4383-ad7d-adeade81f55b'},
+    headers: { 'API-KEY': '75852ffb-adc3-4383-ad7d-adeade81f55b' },
 })
 
 export enum ResultCodeEnum {
@@ -25,7 +25,7 @@ type MeResponseType = {
 }
 type LoginMeResponseType = {
     data: {
-        userId:number
+        userId: number
     }
     resultCode: ResultCodeEnum | ResultCodeForCaptcha
     messages: Array<string>
@@ -50,7 +50,7 @@ type ProfileType = {
     userId: number
 }
 type ContactsType = {
-    facebook: string ,
+    facebook: string,
     github: string,
     instagram: string,
     mainLink: string,
@@ -70,7 +70,7 @@ type ProfileResponseType = {
     data: {}
 }
 type PhotoResponseType = {
-    data: {photos: PhotosType}
+    data: { photos: PhotosType }
     resultCode: ResultCodeEnum
     messages: Array<string>
 }
@@ -100,7 +100,7 @@ export const profileAPI = {
         return instance.get<string>(`profile/status/${userId}`).then(res => res.data)
     },
     updateStatus(status: string) {
-        return instance.put<StatusResponseType>(`profile/status`, {status: status}).then(res => res.data)
+        return instance.put<StatusResponseType>(`profile/status`, { status: status }).then(res => res.data)
     },
     updateProfile(profile: ProfileType) {
         return instance.put<ProfileResponseType>(`profile`, profile).then(res => res.data)
@@ -119,9 +119,9 @@ export const authAPI = {
     me() {
         return instance.get<MeResponseType>(`auth/me`).then(res => res.data)
     },
-    login(email: string, password: string, rememberMe=false, captcha: string | null = null) {
-        return instance.post<LoginMeResponseType>(`auth/login`, 
-        {email, password, rememberMe, captcha}).then(res => res.data)
+    login(email: string, password: string, rememberMe = false, captcha: string | null = null) {
+        return instance.post<LoginMeResponseType>(`auth/login`,
+            { email, password, rememberMe, captcha }).then(res => res.data)
     },
     exit() {
         return instance.delete<ProfileResponseType>(`auth/login`).then(res => res.data)

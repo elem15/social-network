@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.png";
@@ -6,7 +6,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import arrow from '../../../assets/images/add.svg'
 import ProfileDataFormRedux from "./ProfileDataForm";
 import Follow from "../../Common/Follow/Follow";
-import {ProfileType, UserType} from "../../../Types/Types";
+import {ProfileType} from "../../../Types/Types";
 import {Col, Row, Typography, Image, Button, Space, Divider} from "antd";
 const { Title, Text } = Typography
 
@@ -83,7 +83,7 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
                         <input type={'file'} id={'input__file'} className={s.inputFile} onChange={onMainPhotoSelected}/>
                         <label htmlFor={"input__file"} className={s.inputFileButton}>
                         <span className={s.inputFileIconWrapper}>
-                            <img className={s.inputFileIcon} src={arrow}/>
+                            <img className={s.inputFileIcon} src={arrow} alt="file input"/>
                             </span>
                             <span className={s.inputFileButtonText}>Download your photo</span>
                         </label>

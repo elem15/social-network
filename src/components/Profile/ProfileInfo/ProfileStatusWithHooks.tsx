@@ -1,6 +1,5 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Typography} from 'antd';
-import {getStatus} from "../../../redux/profile-reducer";
 
 const {Text,  Paragraph} = Typography;
 
@@ -39,15 +38,4 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
     )
 }
 export default ProfileStatusWithHooks;
-{/*{!editMode &&*/}
 
-{/*    <Button type={"text"} disabled={!props.isOwner || !props.isAuth} onClick={activateEditMode}>{props.status}</Button>*/}
-{/*}*/}
-
-{/*{editMode &&*/}
-{/*    <Input placeholder="Basic usage"*/}
-{/*           autoFocus={true}*/}
-{/*           onBlur={inActivateMode}*/}
-{/*           onChange={onStatusChange}*/}
-{/*           value={status}*/}
-{/*    />}*/}

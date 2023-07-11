@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import ProfileHead from './ProfileHead/ProfileHead';
-import s from './Profile.module.css';
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {ProfileType} from "../../Types/Types";
 import {Col, Divider, Layout, Row} from "antd";
 import Preloader from "../Common/Preloader/Preloader";
-
-const {Content, Sider, Footer} = Layout
 
 type OwnPropsType = {}
 type MapStatePropsType = {

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import styles from "./Paginator.module.css";
 import cn from 'classnames';
 import { LeftOutlined, VerticalRightOutlined, RightOutlined, VerticalLeftOutlined} from '@ant-design/icons';

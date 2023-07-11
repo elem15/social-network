@@ -1,8 +1,6 @@
 import React from 'react';
 import s from '../Dialogs.module.css';
-import {Typography, Space} from 'antd';
 
-const {Text, Link} = Typography;
 type PropsType = {
     message: string,
     name: string,
