@@ -22,7 +22,7 @@
   },
   "include": [
     "src"
-  ],
+, "audio.d.ts"  ],
   "typeRoots": [
     "node_modules/@types",
     "src/custom_typings/"
